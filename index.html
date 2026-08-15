@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temettü Defteri</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #090D16;
+    --surface: #121828;
+    --surface-2: #1A2236;
+    --line: #212A40;
+    --text: #E7ECF6;
+    --muted: #7C88A5;
+    --mint: #34D9A0;
+    --mint-2: #22B888;
+    --mint-dim: #1E5E4C;
+    --rose: #FB7185;
+    --amber: #F0B549;
+    --disp: 'Space Grotesk', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --body: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; background:var(--bg); color:var(--text);}
+  body{
+    font-family:var(--body); position:relative;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .app-bg-glow{
+    position:fixed; top:-140px; left:50%; transform:translateX(-50%);
+    width:520px; height:340px; pointer-events:none; z-index:0;
+    background:radial-gradient(circle, rgba(52,217,160,0.16), transparent 70%);
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:20px 14px 4px; position:relative; z-index:1;}
+  main{padding-bottom:108px;}
+
+  header{margin-bottom:18px; display:flex; align-items:baseline; justify-content:space-between;}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--mint); text-transform:uppercase;}
+  h1{font-family:var(--disp); font-size:24px; font-weight:700; margin:2px 0 0; letter-spacing:-.01em;}
+
+  .tabview{display:none;}
+  .tabview.active{display:block; animation:fadein .22s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  .section-title{font-family:var(--disp); font-size:16px; font-weight:600; margin:4px 0 14px;}
+
+  /* Hero */
+  .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;}
+  .hero-card{
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line); border-radius:16px; padding:15px 16px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.25);
+  }
+  .hero-card .lbl{font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; font-family:var(--mono);}
+  .hero-card .val{font-family:var(--disp); font-size:23px; font-weight:700; margin-top:6px; letter-spacing:-.01em;}
+  .hero-card .sub{font-size:11.5px; color:var(--muted); margin-top:4px; font-family:var(--mono);}
+  .pos{color:var(--mint);} .neg{color:var(--rose);}
+
+  /* Chart cards */
+  .chart-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:16px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,0.2);
+  }
+  .chart-head{font-family:var(--disp); font-size:15px; font-weight:600; margin-bottom:4px;}
+  .chart-sub-label{font-family:var(--mono); font-size:10.5px; color:var(--muted); margin:14px 0 8px; text-transform:uppercase; letter-spacing:.06em;}
+  .chart-sub-label:first-of-type{margin-top:12px;}
+  .bar-chart{width:100%; height:auto; display:block;}
+  .pie-row{display:flex; align-items:center; gap:18px;}
+  .pie-chart{width:108px; height:108px; flex:0 0 auto;}
+  .legend{display:flex; flex-direction:column; gap:7px; flex:1; min-width:0;}
+  .legend-item{font-size:12px; font-family:var(--mono); color:var(--text); display:flex; align-items:center; gap:7px;}
+  .legend-item b{color:var(--mint); margin-left:auto; font-weight:600;}
+  .legend-dot{width:8px; height:8px; border-radius:50%; flex:0 0 auto;}
+
+  /* Dividend ribbon */
+  .ribbon-title{font-family:var(--disp); font-size:13px; color:var(--muted); margin:20px 0 8px; display:flex; align-items:center; gap:6px;}
+  .ribbon-title .dot{width:6px;height:6px;border-radius:50%;background:var(--mint);}
+  .ribbon{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; scrollbar-width:thin;}
+  .chip{
+    flex:0 0 auto; background:var(--surface); border:1px solid var(--mint-dim);
+    border-radius:999px; padding:7px 12px; font-family:var(--mono); font-size:12px;
+    white-space:nowrap; color:var(--text);
+  }
+  .chip b{color:var(--mint);}
+  .empty-ribbon{color:var(--muted); font-size:12px; font-family:var(--mono);}
+
+  /* Cards / forms */
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+  .card h2{font-family:var(--disp); font-size:15px; margin:0 0 12px; font-weight:600;}
+
+  .tabs{display:flex; gap:6px; margin-bottom:14px;}
+  .tab{
+    flex:1; text-align:center; padding:10px; border-radius:10px; font-size:13px;
+    font-weight:600; cursor:pointer; border:1px solid var(--line); color:var(--muted);
+    font-family:var(--body); background:transparent; transition:all .15s ease;
+  }
+  .tab.active{background:var(--mint); color:#06110D; border-color:var(--mint);}
+
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .field{display:flex; flex-direction:column; gap:4px;}
+  .field.full{grid-column:1 / -1;}
+  label{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;}
+  input, select{
+    background:var(--bg); border:1px solid var(--line); border-radius:9px;
+    padding:10px 10px; color:var(--text); font-family:var(--mono); font-size:13px;
+  }
+  input:focus, select:focus{outline:none; border-color:var(--mint);}
+  .add-btn{
+    margin-top:12px; width:100%; padding:12px; border-radius:11px; border:none;
+    background:linear-gradient(135deg, var(--mint), var(--mint-2)); color:#06110D;
+    font-family:var(--body); font-weight:700; font-size:14px; cursor:pointer;
+    box-shadow:0 6px 18px rgba(52,217,160,0.28);
+  }
+  .add-btn:active{opacity:.85;}
+
+  .checkbox-field{background:var(--bg); border:1px solid var(--line); border-radius:9px; padding:10px;}
+  .checkbox-label{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); text-transform:none; letter-spacing:0; cursor:pointer; font-family:var(--body);}
+  .checkbox-label input{width:16px; height:16px; accent-color:var(--mint); cursor:pointer;}
+  .hint{font-size:11px; color:var(--muted); margin-top:5px; line-height:1.4;}
+
+  /* Holdings */
+  .holding{border:1px solid var(--line); border-radius:14px; padding:13px 15px; margin-bottom:10px; background:var(--surface); box-shadow:0 6px 16px rgba(0,0,0,0.18);}
+  .holding-top{display:flex; justify-content:space-between; align-items:baseline;}
+  .sym{font-family:var(--disp); font-size:16px; font-weight:700;}
+  .cur-tag{font-family:var(--mono); font-size:10px; color:var(--muted); border:1px solid var(--line); border-radius:5px; padding:1px 5px; margin-left:6px;}
+  .ret{font-family:var(--mono); font-size:15px; font-weight:600;}
+  .metrics{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:11px;}
+  .metric .m-lbl{font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em;}
+  .metric .m-val{font-family:var(--mono); font-size:13px; margin-top:2px;}
+  .price-row{display:flex; align-items:center; gap:8px; margin-top:11px; padding-top:11px; border-top:1px dashed var(--line);}
+  .price-row label{white-space:nowrap;}
+  .price-row input{width:100px;}
+  .no-data{color:var(--muted); font-size:12px; font-family:var(--mono); text-align:center; padding:22px 0;}
+
+  /* History */
+  .hist-item{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); font-size:13px;}
+  .hist-item:last-child{border-bottom:none;}
+  .hist-left b{font-family:var(--mono);}
+  .hist-tag{font-size:10px; padding:2px 6px; border-radius:5px; font-family:var(--mono); margin-right:6px;}
+  .tag-buy{background:#1B2A45; color:#8FB4FF;}
+  .tag-div{background:var(--mint-dim); color:var(--mint);}
+  .tag-drip{background:var(--mint-dim); color:var(--mint);}
+  .hist-sub{color:var(--muted); font-size:11px; margin-top:2px; font-family:var(--mono);}
+  .del{background:none; border:none; color:var(--muted); font-size:16px; cursor:pointer; padding:0 4px;}
+  .del:hover{color:var(--rose);}
+
+  .foot-note{font-size:11px; color:var(--muted); text-align:center; margin:18px 0 6px; line-height:1.6;}
+
+  /* Bottom nav */
+  .bottom-nav{
+    position:fixed; bottom:0; left:0; right:0; z-index:50;
+    background:rgba(15,20,33,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    border-top:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-around;
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+  }
+  .nav-item{
+    background:none; border:none; display:flex; flex-direction:column; align-items:center;
+    gap:3px; color:var(--muted); font-family:var(--body); font-size:10px; font-weight:600;
+    padding:4px 12px; cursor:pointer; transition:color .15s ease;
+  }
+  .nav-item svg{width:20px; height:20px;}
+  .nav-item.active{color:var(--mint);}
+  .nav-fab{
+    width:54px; height:54px; border-radius:50%; border:none; cursor:pointer;
+    background:linear-gradient(150deg, var(--mint), var(--mint-2));
+    display:flex; align-items:center; justify-content:center; color:#06110D;
+    margin-top:-28px; box-shadow:0 8px 22px rgba(52,217,160,0.42), 0 0 0 5px var(--bg);
+  }
+  .nav-fab svg{width:24px; height:24px;}
+</style>
+</head>
+<body>
+<div class="app-bg-glow"></div>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Temettü Defteri</div>
+      <h1>Portföy Takibi</h1>
+    </div>
+  </header>
+
+  <main>
+    <section id="tab-ozet" class="tabview active">
+      <div class="hero-grid" id="heroGrid"></div>
+      <div class="chart-card" id="monthlyChartCard"></div>
+      <div class="chart-card" id="pieChartCard"></div>
+      <div class="ribbon-title"><span class="dot"></span>Son temettüler</div>
+      <div class="ribbon" id="ribbon"></div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>Yedekle</h2>
+        <div style="display:flex; gap:8px;">
+          <button class="add-btn" style="margin-top:0" onclick="exportBackup()">Panoya Kopyala</button>
+          <button class="add-btn" style="margin-top:0; background:var(--surface-2); color:var(--text); box-shadow:none; border:1px solid var(--line)" onclick="importBackup()">İçe Aktar</button>
+        </div>
+        <div class="hint" style="margin-top:9px">Verilerini metin olarak kopyalayıp Notlar'a kaydet. Cihaz değiştirirsen ya da bir sorun yaşarsan buradan geri yükleyebilirsin.</div>
+      </div>
+
+      <div class="foot-note">Ortalama maliyet, alınan temettülerin toplam maliyetten düşülmesiyle hesaplanır.<br>Fiyatlar manuel girilir — canlı veri çekilmez.<br><span style="opacity:.5">sürüm 2026-08-15</span></div>
+    </section>
+
+    <section id="tab-pozisyonlar" class="tabview">
+      <div class="section-title">Pozisyonlar</div>
+      <div id="holdings"></div>
+    </section>
+
+    <section id="tab-ekle" class="tabview">
+      <div class="card">
+        <div class="tabs">
+          <div class="tab active" data-tab="buy" onclick="switchTab('buy')">Alım Ekle</div>
+          <div class="tab" data-tab="div" onclick="switchTab('div')">Temettü Ekle</div>
+        </div>
+
+        <div id="buyForm">
+          <div class="form-grid">
+            <div class="field"><label>Sembol</label><input id="b-sym" list="symbolList" placeholder="Örn. DIVO" style="text-transform:uppercase" oninput="autoFillCurrency('b')"></div>
+            <div class="field"><label>Para Birimi</label>
+              <select id="b-cur"><option value="USD">USD</option><option value="TRY">TRY</option></select>
+            </div>
+            <div class="field"><label>Adet</label><input id="b-shares" type="number" step="any" placeholder="10"></div>
+            <div class="field"><label>Fiyat (birim)</label><input id="b-price" type="number" step="any" placeholder="42.50"></div>
+            <div class="field full"><label>Tarih</label><input id="b-date" type="date"></div>
+            <div class="field full checkbox-field">
+              <label class="checkbox-label"><input type="checkbox" id="b-fromdiv"> Temettü ile aldım</label>
+              <div class="hint">İşaretlersen bu alımın tutarı yatırım maliyetine eklenmez — adet artar, ortalama maliyet düşer.</div>
+            </div>
+          </div>
+          <button class="add-btn" onclick="submitBuy()">Alımı Kaydet</button>
+        </div>
+
+        <div id="divForm" style="display:none">
+          <div class="form-grid">
+            <div class="field"><label>Sembol</label><input id="d-sym" list="symbolList" placeholder="Örn. DIVO" style="text-transform:uppercase" oninput="autoFillCurrency('d')"></div>
+            <div class="field"><label>Para Birimi</label>
+              <select id="d-cur"><option value="USD">USD</option><option value="TRY">TRY</option></select>
+            </div>
+            <div class="field full"><label>Toplam Temettü Tutarı</label><input id="d-amount" type="number" step="any" placeholder="12.30"></div>
+            <div class="field full"><label>Tarih</label><input id="d-date" type="date"></div>
+          </div>
+          <button class="add-btn" onclick="submitDiv()">Temettüyü Kaydet</button>
+        </div>
+      </div>
+      <datalist id="symbolList"></datalist>
+    </section>
+
+    <section id="tab-gecmis" class="tabview">
+      <div class="section-title">İşlem Geçmişi</div>
+      <div id="history"></div>
+    </section>
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-item active" data-view="ozet" onclick="switchView('ozet')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V11M12 20V4M20 20v-7"/></svg>
+    <span>Özet</span>
+  </button>
+  <button class="nav-item" data-view="pozisyonlar" onclick="switchView('pozisyonlar')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M8 6V4h8v2"/></svg>
+    <span>Pozisyon</span>
+  </button>
+  <button class="nav-fab" onclick="switchView('ekle')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+  <button class="nav-item" data-view="gecmis" onclick="switchView('gecmis')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+    <span>Geçmiş</span>
+  </button>
+</nav>
+
+<script>
+let state = { transactions: [], dividends: [], prices: {} };
+const fmt = (n, cur) => {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  const s = n.toLocaleString('tr-TR', {minimumFractionDigits:2, maximumFractionDigits:2});
+  return cur === 'TRY' ? s + ' ₺' : '$' + s;
+};
+const pct = (n) => (n===null||n===undefined||isNaN(n)) ? '—' : (n>=0?'+':'') + n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+const uid = () => Math.random().toString(36).slice(2,10);
+const TR_MONTHS = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+const PIE_COLORS = ['#34D9A0','#60A5FA','#F0B549','#FB7185','#A78BFA','#38BDF8','#FCA5A5','#4ADE80'];
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem('temettu-defteri-v1');
+    if(raw) state = JSON.parse(raw);
+  }catch(e){ /* no saved data yet */ }
+  render();
+}
+function saveState(){
+  try{ localStorage.setItem('temettu-defteri-v1', JSON.stringify(state)); }
+  catch(e){ console.error('Kaydetme hatası', e); }
+}
+
+function exportBackup(){
+  const json = JSON.stringify(state);
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(json).then(()=>{
+      alert('Yedek panoya kopyalandı. Notlar uygulamasına yapıştırıp saklayabilirsin.');
+    }).catch(()=>{
+      window.prompt('Panoya kopyalanamadı, aşağıdaki metni elle seçip kopyala:', json);
+    });
+  } else {
+    window.prompt('Aşağıdaki metni elle seçip kopyala:', json);
+  }
+}
+function importBackup(){
+  const json = window.prompt('Yedek metnini buraya yapıştır:');
+  if(!json) return;
+  try{
+    const parsed = JSON.parse(json);
+    if(!Array.isArray(parsed.transactions) || !Array.isArray(parsed.dividends)) throw new Error('geçersiz format');
+    state = {transactions:parsed.transactions, dividends:parsed.dividends, prices:parsed.prices||{}};
+    saveState(); render();
+    alert('Veriler içe aktarıldı.');
+  }catch(e){
+    alert('Geçersiz yedek metni — kontrol edip tekrar dene.');
+  }
+}
+
+function switchView(name){
+  document.querySelectorAll('.tabview').forEach(el=>el.classList.toggle('active', el.id==='tab-'+name));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active', el.dataset.view===name));
+  window.scrollTo({top:0, behavior:'auto'});
+}
+
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('active', el.dataset.tab===t));
+  document.getElementById('buyForm').style.display = t==='buy' ? 'block':'none';
+  document.getElementById('divForm').style.display = t==='div' ? 'block':'none';
+}
+
+function knownCurrencyFor(sym){
+  sym = sym.trim().toUpperCase();
+  if(!sym) return null;
+  const tx = state.transactions.find(t=>t.symbol===sym);
+  if(tx) return tx.currency;
+  const dv = state.dividends.find(d=>d.symbol===sym);
+  if(dv) return dv.currency;
+  return null;
+}
+function autoFillCurrency(prefix){
+  const sym = document.getElementById(prefix+'-sym').value;
+  const cur = knownCurrencyFor(sym);
+  if(cur) document.getElementById(prefix+'-cur').value = cur;
+}
+
+function submitBuy(){
+  const sym = document.getElementById('b-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('b-cur').value;
+  const shares = parseFloat(document.getElementById('b-shares').value);
+  const price = parseFloat(document.getElementById('b-price').value);
+  const date = document.getElementById('b-date').value || new Date().toISOString().slice(0,10);
+  const fromDiv = document.getElementById('b-fromdiv').checked;
+  if(!sym || !shares || !price){ alert('Sembol, adet ve fiyat gerekli.'); return; }
+  state.transactions.push({id:uid(), symbol:sym, currency:cur, shares, price, date, fromDiv});
+  document.getElementById('b-sym').value=''; document.getElementById('b-shares').value=''; document.getElementById('b-price').value=''; document.getElementById('b-fromdiv').checked=false;
+  saveState(); render();
+}
+function submitDiv(){
+  const sym = document.getElementById('d-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('d-cur').value;
+  const amount = parseFloat(document.getElementById('d-amount').value);
+  const date = document.getElementById('d-date').value || new Date().toISOString().slice(0,10);
+  if(!sym || !amount){ alert('Sembol ve tutar gerekli.'); return; }
+  state.dividends.push({id:uid(), symbol:sym, currency:cur, amount, date});
+  document.getElementById('d-sym').value=''; document.getElementById('d-amount').value='';
+  saveState(); render();
+}
+function deleteEntry(kind, id){
+  if(kind==='tx') state.transactions = state.transactions.filter(t=>t.id!==id);
+  else state.dividends = state.dividends.filter(d=>d.id!==id);
+  saveState(); render();
+}
+function updatePrice(sym, val){
+  const p = parseFloat(val);
+  if(!isNaN(p)) state.prices[sym] = p;
+  saveState(); render();
+}
+
+function computeHoldings(){
+  const bySym = {};
+  state.transactions.forEach(t=>{
+    if(!bySym[t.symbol]) bySym[t.symbol] = {symbol:t.symbol, currency:t.currency, shares:0, costBasis:0, dividends:0, ttmDividends:0, divFundedShares:0};
+    bySym[t.symbol].shares += t.shares;
+    if(t.fromDiv){
+      bySym[t.symbol].divFundedShares += t.shares;
+    } else {
+      bySym[t.symbol].costBasis += t.shares * t.price;
+    }
+  });
+  const now = new Date();
+  const ttmCutoff = new Date(now); ttmCutoff.setFullYear(ttmCutoff.getFullYear()-1);
+  state.dividends.forEach(d=>{
+    if(!bySym[d.symbol]) bySym[d.symbol] = {symbol:d.symbol, currency:d.currency, shares:0, costBasis:0, dividends:0, ttmDividends:0, divFundedShares:0};
+    bySym[d.symbol].dividends += d.amount;
+    if(new Date(d.date) >= ttmCutoff) bySym[d.symbol].ttmDividends += d.amount;
+  });
+  return Object.values(bySym).map(h=>{
+    const avgCost = h.shares > 0 ? h.costBasis / h.shares : null;
+    const currentPrice = state.prices[h.symbol];
+    const marketValue = currentPrice ? h.shares * currentPrice : null;
+    const totalReturnAmount = marketValue !== null ? (marketValue - h.costBasis + h.dividends) : null;
+    const totalReturnPct = (totalReturnAmount !== null && h.costBasis) ? (totalReturnAmount / h.costBasis * 100) : null;
+    const divYieldTTM = (currentPrice && h.ttmDividends) ? (h.ttmDividends / marketValue * 100) : null;
+    const yieldOnCost = (h.ttmDividends && h.costBasis > 0) ? (h.ttmDividends / h.costBasis * 100) : null;
+    return {...h, avgCost, currentPrice, marketValue, totalReturnAmount, totalReturnPct, divYieldTTM, yieldOnCost};
+  }).sort((a,b)=> (b.marketValue||0) - (a.marketValue||0));
+}
+
+function computeMonthlyDividends(){
+  const now = new Date();
+  const months = [];
+  for(let i=11;i>=0;i--){
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    months.push({key: d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'), label: TR_MONTHS[d.getMonth()]});
+  }
+  const byCurrency = {};
+  state.dividends.forEach(dv=>{
+    const dt = new Date(dv.date);
+    const key = dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0');
+    if(!byCurrency[dv.currency]) byCurrency[dv.currency] = {};
+    byCurrency[dv.currency][key] = (byCurrency[dv.currency][key]||0) + dv.amount;
+  });
+  return {months, byCurrency};
+}
+
+function renderMonthlyChart(){
+  const container = document.getElementById('monthlyChartCard');
+  const {months, byCurrency} = computeMonthlyDividends();
+  const currencies = Object.keys(byCurrency);
+  if(currencies.length === 0){
+    container.innerHTML = '<div class="chart-head">Aylık Temettü</div><div class="no-data">Henüz temettü girilmedi.</div>';
+    return;
+  }
+  const w = 320, h = 118, padBottom = 20, gap = 4;
+  let html = '<div class="chart-head">Aylık Temettü <span style="color:var(--muted);font-weight:400;font-size:12px">(son 12 ay)</span></div>';
+  currencies.forEach(cur=>{
+    const vals = months.map(m => byCurrency[cur][m.key] || 0);
+    const max = Math.max(...vals, 0.0001);
+    const bw = (w - (months.length-1)*gap) / months.length;
+    let bars = '';
+    months.forEach((m,i)=>{
+      const val = vals[i];
+      const bh = Math.max((val/max) * (h-padBottom-8), val>0 ? 2 : 0);
+      const x = i*(bw+gap);
+      const y = h-padBottom-bh;
+      bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="2.5" fill="var(--mint)" opacity="${val>0?1:0.12}"/>`;
+      bars += `<text x="${(x+bw/2).toFixed(1)}" y="${h-5}" font-size="8" fill="#7C88A5" text-anchor="middle" font-family="IBM Plex Mono, monospace">${m.label}</text>`;
+    });
+    html += `<div class="chart-sub-label">${cur}</div><svg viewBox="0 0 ${w} ${h}" class="bar-chart">${bars}</svg>`;
+  });
+  container.innerHTML = html;
+}
+
+function renderPieChart(holdings){
+  const container = document.getElementById('pieChartCard');
+  const currencies = [...new Set(holdings.map(h=>h.currency))];
+  if(currencies.length === 0){
+    container.innerHTML = '<div class="chart-head">Portföy Dağılımı</div><div class="no-data">Henüz pozisyon yok.</div>';
+    return;
+  }
+  let html = '<div class="chart-head">Portföy Dağılımı</div>';
+  currencies.forEach(cur=>{
+    const hs = holdings.filter(h=>h.currency===cur && h.marketValue);
+    const total = hs.reduce((s,h)=>s+h.marketValue,0);
+    html += `<div class="chart-sub-label">${cur}</div>`;
+    if(!hs.length || total<=0){
+      html += '<div class="no-data" style="padding:10px 0">Bu para birimi için fiyat girilmemiş.</div>';
+      return;
+    }
+    const r=52, cx=64, cy=64, circumference=2*Math.PI*r;
+    let offsetAcc=0, circles='', legend='';
+    hs.forEach((h,i)=>{
+      const frac = h.marketValue/total;
+      const dash = frac*circumference;
+      const gapLen = circumference-dash;
+      const color = PIE_COLORS[i%PIE_COLORS.length];
+      circles += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="16" stroke-dasharray="${dash.toFixed(2)} ${gapLen.toFixed(2)}" stroke-dashoffset="${(-offsetAcc).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
+      offsetAcc += dash;
+      legend += `<div class="legend-item"><span class="legend-dot" style="background:${color}"></span>${h.symbol} <b>${(frac*100).toFixed(0)}%</b></div>`;
+    });
+    html += `<div class="pie-row"><svg viewBox="0 0 128 128" class="pie-chart">${circles}</svg><div class="legend">${legend}</div></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function render(){
+  const holdings = computeHoldings();
+
+  const allSymbols = [...new Set([
+    ...state.transactions.map(t=>t.symbol),
+    ...state.dividends.map(d=>d.symbol)
+  ])].sort();
+  document.getElementById('symbolList').innerHTML = allSymbols.map(s=>`<option value="${s}">`).join('');
+
+  const heroGrid = document.getElementById('heroGrid');
+  const currencies = [...new Set(holdings.map(h=>h.currency))];
+  if(currencies.length === 0){
+    heroGrid.innerHTML = '<div class="hero-card" style="grid-column:1/-1"><div class="lbl">Portföy</div><div class="val">Henüz işlem yok</div></div>';
+  } else {
+    heroGrid.innerHTML = currencies.map(cur=>{
+      const hs = holdings.filter(h=>h.currency===cur);
+      const totalCost = hs.reduce((s,h)=>s+h.costBasis,0);
+      const totalDiv = hs.reduce((s,h)=>s+h.dividends,0);
+      const knownValue = hs.filter(h=>h.marketValue!==null).reduce((s,h)=>s+h.marketValue,0);
+      const hasAllPrices = hs.every(h=>h.marketValue!==null);
+      const totalReturnAmt = hasAllPrices ? (knownValue - totalCost + totalDiv) : null;
+      const totalReturnPct = (totalReturnAmt!==null && totalCost) ? (totalReturnAmt/totalCost*100) : null;
+      const cls = totalReturnPct===null ? '' : (totalReturnPct>=0?'pos':'neg');
+      return `<div class="hero-card">
+        <div class="lbl">${cur} Toplam Getiri</div>
+        <div class="val ${cls}">${totalReturnPct!==null ? pct(totalReturnPct) : 'Fiyat girin'}</div>
+        <div class="sub">Değer: ${hasAllPrices ? fmt(knownValue,cur) : '—'} · Temettü: ${fmt(totalDiv,cur)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  renderMonthlyChart();
+  renderPieChart(holdings);
+
+  const ribbon = document.getElementById('ribbon');
+  const recentDivs = [...state.dividends].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,8);
+  ribbon.innerHTML = recentDivs.length ? recentDivs.map(d=>
+    `<div class="chip">${d.symbol} <b>+${fmt(d.amount, d.currency)}</b> · ${d.date}</div>`
+  ).join('') : '<div class="empty-ribbon">Henüz temettü girilmedi.</div>';
+
+  const hDiv = document.getElementById('holdings');
+  hDiv.innerHTML = holdings.length ? holdings.map(h=>{
+    const cls = h.totalReturnPct===null ? '' : (h.totalReturnPct>=0?'pos':'neg');
+    return `<div class="holding">
+      <div class="holding-top">
+        <div><span class="sym">${h.symbol}</span><span class="cur-tag">${h.currency}</span></div>
+        <div class="ret ${cls}">${h.totalReturnPct!==null ? pct(h.totalReturnPct) : '—'}</div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="m-lbl">Adet</div><div class="m-val">${h.shares}${h.divFundedShares>0 ? ` <span style="color:var(--mint);font-size:11px">(${h.divFundedShares} temettü ile)</span>`:''}</div></div>
+        <div class="metric"><div class="m-lbl">Ort. Maliyet</div><div class="m-val">${fmt(h.avgCost,h.currency)}</div></div>
+        <div class="metric"><div class="m-lbl">Toplam Temettü</div><div class="m-val" style="color:var(--mint)">${fmt(h.dividends,h.currency)}</div></div>
+        <div class="metric"><div class="m-lbl">Piyasa Değeri</div><div class="m-val">${fmt(h.marketValue,h.currency)}</div></div>
+        <div class="metric"><div class="m-lbl">Temettü Verimi (12 ay)</div><div class="m-val">${h.divYieldTTM!==null?h.divYieldTTM.toFixed(2)+'%':'—'}</div></div>
+        <div class="metric"><div class="m-lbl">Maliyete Göre Verim</div><div class="m-val">${h.yieldOnCost!==null?h.yieldOnCost.toFixed(2)+'%':'—'}</div></div>
+      </div>
+      <div class="price-row">
+        <label>Güncel Fiyat</label>
+        <input type="number" step="any" value="${h.currentPrice||''}" placeholder="Fiyat girin" onchange="updatePrice('${h.symbol}', this.value)">
+      </div>
+    </div>`;
+  }).join('') : '<div class="no-data">Henüz pozisyon yok. Aşağıdaki + butonuyla bir alım ekleyin.</div>';
+
+  const hist = document.getElementById('history');
+  const all = [
+    ...state.transactions.map(t=>({...t, kind:'tx', sortDate:t.date})),
+    ...state.dividends.map(d=>({...d, kind:'div', sortDate:d.date}))
+  ].sort((a,b)=> new Date(b.sortDate)-new Date(a.sortDate));
+  hist.innerHTML = all.length ? all.map(item=>{
+    if(item.kind==='tx'){
+      const tagLabel = item.fromDiv ? 'ALIM · TEMETTÜ İLE' : 'ALIM';
+      const tagClass = item.fromDiv ? 'tag-drip' : 'tag-buy';
+      return `<div class="hist-item">
+        <div class="hist-left"><span class="hist-tag ${tagClass}">${tagLabel}</span><b>${item.symbol}</b>
+          <div class="hist-sub">${item.shares} adet × ${fmt(item.price,item.currency)} · ${item.date}</div>
+        </div>
+        <button class="del" onclick="deleteEntry('tx','${item.id}')">✕</button>
+      </div>`;
+    } else {
+      return `<div class="hist-item">
+        <div class="hist-left"><span class="hist-tag tag-div">TEMETTÜ</span><b>${item.symbol}</b>
+          <div class="hist-sub">${fmt(item.amount,item.currency)} · ${item.date}</div>
+        </div>
+        <button class="del" onclick="deleteEntry('div','${item.id}')">✕</button>
+      </div>`;
+    }
+  }).join('') : '<div class="no-data">İşlem geçmişi boş.</div>';
+}
+
+loadState();
+</script>
+</body>
+</html>
