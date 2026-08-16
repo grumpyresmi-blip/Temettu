@@ -257,16 +257,7 @@
       <div class="ribbon-title"><span class="dot"></span>Son temettüler</div>
       <div class="ribbon" id="ribbon"></div>
 
-      <div class="card" style="margin-top:16px">
-        <h2>Yedekle</h2>
-        <div class="hint card-intro">Cihaz değiştirirsen ya da bir sorun yaşarsan buradan geri yükleyebilirsin.</div>
-        <div style="display:flex; gap:8px;">
-          <button class="add-btn" style="margin-top:0" onclick="exportBackup()">Panoya Kopyala</button>
-          <button class="add-btn btn-secondary" style="margin-top:0" onclick="importBackup()">İçe Aktar</button>
-        </div>
-      </div>
-
-      <div class="foot-note">Ortalama maliyet, alınan temettülerin toplam maliyetten düşülmesiyle hesaplanır.<br>Fiyatlar manuel girilir — canlı veri çekilmez.<br><span style="opacity:.5">sürüm 2026-08-15f</span></div>
+      <div class="foot-note">Ortalama maliyet, alınan temettülerin toplam maliyetten düşülmesiyle hesaplanır.<br>Fiyatlar manuel girilir — canlı veri çekilmez.<br><span style="opacity:.5">sürüm 2026-08-15g</span></div>
     </section>
 
     <section id="tab-pozisyonlar" class="tabview">
@@ -366,6 +357,15 @@
       <div class="chart-card" id="inflationCard" style="display:none"></div>
       <div class="search-row"><input id="hist-search" placeholder="Sembole göre ara..." oninput="renderHistory()"></div>
       <div id="history"></div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>Yedekle</h2>
+        <div class="hint card-intro">Cihaz değiştirirsen ya da bir sorun yaşarsan buradan geri yükleyebilirsin.</div>
+        <div style="display:flex; gap:8px;">
+          <button class="add-btn" style="margin-top:0" onclick="exportBackup()">Panoya Kopyala</button>
+          <button class="add-btn btn-secondary" style="margin-top:0" onclick="importBackup()">İçe Aktar</button>
+        </div>
+      </div>
     </section>
   </main>
 </div>
@@ -390,7 +390,7 @@
 </nav>
 
 <script>
-let state = { transactions: [], dividends: [], prices: {}, fxRate: null, monthlyGoal: null, inflationRate: null, monthlyExpenses: null, targetWeights: {} };
+let state = { transactions: [], dividends: [], prices: {}, fxRate: null, monthlyGoal: null, inflationRate: null, monthlyExpenses: null, targetWeights: {}, paymentFrequency: {} };
 let lastHoldings = [];
 let simDefaultsSet = false;
 const fmt = (n, cur) => {
@@ -432,6 +432,7 @@ function loadState(){
     if(state.inflationRate === undefined) state.inflationRate = null;
     if(state.monthlyExpenses === undefined) state.monthlyExpenses = null;
     if(state.targetWeights === undefined) state.targetWeights = {};
+    if(state.paymentFrequency === undefined) state.paymentFrequency = {};
   }catch(e){ }
   render();
 }
@@ -574,27 +575,42 @@ function computePortfolioForwardYield(){
   });
   return weighted;
 }
-function nextExpectedDividendLabel(symbol){
+function getPaymentFrequency(symbol){
+  return (state.paymentFrequency && state.paymentFrequency[symbol]) ? state.paymentFrequency[symbol] : null;
+}
+function setPaymentFrequency(symbol, val){
+  const f = parseInt(val);
+  if(!state.paymentFrequency) state.paymentFrequency = {};
+  if(isNaN(f) || f<=0) delete state.paymentFrequency[symbol];
+  else state.paymentFrequency[symbol] = f;
+  saveState(); render();
+}
+function getNextExpectedDate(symbol){
   const divs = state.dividends.filter(d=>d.symbol===symbol).map(d=>new Date(d.date)).sort((a,b)=>a-b);
-  if(divs.length<2) return null;
-  let totalGap=0; for(let i=1;i<divs.length;i++) totalGap += (divs[i]-divs[i-1]);
-  const avgGap = totalGap/(divs.length-1);
-  const next = new Date(divs[divs.length-1].getTime()+avgGap);
-  return `${next.getDate()} ${TR_MONTHS[next.getMonth()]} ${next.getFullYear()}`;
+  if(!divs.length) return null;
+  const freq = getPaymentFrequency(symbol);
+  let gapMs;
+  if(freq){
+    gapMs = (365.25*24*3600*1000)/freq;
+  } else {
+    if(divs.length<2) return null;
+    let totalGap=0; for(let i=1;i<divs.length;i++) totalGap += (divs[i]-divs[i-1]);
+    gapMs = totalGap/(divs.length-1);
+  }
+  return new Date(divs[divs.length-1].getTime()+gapMs);
+}
+function nextExpectedDividendLabel(symbol){
+  const next = getNextExpectedDate(symbol);
+  return next ? `${next.getDate()} ${TR_MONTHS[next.getMonth()]} ${next.getFullYear()}` : null;
 }
 function computeExpectedThisMonth(){
   const now = new Date();
   const symbols = [...new Set(state.dividends.map(d=>d.symbol))];
   const results = [];
   symbols.forEach(sym=>{
-    const divs = state.dividends.filter(d=>d.symbol===sym).sort((a,b)=>new Date(a.date)-new Date(b.date));
-    if(divs.length<2) return;
-    let totalGap=0;
-    for(let i=1;i<divs.length;i++) totalGap += (new Date(divs[i].date)-new Date(divs[i-1].date));
-    const avgGap = totalGap/(divs.length-1);
-    const last = new Date(divs[divs.length-1].date);
-    const next = new Date(last.getTime()+avgGap);
-    if(next.getFullYear()===now.getFullYear() && next.getMonth()===now.getMonth()){
+    const next = getNextExpectedDate(sym);
+    if(next && next.getFullYear()===now.getFullYear() && next.getMonth()===now.getMonth()){
+      const divs = state.dividends.filter(d=>d.symbol===sym).sort((a,b)=>new Date(a.date)-new Date(b.date));
       const lastEntry = divs[divs.length-1];
       results.push({symbol:sym, amount:lastEntry.amount, currency:lastEntry.currency});
     }
@@ -687,9 +703,28 @@ function computeHoldings(){
     const marketValue = currentPrice ? h.shares * currentPrice : null;
     const totalReturnAmount = marketValue !== null ? (marketValue - h.costBasis + h.dividends) : null;
     const totalReturnPct = (totalReturnAmount !== null && h.costBasis) ? (totalReturnAmount / h.costBasis * 100) : null;
-    const divYieldTTM = (currentPrice && h.ttmDividends) ? (h.ttmDividends / marketValue * 100) : null;
-    const yieldOnCost = (h.ttmDividends && h.costBasis > 0) ? (h.ttmDividends / h.costBasis * 100) : null;
-    return {...h, avgCost, currentPrice, marketValue, totalReturnAmount, totalReturnPct, divYieldTTM, yieldOnCost};
+
+    // Prefer frequency-based annualized estimate when the payment frequency is known —
+    // this is much more accurate for positions younger than 12 months, where a plain
+    // trailing-12-month sum would understate the true annual rate.
+    const freq = getPaymentFrequency(h.symbol);
+    let annualDividendPerShare = null;
+    if(freq && h.shares>0){
+      const divsForSym = state.dividends.filter(d=>d.symbol===h.symbol).sort((a,b)=>new Date(a.date)-new Date(b.date));
+      if(divsForSym.length){
+        const last = divsForSym[divsForSym.length-1];
+        const sharesAtLast = computeSharesAtDate(h.symbol, new Date(last.date).getTime());
+        if(sharesAtLast>0) annualDividendPerShare = (last.amount/sharesAtLast) * freq;
+      }
+    }
+    const usesFrequencyEstimate = annualDividendPerShare !== null;
+    const divYieldTTM = usesFrequencyEstimate && currentPrice
+      ? (annualDividendPerShare / currentPrice * 100)
+      : ((currentPrice && h.ttmDividends) ? (h.ttmDividends / marketValue * 100) : null);
+    const yieldOnCost = usesFrequencyEstimate && avgCost
+      ? (annualDividendPerShare / avgCost * 100)
+      : ((h.ttmDividends && h.costBasis > 0) ? (h.ttmDividends / h.costBasis * 100) : null);
+    return {...h, avgCost, currentPrice, marketValue, totalReturnAmount, totalReturnPct, divYieldTTM, yieldOnCost, usesFrequencyEstimate};
   }).sort((a,b)=> (b.marketValue||0) - (a.marketValue||0));
 }
 
@@ -1145,30 +1180,45 @@ function computeSimulation(){
   if(!startEl) return;
   const start = parseFloat(startEl.value)||0;
   const monthly = parseFloat(document.getElementById('sim-monthly').value)||0;
-  const growth = (parseFloat(document.getElementById('sim-growth').value)||0)/100;
-  const yieldRate = (parseFloat(document.getElementById('sim-yield').value)||0)/100;
+  const growthAnnual = (parseFloat(document.getElementById('sim-growth').value)||0)/100;
+  const yieldAnnual = (parseFloat(document.getElementById('sim-yield').value)||0)/100;
   const reinvest = document.getElementById('sim-reinvest').checked;
   const years = parseInt(document.getElementById('sim-years').value)||0;
   const result = document.getElementById('simResult');
   if(years<=0){ result.innerHTML=''; return; }
+  // Geometric (compound-correct) monthly rates, not a naive /12 division
+  const monthlyGrowthRate = Math.pow(1+growthAnnual, 1/12) - 1;
+  const monthlyYieldRate = Math.pow(1+yieldAnnual, 1/12) - 1;
   let value = start, totalContributed = start, totalDivIncome = 0;
   const rows = [];
   for(let y=1; y<=Math.min(years,40); y++){
+    let yearDiv = 0;
     for(let m=0; m<12; m++){
       value += monthly; totalContributed += monthly;
-      const monthlyDiv = value * (yieldRate/12);
+      const monthlyDiv = value * monthlyYieldRate;
+      yearDiv += monthlyDiv;
       totalDivIncome += monthlyDiv;
       if(reinvest) value += monthlyDiv;
-      value *= (1 + growth/12);
+      value *= (1 + monthlyGrowthRate);
     }
-    rows.push({year:y, value, totalContributed, totalDivIncome});
+    rows.push({year:y, value, totalContributed, totalDivIncome, avgMonthlyDiv: yearDiv/12});
   }
-  let html = '<div style="display:flex;flex-direction:column;gap:2px">';
+  let html = '';
+  if(rows.length){
+    const firstRow = rows[0], lastRow = rows[rows.length-1];
+    html += `<div class="mega-sub" style="margin-bottom:12px">
+      <div class="mega-chip">1. Yıl Aylık Ort. Temettü: <b>${fmt(firstRow.avgMonthlyDiv,'TRY')}</b></div>
+      <div class="mega-chip highlight">${lastRow.year}. Yıl Aylık Ort. Temettü: <b>${fmt(lastRow.avgMonthlyDiv,'TRY')}</b></div>
+    </div>`;
+  }
+  html += '<div style="display:flex;flex-direction:column;gap:2px">';
   rows.forEach(r=>{
-    html += `<div class="hist-item"><div class="hist-left"><b>${r.year}. Yıl</b><div class="hist-sub">Yatırılan: ${fmt(r.totalContributed,'TRY')} · Kümülatif Temettü: ${fmt(r.totalDivIncome,'TRY')}</div></div><div style="font-family:var(--mono);font-weight:600;color:var(--accent)">${fmt(r.value,'TRY')}</div></div>`;
+    html += `<div class="hist-item"><div class="hist-left"><b>${r.year}. Yıl</b><div class="hist-sub">Yatırılan: ${fmt(r.totalContributed,'TRY')} · O yıl aylık ort. temettü: ${fmt(r.avgMonthlyDiv,'TRY')}</div></div><div style="font-family:var(--mono);font-weight:600;color:var(--accent)">${fmt(r.value,'TRY')}</div></div>`;
   });
   html += '</div>';
-  const finalGainPct = totalContributed>0 ? ((value-totalContributed)/totalContributed*100) : 0;
+  // If dividends weren't reinvested, they sit outside `value` as separate cash — include them in total wealth.
+  const totalWealth = value + (reinvest ? 0 : totalDivIncome);
+  const finalGainPct = totalContributed>0 ? ((totalWealth-totalContributed)/totalContributed*100) : 0;
   html += `<div class="mega-chip" style="margin-top:10px;display:inline-block">Toplam Getiri: <b>${pct(finalGainPct)}</b></div>`;
   result.innerHTML = html;
 }
@@ -1233,6 +1283,13 @@ function render(){
   holdings.forEach(h=>{ if(h.marketValue!==null) valueByCurrency[h.currency] = (valueByCurrency[h.currency]||0) + h.marketValue; });
   const countByCurrency = {};
   holdings.forEach(h=>{ countByCurrency[h.currency] = (countByCurrency[h.currency]||0)+1; });
+  const avgYieldByCurrency = {};
+  currencies.forEach(cur=>{
+    const hs = holdings.filter(h=>h.currency===cur && h.marketValue && h.divYieldTTM!==null);
+    const val = hs.reduce((s,h)=>s+h.marketValue,0);
+    const weightedYield = hs.reduce((s,h)=>s+h.marketValue*h.divYieldTTM,0);
+    avgYieldByCurrency[cur] = val>0 ? (weightedYield/val) : null;
+  });
 
   const hDiv = document.getElementById('holdings');
   hDiv.innerHTML = holdings.length ? holdings.map(h=>{
@@ -1244,6 +1301,13 @@ function render(){
     const paymentCount = state.dividends.filter(d=>d.symbol===h.symbol).length;
     const curTotal = valueByCurrency[h.currency];
     const concentration = (h.marketValue && curTotal && countByCurrency[h.currency]>=2) ? (h.marketValue/curTotal*100) : null;
+    const portfolioAvgYield = avgYieldByCurrency[h.currency];
+    let yieldStyle = '';
+    if(h.divYieldTTM!==null && portfolioAvgYield && countByCurrency[h.currency]>=2){
+      if(h.divYieldTTM >= portfolioAvgYield*1.15) yieldStyle = 'color:var(--accent)';
+      else if(h.divYieldTTM <= portfolioAvgYield*0.85) yieldStyle = 'color:var(--warn)';
+    }
+    const yieldLabel = h.usesFrequencyEstimate ? 'Verim (Yıllık Tahmini)' : 'Verim (12 ay)';
     let badges = '';
     if(bestReturn && bestReturn.symbol===h.symbol) badges += '<span class="badge-elite">En İyi Getiri</span>';
     if(bestDiv && bestDiv.symbol===h.symbol && bestDiv.dividends>0) badges += '<span class="badge-elite" style="border-color:var(--accent);color:var(--accent)">En Çok Temettü</span>';
@@ -1266,15 +1330,17 @@ function render(){
         <div class="metric"><div class="m-lbl">Ort. Maliyet</div><div class="m-val">${fmt(h.avgCost,h.currency)}</div></div>
         <div class="metric"><div class="m-lbl">Toplam Temettü</div><div class="m-val" style="color:var(--accent)">${fmt(h.dividends,h.currency)}</div></div>
         <div class="metric"><div class="m-lbl">Piyasa Değeri</div><div class="m-val">${fmt(h.marketValue,h.currency)}</div></div>
-        <div class="metric"><div class="m-lbl">Verim (12 ay)</div><div class="m-val">${h.divYieldTTM!==null?h.divYieldTTM.toFixed(2)+'%':'—'}</div></div>
+        <div class="metric"><div class="m-lbl">${yieldLabel}</div><div class="m-val" style="${yieldStyle}">${h.divYieldTTM!==null?h.divYieldTTM.toFixed(2)+'%':'—'}</div></div>
         <div class="metric"><div class="m-lbl">Aylık Ort. Verim</div><div class="m-val">${monthlyYield!==null?monthlyYield.toFixed(2)+'%':'—'}</div></div>
         <div class="metric"><div class="m-lbl">Ödeme Sayısı</div><div class="m-val">${paymentCount}</div></div>
       </div>
       ${nextDiv ? `<div class="next-div-line">Sıradaki temettü ~ ${nextDiv}</div>` : ''}
       ${fwdYield ? `<div class="next-div-line">Tahmini İleri Verim: %${fwdYield.forwardYield.toFixed(2)}${fwdYield.hasTrend?` <span style="color:var(--accent)">(trend: ${fwdYield.growthPct>=0?'+':''}${fwdYield.growthPct.toFixed(0)}%/yıl, ${fwdYield.dataPoints} ödeme)</span>`:' <span style="color:var(--muted)">(trend verisi yetersiz, mevcut oran kullanıldı)</span>'}</div>` : ''}
       <div class="price-row">
-        <label>Güncel Fiyat</label>
-        <input type="number" step="any" value="${h.currentPrice||''}" placeholder="Fiyat girin" onchange="updatePrice('${h.symbol}', this.value)">
+        <label>Fiyat</label>
+        <input type="number" step="any" value="${h.currentPrice||''}" placeholder="Fiyat" onchange="updatePrice('${h.symbol}', this.value)">
+        <label style="margin-left:6px">Ödeme/Yıl</label>
+        <input type="number" step="1" min="1" style="width:56px" value="${getPaymentFrequency(h.symbol)||''}" placeholder="12" onchange="setPaymentFrequency('${h.symbol}', this.value)">
       </div>
     </div>`;
   }).join('') : '<div class="no-data">Henüz pozisyon yok. Aşağıdaki + butonuyla bir alım ekleyin.</div>';
