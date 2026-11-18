@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#08090D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Temettü">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>Temettü Defteri</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08090D;
+    --surface: #11131A;
+    --surface-2: #171A24;
+    --line: rgba(255, 255, 255, 0.065);
+    --line-hi: rgba(255, 255, 255, 0.14);
+    --text: #F4F5F8;
+    --muted: #848C9E;
+    --emerald: #10B981;
+    --emerald-light: #34D399;
+    --emerald-dim: rgba(52, 211, 153, 0.12);
+    --sapphire: #60A5FA;
+    --sapphire-dim: rgba(96, 165, 250, 0.12);
+    --gold: #FBBF24;
+    --gold-dim: rgba(251, 191, 36, 0.12);
+    --neg: #F87171;
+    --neg-dim: rgba(248, 113, 113, 0.12);
+    --pos: #34D399;
+    --disp: 'Outfit', sans-serif;
+    --body: 'Plus Jakarta Sans', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); }
+  body {
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Ambient Spotlight */
+  .ambient {
+    position: fixed; top: -220px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 380px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.085) 0%, rgba(96, 165, 250, 0.04) 45%, transparent 72%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 18px 16px 6px; position: relative; z-index: 1; }
+  main { padding-bottom: 118px; }
+
+  /* Top Header */
+  header {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+  .logo-mark {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: linear-gradient(135deg, #34D399 0%, #60A5FA 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: #061410; flex-shrink: 0;
+    box-shadow: 0 6px 20px rgba(52, 211, 153, 0.24);
+  }
+  .logo-mark svg { width: 19px; height: 19px; }
+  .eyebrow { font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em; color: var(--emerald-light); text-transform: uppercase; font-weight: 600; }
+  h1 { font-family: var(--disp); font-size: 22px; font-weight: 700; margin: 1px 0 0; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .top-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  /* Live USD/TRY Pill */
+  .fx-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--surface); border: 1px solid var(--line-hi);
+    border-radius: 999px; padding: 5px 11px; height: 36px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+    transition: border-color .2s ease;
+  }
+  .fx-pill:focus-within { border-color: var(--emerald-light); }
+  .fx-pill span { color: var(--sapphire); font-weight: 600; }
+  .fx-pill input {
+    width: 54px; background: transparent; border: none; padding: 0;
+    color: var(--text); font-family: var(--mono); font-size: 12px; font-weight: 600;
+    text-align: right; border-radius: 0; font-variant-numeric: tabular-nums;
+  }
+  .fx-pill input:focus { outline: none; background: transparent; }
+
+  /* Privacy Eye Button */
+  .eye-btn {
+    width: 36px; height: 36px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--line-hi);
+    color: var(--muted); display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .2s ease;
+  }
+  .eye-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.24); }
+  .eye-btn.active { color: var(--gold); border-color: rgba(251, 191, 36, 0.45); background: var(--gold-dim); }
+  .eye-btn svg { width: 16px; height: 16px; }
+
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* Tab Views */
+  .tabview { display: none; }
+  .tabview.active { display: block; animation: viewIn .28s cubic-bezier(.16, 1, .3, 1); }
+  @keyframes viewIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Card Surface */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .card-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .card-title { font-family: var(--disp); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+  .pill-badge {
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.045); color: var(--muted); border: 1px solid var(--line);
+  }
+  .pill-badge.emerald { background: var(--emerald-dim); color: var(--emerald-light); border-color: rgba(52, 211, 153, 0.28); }
+  .pill-badge.sapphire { background: var(--sapphire-dim); color: var(--sapphire); border-color: rgba(96, 165, 250, 0.28); }
+  .pill-badge.gold { background: var(--gold-dim); color: var(--gold); border-color: rgba(251, 191, 36, 0.28); }
+
+  /* Mega Wealth Card (Apple Card / Wealthfront aesthetic) */
+  .mega-card {
+    background:
+      radial-gradient(110% 90% at 100% 0%, rgba(96, 165, 250, 0.14), transparent 55%),
+      radial-gradient(90% 80% at 0% 100%, rgba(52, 211, 153, 0.11), transparent 60%),
+      linear-gradient(180deg, #151822 0%, #0F1118 100%);
+    border: 1px solid var(--line-hi);
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  }
+  .mega-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .mega-lbl { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; }
+  .mega-val {
+    font-family: var(--disp); font-size: 36px; font-weight: 800;
+    letter-spacing: -0.03em; margin-top: 8px;
+    background: linear-gradient(135deg, #FFFFFF 20%, #CBD5E1 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+  .mega-val.plain { background: none; color: var(--text); }
+  .mega-usd { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
+
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .kpi {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--line);
+    border-radius: 16px; padding: 12px 13px;
+  }
+  .kpi.hl { background: var(--emerald-dim); border-color: rgba(52, 211, 153, 0.28); }
+  .kpi-lbl { font-family: var(--mono); font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .kpi-val { font-family: var(--disp); font-size: 18px; font-weight: 700; margin-top: 5px; font-variant-numeric: tabular-nums; }
+  .kpi-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .pos { color: var(--pos); } .neg { color: var(--neg); }
+
+  /* Currency Split Cards */
+  .cur-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .cur-box {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 18px; padding: 14px; position: relative;
+  }
+  .cur-box::before {
+    content: ''; position: absolute; top: 0; left: 16px; right: 16px; height: 2px;
+    background: var(--emerald-light); border-radius: 0 0 3px 3px;
+  }
+  .cur-box.usd::before { background: var(--sapphire); }
+  .cur-lbl { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .cur-val { font-family: var(--disp); font-size: 21px; font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .cur-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+  /* Snowball Strip */
+  .sb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .sb-item {
+    background: rgba(255, 255, 255, 0.025); border: 1px solid var(--line);
+    border-radius: 15px; padding: 12px 8px; text-align: center;
+  }
+  .sb-v { font-family: var(--disp); font-size: 16px; font-weight: 700; color: var(--emerald-light); font-variant-numeric: tabular-nums; }
+  .sb-l { font-family: var(--mono); font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-top: 4px; }
+
+  /* 12-Month Heatmap Grid */
+  .heat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+  .heat-cell {
+    background: rgba(255, 255, 255, 0.02); border: 1px solid var(--line);
+    border-radius: 13px; padding: 9px 7px; cursor: pointer; transition: border-color .15s ease;
+  }
+  .heat-cell:hover { border-color: var(--emerald-light); }
+  .heat-cell.low { background: rgba(52, 211, 153, 0.07); border-color: rgba(52, 211, 153, 0.22); }
+  .heat-cell.mid { background: rgba(52, 211, 153, 0.14); border-color: rgba(52, 211, 153, 0.36); }
+  .heat-cell.high { background: rgba(52, 211, 153, 0.24); border-color: rgba(52, 211, 153, 0.55); }
+  .heat-m { font-family: var(--mono); font-size: 10px; color: var(--muted); font-weight: 600; }
+  .heat-v { font-family: var(--mono); font-size: 11px; color: var(--text); font-weight: 600; margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .heat-s { font-family: var(--mono); font-size: 9px; color: var(--emerald-light); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Progress Bars & Milestones */
+  .prog-track { height: 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.065); overflow: hidden; margin-top: 10px; }
+  .prog-fill { height: 100%; background: linear-gradient(90deg, var(--emerald-light), var(--sapphire)); border-radius: 999px; transition: width .35s ease; }
+  .ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .ms-box {
+    background: rgba(255, 255, 255, 0.025); border: 1px solid var(--line);
+    border-radius: 13px; padding: 9px 11px;
+  }
+  .ms-box.done { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.08); }
+  .ms-top { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; }
+  .ms-top span:last-child { font-family: var(--mono); color: var(--emerald-light); font-size: 11px; }
+
+  /* Ribbon */
+  .ribbon { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .ribbon::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: 0 0 auto; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; padding: 8px 13px; font-family: var(--mono);
+    font-size: 11.5px; white-space: nowrap; color: var(--text);
+  }
+  .chip b { color: var(--emerald-light); }
+
+  /* Charts */
+  .bar-chart, .nw-svg { width: 100%; height: auto; display: block; cursor: pointer; }
+  .chart-tip { font-family: var(--mono); font-size: 11px; color: var(--emerald-light); margin-top: 8px; text-align: center; min-height: 15px; }
+  .pie-row { display: flex; align-items: center; gap: 16px; margin-top: 6px; }
+  .pie-chart { width: 116px; height: 116px; flex: 0 0 auto; cursor: pointer; }
+  .legend { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+  .legend-item {
+    font-size: 12px; font-family: var(--mono); color: var(--text);
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 4px 8px; border-radius: 9px;
+  }
+  .legend-item:hover { background: rgba(255, 255, 255, 0.04); }
+  .legend-item b { color: var(--emerald-light); margin-left: auto; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+
+  /* Position Cards */
+  .pos-card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 22px; padding: 16px; margin-bottom: 12px;
+  }
+  .pos-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .pos-sym { font-family: var(--disp); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+  .cur-pill {
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    border: 1px solid var(--line-hi); border-radius: 999px;
+    padding: 2px 8px; margin-left: 6px; vertical-align: middle;
+  }
+  .hold-age { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-left: 6px; }
+  .pos-ret { font-family: var(--mono); font-size: 15.5px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  .pos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px 8px;
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
+  }
+  .pm-lbl { font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; font-family: var(--mono); }
+  .pm-val { font-family: var(--mono); font-size: 12.5px; margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  /* Zero-Cost Payback Bar */
+  .zc-wrap { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .zc-head { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+  .zc-head b { color: var(--gold); }
+  .zc-bar { height: 5px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); margin-top: 5px; overflow: hidden; }
+  .zc-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--emerald-light)); border-radius: 999px; }
+
+  .pos-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); flex-wrap: wrap;
+  }
+  .inline-group { display: flex; align-items: center; gap: 6px; }
+  .inline-group label { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  .inline-group input { width: 78px; padding: 6px 8px; font-size: 12px; border-radius: 10px; }
+
+  .warn-tag { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 999px; display: inline-block; margin-bottom: 6px; margin-right: 5px; }
+  .warn-tag.gold { background: var(--gold-dim); color: var(--gold); }
+  .warn-tag.red { background: var(--neg-dim); color: var(--neg); }
+
+  /* Forms & Segmented Tabs */
+  .seg-tabs { display: flex; gap: 4px; margin-bottom: 14px; background: rgba(255, 255, 255, 0.035); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+  .seg-tab { flex: 1; text-align: center; padding: 9px; border-radius: 999px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--muted); transition: all .2s ease; }
+  .seg-tab.active { background: linear-gradient(135deg, #34D399 0%, #60A5FA 100%); color: #061410; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; font-family: var(--mono); }
+  input, select {
+    background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line);
+    border-radius: 12px; padding: 10px 12px; color: var(--text);
+    font-family: var(--mono); font-size: 13px; width: 100%;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--emerald-light); }
+  select option { background: #11131A; color: var(--text); }
+
+  .btn {
+    margin-top: 12px; width: 100%; padding: 13px; border-radius: 14px; border: none;
+    background: linear-gradient(135deg, #34D399 0%, #60A5FA 100%); color: #061410;
+    font-family: var(--body); font-weight: 700; font-size: 13.5px; cursor: pointer;
+    transition: opacity .15s ease;
+  }
+  .btn:active { opacity: .88; }
+  .btn.secondary { background: rgba(255, 255, 255, 0.05); color: var(--text); border: 1px solid var(--line-hi); }
+  .btn.danger { background: var(--neg-dim); color: var(--neg); border: 1px solid rgba(248, 113, 113, 0.3); }
+  .btn-sm {
+    background: var(--emerald-dim); border: 1px solid rgba(52, 211, 153, 0.3);
+    color: var(--emerald-light); font-family: var(--body); font-size: 11px; font-weight: 600;
+    padding: 6px 11px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+  }
+
+  .check-box { background: rgba(255, 255, 255, 0.025); border: 1px solid var(--line); border-radius: 12px; padding: 11px; }
+  .check-lbl { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text); text-transform: none; letter-spacing: 0; cursor: pointer; font-family: var(--body); }
+  .check-lbl input { width: 16px; height: 16px; accent-color: var(--emerald-light); }
+  .hint { font-size: 11.5px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+
+  /* Rows & Lists */
+  .list-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); gap: 10px; font-size: 13px; }
+  .list-row:last-child { border-bottom: none; }
+  .tag-badge { font-size: 9.5px; padding: 2px 7px; border-radius: 999px; font-family: var(--mono); margin-right: 6px; font-weight: 600; }
+  .tag-buy { background: var(--sapphire-dim); color: var(--sapphire); }
+  .tag-sell { background: var(--neg-dim); color: var(--neg); }
+  .tag-div { background: var(--emerald-dim); color: var(--emerald-light); }
+  .row-sub { color: var(--muted); font-size: 11px; margin-top: 2px; font-family: var(--mono); }
+  .icon-btn { background: none; border: none; color: var(--muted); cursor: pointer; padding: 4px 6px; font-size: 14px; }
+  .icon-btn:hover { color: var(--text); }
+  .icon-btn.del:hover { color: var(--neg); }
+
+  /* Checklist Alerts */
+  .alert-row { font-size: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .alert-row:last-child { border-bottom: none; }
+  .alert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  /* Floating 5-Tab Bottom Navigation */
+  .bottom-nav {
+    position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 50; max-width: 560px; margin: 0 auto;
+    background: rgba(17, 19, 26, 0.86);
+    backdrop-filter: blur(22px) saturate(160%); -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid var(--line-hi); border-radius: 26px;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
+    display: flex; align-items: center; justify-content: space-around; padding: 7px 6px;
+  }
+  .nav-item {
+    background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    color: var(--muted); font-family: var(--body); font-size: 10px; font-weight: 600;
+    padding: 6px 10px; cursor: pointer; border-radius: 14px; transition: all .18s ease;
+  }
+  .nav-item svg { width: 19px; height: 19px; }
+  .nav-item.active { color: var(--emerald-light); background: var(--emerald-dim); }
+  .nav-fab {
+    width: 46px; height: 46px; border-radius: 16px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #34D399 0%, #60A5FA 100%); color: #061410;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(52, 211, 153, 0.35);
+    transition: transform .15s ease;
+  }
+  .nav-fab:active { transform: scale(0.94); }
+  .nav-fab svg { width: 21px; height: 21px; }
+
+  /* Toast */
+  .toast {
+    position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom));
+    transform: translate(-50%, 10px);
+    background: var(--surface-2); border: 1px solid rgba(52, 211, 153, 0.45);
+    color: var(--text); font-size: 12.5px; font-weight: 600; padding: 10px 16px;
+    border-radius: 999px; opacity: 0; pointer-events: none; transition: all .22s ease;
+    z-index: 90; white-space: nowrap; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .edit-banner { display: none; align-items: center; justify-content: space-between; background: var(--gold-dim); border: 1px solid rgba(251, 191, 36, 0.35); color: var(--gold); border-radius: 12px; padding: 9px 12px; margin-bottom: 12px; font-size: 12px; font-weight: 600; }
+  .edit-banner button { background: none; border: none; color: var(--gold); font-weight: 700; cursor: pointer; }
+  .no-data { color: var(--muted); font-size: 12px; font-family: var(--mono); text-align: center; padding: 20px 10px; }
+  .foot-note { font-size: 11px; color: var(--muted); text-align: center; margin: 18px 0 4px; line-height: 1.55; }
+
+  @media (max-width: 760px) { input, select { font-size: 16px; } .fx-pill input { font-size: 12px; } }
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+      </div>
+      <div>
+        <div class="eyebrow">Temettü Defteri</div>
+        <h1 id="pageTitle">Portföy Özeti</h1>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <div class="fx-pill" title="USD/TRY Kurunu Düzenle">
+        <span>1$</span>=₺<input id="topFxInput" type="number" step="any" placeholder="36.85" onchange="setFxRate(this.value)">
+      </div>
+      <button class="eye-btn" id="privacyBtn" onclick="togglePrivacyMode()" title="Tutarları Gizle/Göster">
+        <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. ÖZET -->
+    <section id="tab-ozet" class="tabview active">
+      <div id="checklistCard" class="card" style="display:none"></div>
+      <div class="mega-card" id="megaCard"></div>
+      <div class="cur-grid" id="heroGrid"></div>
+      <div class="card" id="snowballCard"></div>
+      <div class="card" id="freedomCard"></div>
+      <div class="card" id="forecastCard"></div>
+      <div class="card" id="monthlyChartCard"></div>
+      <div class="card" id="heatmapCard"></div>
+      <div style="font-family:var(--mono); font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin:16px 0 8px;">Son Temettüler</div>
+      <div class="ribbon" id="ribbon"></div>
+      <div class="foot-note">Ortalama maliyet alınan temettüler düşülerek hesaplanır · Veriler cihazınızda yerel saklanır.</div>
+    </section>
+
+    <!-- 2. PORTFÖY -->
+    <section id="tab-pozisyonlar" class="tabview">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-family:var(--mono); font-size:11px; color:var(--muted)" id="posCountBadge">0 aktif pozisyon</span>
+        <select id="holdings-sort" onchange="setHoldingsSort(this.value)" style="width:auto; padding:7px 12px; border-radius:999px; font-size:11.5px;">
+          <option value="value">Değere Göre</option>
+          <option value="return">Getiriye Göre</option>
+          <option value="yield">Verime Göre</option>
+        </select>
+      </div>
+      <div class="card" id="pieChartCard"></div>
+      <div class="card" id="bulkPriceCard" style="display:none"></div>
+      <div id="holdings"></div>
+    </section>
+
+    <!-- 3. EKLE -->
+    <section id="tab-ekle" class="tabview">
+      <div class="card">
+        <div id="editBanner" class="edit-banner">
+          <span>Kaydı düzenliyorsun</span>
+          <button onclick="cancelEdit()">İptal</button>
+        </div>
+        <div class="seg-tabs">
+          <div class="seg-tab active" data-tab="buy" onclick="switchTab('buy')">Alım</div>
+          <div class="seg-tab" data-tab="sell" onclick="switchTab('sell')">Satış</div>
+          <div class="seg-tab" data-tab="div" onclick="switchTab('div')">Temettü</div>
+        </div>
+
+        <div id="buyForm">
+          <div class="form-grid">
+            <div class="field"><label>Sembol</label><input id="b-sym" list="symbolList" placeholder="Örn. TUPRS / SCHD" style="text-transform:uppercase" oninput="autoFillCurrency('b')"></div>
+            <div class="field"><label>Para Birimi</label><select id="b-cur"><option value="TRY">TRY (₺)</option><option value="USD">USD ($)</option></select></div>
+            <div class="field"><label>Adet</label><input id="b-shares" type="number" step="any" placeholder="10"></div>
+            <div class="field"><label>Birim Fiyat</label><input id="b-price" type="number" step="any" placeholder="150.00"></div>
+            <div class="field full"><label>Tarih</label><input id="b-date" type="date"></div>
+            <div class="field full check-box">
+              <label class="check-lbl"><input type="checkbox" id="b-fromdiv"> Temettü ile aldım (DRIP Kartopu)</label>
+              <div class="hint">İşaretlersen tutar yatırdığın ana paraya eklenmez — adet artar, ortalama maliyetin düşer.</div>
+            </div>
+          </div>
+          <button class="btn" id="btn-buy" onclick="submitBuy()">Alımı Kaydet</button>
+        </div>
+
+        <div id="sellForm" style="display:none">
+          <div class="form-grid">
+            <div class="field"><label>Sembol</label><input id="s-sym" list="symbolList" placeholder="Örn. TUPRS" style="text-transform:uppercase" oninput="autoFillCurrency('s')"></div>
+            <div class="field"><label>Para Birimi</label><select id="s-cur"><option value="TRY">TRY (₺)</option><option value="USD">USD ($)</option></select></div>
+            <div class="field"><label>Adet</label><input id="s-shares" type="number" step="any" placeholder="10"></div>
+            <div class="field"><label>Satış Fiyatı</label><input id="s-price" type="number" step="any" placeholder="175.00"></div>
+            <div class="field full"><label>Tarih</label><input id="s-date" type="date"></div>
+          </div>
+          <button class="btn" id="btn-sell" onclick="submitSell()">Satışı Kaydet</button>
+        </div>
+
+        <div id="divForm" style="display:none">
+          <div class="form-grid">
+            <div class="field"><label>Sembol</label><input id="d-sym" list="symbolList" placeholder="Örn. TUPRS" style="text-transform:uppercase" oninput="autoFillCurrency('d')"></div>
+            <div class="field"><label>Para Birimi</label><select id="d-cur"><option value="TRY">TRY (₺)</option><option value="USD">USD ($)</option></select></div>
+            <div class="field full"><label>Net Temettü Tutarı</label><input id="d-amount" type="number" step="any" placeholder="450.00"></div>
+            <div class="field full"><label>Tarih</label><input id="d-date" type="date"></div>
+          </div>
+          <button class="btn" id="btn-div" onclick="submitDiv()">Temettüyü Kaydet</button>
+        </div>
+      </div>
+      <datalist id="symbolList"></datalist>
+    </section>
+
+    <!-- 4. PLANLAMA (ASİSTAN) -->
+    <section id="tab-araclar" class="tabview">
+      <div class="field" style="margin-bottom:14px">
+        <label>Hesaplama Para Birimi</label>
+        <select id="assist-cur" onchange="renderWeightInputs(); computeRebalancePlan(); computeGoalPlan();">
+          <option value="TRY">TRY (₺)</option>
+          <option value="USD">USD ($)</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2 class="card-title">Aylık Yatırım Planı</h2></div>
+        <div id="investPlanBody"></div>
+      </div>
+
+      <div class="card" id="acc-rebal">
+        <div class="card-head"><h2 class="card-title">Bu Sefer Ne Almalıyım?</h2><span class="pill-badge emerald">Akıllı Rebalance</span></div>
+        <div class="hint" style="margin-bottom:10px">Yatıracağın tutarı gir; hedef ağırlıklarına en çok yaklaştıracak lot dağıtımını hesaplar.</div>
+        <div class="field"><label>Yatırılacak Tutar</label><input id="rebal-amount" type="number" step="any" placeholder="10000" oninput="computeRebalancePlan()"></div>
+        <div id="rebalResult" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2 class="card-title">Hedef Dağılım</h2></div>
+        <div style="display:flex; gap:8px; margin-bottom:10px">
+          <input id="new-target-sym" placeholder="Yeni sembol ekle (Örn. VOO)" style="text-transform:uppercase">
+          <button class="btn secondary" style="margin-top:0; width:auto; padding:0 16px" onclick="addTargetSymbol()">Ekle</button>
+        </div>
+        <div id="weightInputs"></div>
+        <div id="weightTotal" style="font-family:var(--mono); font-size:11.5px; text-align:right; margin-top:8px;"></div>
+        <div style="display:flex; gap:8px; margin-top:10px">
+          <button class="btn secondary" style="margin-top:0" onclick="weightsEqualSplit()">Eşit Dağıt</button>
+          <button class="btn secondary" style="margin-top:0" onclick="weightsMatchCurrent()">Mevcut Ağırlığa Göre</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2 class="card-title">Gelir Hedefine Göre Gereken Yatırım</h2></div>
+        <div class="hint" style="margin-bottom:10px">Hedef dağılımını koruyarak aylık ek temettü hedefine ulaşmak için gereken toplam yatırımı hesaplar.</div>
+        <div class="field"><label>Hedef Ek Aylık Gelir</label><input id="goal-monthly" type="number" step="any" placeholder="5000" oninput="computeGoalPlan()"></div>
+        <div id="goalPlanResult" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2 class="card-title">Bileşik Büyüme Simülatörü</h2></div>
+        <div class="form-grid">
+          <div class="field"><label>Başlangıç (TL)</label><input id="sim-start" type="number" step="any" oninput="computeSimulation()"></div>
+          <div class="field"><label>Aylık Ek (TL)</label><input id="sim-monthly" type="number" step="any" placeholder="5000" oninput="computeSimulation()"></div>
+          <div class="field"><label>Yıllık Fiyat Artışı (%)</label><input id="sim-growth" type="number" step="any" placeholder="10" oninput="computeSimulation()"></div>
+          <div class="field"><label>Temettü Verimi (%)</label><input id="sim-yield" type="number" step="any" placeholder="6" oninput="computeSimulation()"></div>
+          <div class="field full check-box"><label class="check-lbl"><input type="checkbox" id="sim-reinvest" checked onchange="computeSimulation()"> Temettüler yeniden yatırılsın (DRIP)</label></div>
+          <div class="field full"><label>Süre (Yıl)</label><input id="sim-years" type="number" step="1" value="10" oninput="computeSimulation()"></div>
+        </div>
+        <div id="simResult" style="margin-top:12px"></div>
+      </div>
+    </section>
+
+    <!-- 5. VARLIK & GEÇMİŞ -->
+    <section id="tab-varliklar" class="tabview">
+      <div class="seg-tabs">
+        <div class="seg-tab active" id="subTab-accounts" onclick="switchVarlikSub('accounts')">Varlıklarım</div>
+        <div class="seg-tab" id="subTab-history" onclick="switchVarlikSub('history')">Geçmiş & Yedek</div>
+      </div>
+
+      <div id="varlik-accounts-pane">
+        <div class="mega-card" id="netWorthCard"></div>
+        <div class="card" id="netWorthChartCard"></div>
+        <div id="accountsCard"></div>
+        <div class="card">
+          <div class="card-head"><h2 class="card-title">Yeni Hesap Ekle</h2></div>
+          <div class="form-grid">
+            <div class="field"><label>Hesap Adı</label><input id="acc-name" placeholder="Örn. BES / Banka / PPF"></div>
+            <div class="field"><label>Para Birimi</label><select id="acc-cur"><option value="TRY">TRY (₺)</option><option value="USD">USD ($)</option></select></div>
+          </div>
+          <button class="btn" onclick="addAccount()">Hesap Ekle</button>
+        </div>
+      </div>
+
+      <div id="varlik-history-pane" style="display:none">
+        <div class="card" id="yearlySummaryCard" style="display:none"></div>
+        <div class="card" id="inflationCard" style="display:none"></div>
+
+        <div class="card">
+          <div class="card-head"><h2 class="card-title">İşlem Geçmişi</h2></div>
+          <input id="hist-search" placeholder="Sembole göre ara..." oninput="renderHistory()" style="margin-bottom:10px; border-radius:999px;">
+          <div id="history"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2 class="card-title">Yedekle & Veri Yönetimi</h2></div>
+          <div class="hint" id="lastBackupInfo" style="margin-bottom:12px; color:var(--emerald-light)"></div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <button class="btn" style="margin-top:0" onclick="downloadJsonBackup()">JSON Dosya İndir</button>
+            <button class="btn secondary" style="margin-top:0" onclick="triggerJsonUpload()">JSON İçe Aktar</button>
+            <button class="btn secondary" style="margin-top:0" onclick="exportBackup()">Panoya Kopyala</button>
+            <button class="btn secondary" style="margin-top:0" onclick="importBackup()">Metin Yapıştır</button>
+          </div>
+          <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none" onchange="handleJsonFile(event)">
+          <div style="margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); display:flex; gap:8px;">
+            <button class="btn secondary" style="margin-top:0; flex:1" onclick="loadDemoPortfolio()">Örnek Portföy Yükle</button>
+            <button class="btn danger" style="margin-top:0; flex:1" onclick="clearAllData()">Tümünü Sıfırla</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- 5 Sekmeli Yüzen Alt Navigasyon -->
+<nav class="bottom-nav">
+  <button class="nav-item active" data-view="ozet" onclick="switchView('ozet')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V11M12 20V4M20 20v-7"/></svg><span>Özet</span>
+  </button>
+  <button class="nav-item" data-view="pozisyonlar" onclick="switchView('pozisyonlar')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M8 6V4h8v2"/></svg><span>Portföy</span>
+  </button>
+  <button class="nav-fab" onclick="switchView('ekle')" title="İşlem Ekle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+  <button class="nav-item" data-view="araclar" onclick="switchView('araclar')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Planlama</span>
+  </button>
+  <button class="nav-item" data-view="varliklar" onclick="switchView('varliklar')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6M4 10v9h16v-9M9 21v-6h6v6"/></svg><span>Varlık</span>
+  </button>
+</nav>
+
+<script>
+const STORAGE_KEY = 'temettu-defteri-v1';
+let state = {
+  transactions: [],
+  dividends: [],
+  prices: {},
+  fxRate: null,
+  monthlyGoal: null,
+  inflationRate: null,
+  monthlyExpenses: null,
+  targetWeights: {},
+  paymentFrequency: {},
+  priceUpdatedAt: {},
+  accounts: [],
+  accountSnapshots: [],
+  netWorthHistory: [],
+  lastBackupAt: null,
+  monthlyInvestTarget: null
+};
+
+let lastHoldings = [];
+let holdingsSortBy = 'value';
+let simDefaultsSet = false;
+let editing = null;
+let privacyMode = localStorage.getItem('temettu-privacy-mode') === '1';
+
+const TR_MONTHS = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+const PALETTE = ['#34D399','#60A5FA','#FBBF24','#F87171','#A78BFA','#38BDF8','#F472B6','#2DD4BF'];
+
+const fmt = (n, cur) => {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  const s = n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return cur === 'TRY' ? s + ' ₺' : '$' + s;
+};
+const mFmt = (n, cur) => privacyMode ? '••••' : fmt(n, cur);
+const pct = (n) => (n === null || n === undefined || isNaN(n)) ? '—' : (n >= 0 ? '+' : '') + n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+const uid = () => Math.random().toString(36).slice(2, 10);
+
+function setHoldingsSort(v) { holdingsSortBy = v; render(); }
+
+function applyPrivacyUI() {
+  const btn = document.getElementById('privacyBtn');
+  const icon = document.getElementById('eyeIcon');
+  if (btn) btn.classList.toggle('active', privacyMode);
+  if (icon) {
+    icon.innerHTML = privacyMode
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+}
+
+function togglePrivacyMode() {
+  privacyMode = !privacyMode;
+  localStorage.setItem('temettu-privacy-mode', privacyMode ? '1' : '0');
+  applyPrivacyUI();
+  render();
+  toast(privacyMode ? 'Tutarlar maskelendi' : 'Tutarlar görünür');
+}
+
+function todayStr() {
+  const d = new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+
+function resetDates() {
+  ['b-date', 's-date', 'd-date'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = todayStr();
+  });
+}
+
+function toast(msg) {
+  let el = document.getElementById('toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'toast';
+    el.className = 'toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window.__toastT);
+  window.__toastT = setTimeout(() => el.classList.remove('show'), 2300);
+}
+
+function relDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  const days = Math.round((t - d) / (24 * 3600 * 1000));
+  if (isNaN(days) || days < 0) return dateStr;
+  if (days === 0) return 'Bugün';
+  if (days === 1) return 'Dün';
+  if (days < 7) return days + ' gün önce';
+  if (days < 30) return Math.floor(days / 7) + ' hafta önce';
+  if (days < 365) return Math.floor(days / 30) + ' ay önce';
+  return Math.floor(days / 365) + ' yıl önce';
+}
+
+function normalizeState(rawObj) {
+  const parsed = rawObj || {};
+  return {
+    transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
+    dividends: Array.isArray(parsed.dividends) ? parsed.dividends : [],
+    prices: parsed.prices && typeof parsed.prices === 'object' ? parsed.prices : {},
+    fxRate: parsed.fxRate !== undefined ? parsed.fxRate : null,
+    monthlyGoal: parsed.monthlyGoal !== undefined ? parsed.monthlyGoal : null,
+    inflationRate: parsed.inflationRate !== undefined ? parsed.inflationRate : null,
+    monthlyExpenses: parsed.monthlyExpenses !== undefined ? parsed.monthlyExpenses : null,
+    targetWeights: parsed.targetWeights && typeof parsed.targetWeights === 'object' ? parsed.targetWeights : {},
+    paymentFrequency: parsed.paymentFrequency && typeof parsed.paymentFrequency === 'object' ? parsed.paymentFrequency : {},
+    priceUpdatedAt: parsed.priceUpdatedAt && typeof parsed.priceUpdatedAt === 'object' ? parsed.priceUpdatedAt : {},
+    accounts: Array.isArray(parsed.accounts) ? parsed.accounts : [],
+    accountSnapshots: Array.isArray(parsed.accountSnapshots) ? parsed.accountSnapshots : [],
+    netWorthHistory: Array.isArray(parsed.netWorthHistory) ? parsed.netWorthHistory : [],
+    lastBackupAt: parsed.lastBackupAt !== undefined ? parsed.lastBackupAt : null,
+    monthlyInvestTarget: parsed.monthlyInvestTarget !== undefined ? parsed.monthlyInvestTarget : null
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = normalizeState(JSON.parse(raw));
+  } catch (e) {}
+  applyPrivacyUI();
+  render();
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch (e) {}
+}
+
+function setFxRate(val) {
+  const r = parseFloat(val);
+  state.fxRate = (isNaN(r) || r <= 0) ? null : r;
+  saveState(); render();
+  toast(state.fxRate ? `Kur güncellendi: 1$ = ₺${state.fxRate}` : 'Kur temizlendi');
+}
+function setInflationRate(val) { const r = parseFloat(val); state.inflationRate = isNaN(r) ? null : r; saveState(); render(); }
+function setMonthlyExpenses(val) { const v = parseFloat(val); state.monthlyExpenses = isNaN(v) ? null : v; saveState(); render(); }
+
+/* ---- YEDEKLEME ---- */
+function copyTextSafe(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+  return ok;
+}
+
+function exportBackup() {
+  state.lastBackupAt = new Date().toISOString();
+  saveState();
+  const json = JSON.stringify(state);
+  if (copyTextSafe(json)) toast("Yedek panoya kopyalandı");
+  else if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(json).then(() => toast("Yedek panoya kopyalandı"));
+  render();
+}
+
+function downloadJsonBackup() {
+  state.lastBackupAt = new Date().toISOString();
+  saveState();
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `temettu-defteri-${todayStr()}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('JSON yedek indirildi');
+  render();
+}
+
+function triggerJsonUpload() {
+  const inp = document.getElementById('jsonFileInput');
+  if (inp) { inp.value = ''; inp.click(); }
+}
+
+function handleJsonFile(ev) {
+  const file = ev.target.files && ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      if (!Array.isArray(parsed.transactions) || !Array.isArray(parsed.dividends)) throw new Error();
+      state = normalizeState(parsed);
+      saveState(); render();
+      toast('JSON yedeği içe aktarıldı');
+    } catch (e) { toast('Geçersiz JSON dosyası'); }
+  };
+  reader.readAsText(file);
+}
+
+function importBackup() {
+  const json = window.prompt('Yedek JSON metnini yapıştır:');
+  if (!json) return;
+  try {
+    const parsed = JSON.parse(json);
+    if (!Array.isArray(parsed.transactions) || !Array.isArray(parsed.dividends)) throw new Error();
+    state = normalizeState(parsed);
+    saveState(); render();
+    toast('Veriler içe aktarıldı');
+  } catch (e) { toast('Geçersiz yedek metni'); }
+}
+
+function loadDemoPortfolio() {
+  const now = new Date();
+  const mAgo = (m) => new Date(now.getFullYear(), now.getMonth() - m, 15).toISOString().slice(0, 10);
+  state = normalizeState({
+    fxRate: 36.85,
+    monthlyExpenses: 32000,
+    monthlyInvestTarget: 15000,
+    inflationRate: 38,
+    transactions: [
+      { id: uid(), symbol: 'SCHD', currency: 'USD', shares: 65, price: 26.40, date: mAgo(14), fromDiv: false },
+      { id: uid(), symbol: 'SCHD', currency: 'USD', shares: 4.5, price: 27.80, date: mAgo(3), fromDiv: true },
+      { id: uid(), symbol: 'JEPI', currency: 'USD', shares: 35, price: 55.20, date: mAgo(11), fromDiv: false },
+      { id: uid(), symbol: 'JEPI', currency: 'USD', shares: 2.2, price: 57.10, date: mAgo(2), fromDiv: true },
+      { id: uid(), symbol: 'TUPRS', currency: 'TRY', shares: 240, price: 142.00, date: mAgo(12), fromDiv: false },
+      { id: uid(), symbol: 'TUPRS', currency: 'TRY', shares: 18, price: 154.00, date: mAgo(1), fromDiv: true },
+      { id: uid(), symbol: 'FROTO', currency: 'TRY', shares: 45, price: 910.00, date: mAgo(10), fromDiv: false }
+    ],
+    dividends: [
+      { id: uid(), symbol: 'SCHD', currency: 'USD', amount: 16.40, date: mAgo(12) },
+      { id: uid(), symbol: 'SCHD', currency: 'USD', amount: 17.80, date: mAgo(9) },
+      { id: uid(), symbol: 'SCHD', currency: 'USD', amount: 18.50, date: mAgo(6) },
+      { id: uid(), symbol: 'SCHD', currency: 'USD', amount: 19.90, date: mAgo(3) },
+      { id: uid(), symbol: 'JEPI', currency: 'USD', amount: 13.20, date: mAgo(8) },
+      { id: uid(), symbol: 'JEPI', currency: 'USD', amount: 14.10, date: mAgo(5) },
+      { id: uid(), symbol: 'JEPI', currency: 'USD', amount: 14.80, date: mAgo(2) },
+      { id: uid(), symbol: 'JEPI', currency: 'USD', amount: 15.10, date: mAgo(1) },
+      { id: uid(), symbol: 'TUPRS', currency: 'TRY', amount: 2480.00, date: mAgo(7) },
+      { id: uid(), symbol: 'TUPRS', currency: 'TRY', amount: 2890.00, date: mAgo(1) },
+      { id: uid(), symbol: 'FROTO', currency: 'TRY', amount: 1950.00, date: mAgo(6) },
+      { id: uid(), symbol: 'FROTO', currency: 'TRY', amount: 2210.00, date: mAgo(0) }
+    ],
+    prices: { SCHD: 28.90, JEPI: 58.40, TUPRS: 168.50, FROTO: 1045.00 },
+    priceUpdatedAt: { SCHD: now.toISOString(), JEPI: now.toISOString(), TUPRS: now.toISOString(), FROTO: now.toISOString() },
+    paymentFrequency: { SCHD: 4, JEPI: 12, TUPRS: 2, FROTO: 2 },
+    targetWeights: { TRY: { TUPRS: 55, FROTO: 45 }, USD: { SCHD: 55, JEPI: 45 } },
+    accounts: [
+      { id: 'acc-bes', name: 'BES Emeklilik', currency: 'TRY' },
+      { id: 'acc-ppf', name: 'Para Piyasası Fonu', currency: 'TRY' }
+    ],
+    accountSnapshots: [
+      { id: uid(), accountId: 'acc-bes', date: mAgo(2), balance: 112000 },
+      { id: uid(), accountId: 'acc-bes', date: todayStr(), balance: 124500 },
+      { id: uid(), accountId: 'acc-ppf', date: todayStr(), balance: 48000 }
+    ],
+    netWorthHistory: [
+      { id: uid(), date: mAgo(3), accounts: 145000, total: 145000 },
+      { id: uid(), date: mAgo(2), accounts: 154000, total: 154000 },
+      { id: uid(), date: mAgo(1), accounts: 163500, total: 163500 },
+      { id: uid(), date: todayStr(), accounts: 172500, total: 172500 }
+    ]
+  });
+  saveState(); render();
+  toast('Örnek portföy yüklendi');
+}
+
+function clearAllData() {
+  state = normalizeState({});
+  saveState(); render();
+  toast('Tüm veriler sıfırlandı');
+}
+
+/* ---- NAVİGASYON ---- */
+function switchView(name) {
+  document.querySelectorAll('.tabview').forEach(el => el.classList.toggle('active', el.id === 'tab-' + name));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.toggle('active', el.dataset.view === name));
+  const titles = { ozet: 'Portföy Özeti', pozisyonlar: 'Portföyüm', ekle: 'Yeni Kayıt', araclar: 'Planlama', varliklar: 'Varlık & Geçmiş' };
+  const pt = document.getElementById('pageTitle');
+  if (pt) pt.textContent = titles[name] || 'Portföy Özeti';
+  if (name === 'araclar') {
+    if (!window.__assistCurSet) {
+      window.__assistCurSet = true;
+      const usdN = lastHoldings.filter(h => h.shares > 0 && h.currency === 'USD').length;
+      const tryN = lastHoldings.filter(h => h.shares > 0 && h.currency === 'TRY').length;
+      document.getElementById('assist-cur').value = usdN > tryN ? 'USD' : 'TRY';
+    }
+    renderInvestPlan(); renderWeightInputs(); computeRebalancePlan(); computeGoalPlan();
+    if (!simDefaultsSet) {
+      simDefaultsSet = true;
+      if (window.__lastCombinedVal) document.getElementById('sim-start').value = window.__lastCombinedVal.toFixed(0);
+      const fwd = computePortfolioForwardYield();
+      if (fwd !== null) document.getElementById('sim-yield').value = fwd.toFixed(1);
+      else if (window.__lastCombinedYield) document.getElementById('sim-yield').value = window.__lastCombinedYield.toFixed(1);
+      computeSimulation();
+    }
+  }
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+function switchVarlikSub(sub) {
+  document.getElementById('subTab-accounts').classList.toggle('active', sub === 'accounts');
+  document.getElementById('subTab-history').classList.toggle('active', sub === 'history');
+  document.getElementById('varlik-accounts-pane').style.display = sub === 'accounts' ? 'block' : 'none';
+  document.getElementById('varlik-history-pane').style.display = sub === 'history' ? 'block' : 'none';
+}
+
+function switchTab(t) {
+  if (editing && editing.tab !== t) { editing = null; clearForms(); updateEditUI(); }
+  document.querySelectorAll('.seg-tab[data-tab]').forEach(el => el.classList.toggle('active', el.dataset.tab === t));
+  document.getElementById('buyForm').style.display = t === 'buy' ? 'block' : 'none';
+  document.getElementById('sellForm').style.display = t === 'sell' ? 'block' : 'none';
+  document.getElementById('divForm').style.display = t === 'div' ? 'block' : 'none';
+}
+
+function clearForms() {
+  ['b-sym', 'b-shares', 'b-price', 's-sym', 's-shares', 's-price', 'd-sym', 'd-amount'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const fd = document.getElementById('b-fromdiv'); if (fd) fd.checked = false;
+  resetDates();
+}
+
+function updateEditUI() {
+  const banner = document.getElementById('editBanner');
+  const defaults = { buy: ['btn-buy', 'Alımı Kaydet'], sell: ['btn-sell', 'Satışı Kaydet'], div: ['btn-div', 'Temettüyü Kaydet'] };
+  Object.keys(defaults).forEach(k => {
+    const b = document.getElementById(defaults[k][0]);
+    if (b) b.textContent = (editing && editing.tab === k) ? 'Değişikliği Kaydet' : defaults[k][1];
+  });
+  if (banner) banner.style.display = editing ? 'flex' : 'none';
+}
+
+function cancelEdit() { editing = null; clearForms(); updateEditUI(); }
+
+function startEdit(kind, id) {
+  if (kind === 'tx') {
+    const t = state.transactions.find(x => x.id === id); if (!t) return;
+    const tab = t.type === 'sell' ? 'sell' : 'buy';
+    switchView('ekle'); switchTab(tab);
+    if (tab === 'buy') {
+      document.getElementById('b-sym').value = t.symbol; document.getElementById('b-cur').value = t.currency;
+      document.getElementById('b-shares').value = t.shares; document.getElementById('b-price').value = t.price;
+      document.getElementById('b-date').value = t.date; document.getElementById('b-fromdiv').checked = !!t.fromDiv;
+    } else {
+      document.getElementById('s-sym').value = t.symbol; document.getElementById('s-cur').value = t.currency;
+      document.getElementById('s-shares').value = t.shares; document.getElementById('s-price').value = t.price;
+      document.getElementById('s-date').value = t.date;
+    }
+    editing = { kind: 'tx', id, tab };
+  } else {
+    const d = state.dividends.find(x => x.id === id); if (!d) return;
+    switchView('ekle'); switchTab('div');
+    document.getElementById('d-sym').value = d.symbol; document.getElementById('d-cur').value = d.currency;
+    document.getElementById('d-amount').value = d.amount; document.getElementById('d-date').value = d.date;
+    editing = { kind: 'div', id, tab: 'div' };
+  }
+  updateEditUI();
+}
+
+function quickRepeat(symbol) {
+  const lastTx = [...state.transactions].filter(t => t.symbol === symbol && t.type !== 'sell').sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+  if (!lastTx) return;
+  cancelEdit(); switchView('ekle'); switchTab('buy');
+  document.getElementById('b-sym').value = symbol;
+  document.getElementById('b-cur').value = lastTx.currency;
+  document.getElementById('b-price').value = state.prices[symbol] || lastTx.price;
+  document.getElementById('b-date').value = todayStr();
+  document.getElementById('b-shares').value = '';
+  document.getElementById('b-fromdiv').checked = false;
+}
+
+function knownCurrencyFor(sym) {
+  sym = sym.trim().toUpperCase();
+  if (!sym) return null;
+  const tx = state.transactions.find(t => t.symbol === sym);
+  if (tx) return tx.currency;
+  const dv = state.dividends.find(d => d.symbol === sym);
+  return dv ? dv.currency : null;
+}
+
+function autoFillCurrency(prefix) {
+  const sym = document.getElementById(prefix + '-sym').value;
+  const cur = knownCurrencyFor(sym);
+  if (cur) document.getElementById(prefix + '-cur').value = cur;
+}
+
+function submitBuy() {
+  const sym = document.getElementById('b-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('b-cur').value;
+  const shares = parseFloat(document.getElementById('b-shares').value);
+  const price = parseFloat(document.getElementById('b-price').value);
+  const date = document.getElementById('b-date').value || todayStr();
+  const fromDiv = document.getElementById('b-fromdiv').checked;
+  if (!sym || !shares || !price) { toast('Sembol, adet ve fiyat gerekli'); return; }
+  const isEdit = !!(editing && editing.kind === 'tx' && editing.tab === 'buy');
+  const tx = { id: isEdit ? editing.id : uid(), symbol: sym, currency: cur, shares, price, date, fromDiv };
+  const idx = isEdit ? state.transactions.findIndex(t => t.id === editing.id) : -1;
+  if (idx >= 0) state.transactions[idx] = tx; else state.transactions.push(tx);
+  editing = null; clearForms(); updateEditUI();
+  saveState(); render();
+  toast(isEdit ? 'Alım güncellendi' : 'Alım kaydedildi');
+}
+
+function submitSell() {
+  const sym = document.getElementById('s-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('s-cur').value;
+  const shares = parseFloat(document.getElementById('s-shares').value);
+  const price = parseFloat(document.getElementById('s-price').value);
+  const date = document.getElementById('s-date').value || todayStr();
+  if (!sym || !shares || !price) { toast('Sembol, adet ve fiyat gerekli'); return; }
+  const isEdit = !!(editing && editing.kind === 'tx' && editing.tab === 'sell');
+  const tx = { id: isEdit ? editing.id : uid(), symbol: sym, currency: cur, shares, price, date, type: 'sell' };
+  const idx = isEdit ? state.transactions.findIndex(t => t.id === editing.id) : -1;
+  if (idx >= 0) state.transactions[idx] = tx; else state.transactions.push(tx);
+  editing = null; clearForms(); updateEditUI();
+  saveState(); render();
+  toast(isEdit ? 'Satış güncellendi' : 'Satış kaydedildi');
+}
+
+function submitDiv() {
+  const sym = document.getElementById('d-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('d-cur').value;
+  const amount = parseFloat(document.getElementById('d-amount').value);
+  const date = document.getElementById('d-date').value || todayStr();
+  if (!sym || !amount) { toast('Sembol ve tutar gerekli'); return; }
+  const isEdit = !!(editing && editing.kind === 'div');
+  const entry = { id: isEdit ? editing.id : uid(), symbol: sym, currency: cur, amount, date };
+  const idx = isEdit ? state.dividends.findIndex(d => d.id === editing.id) : -1;
+  if (idx >= 0) state.dividends[idx] = entry; else state.dividends.push(entry);
+  editing = null; clearForms(); updateEditUI();
+  saveState(); render();
+  toast(isEdit ? 'Temettü güncellendi' : 'Temettü kaydedildi');
+}
+
+function deleteEntry(kind, id, label) {
+  if (kind === 'tx') state.transactions = state.transactions.filter(t => t.id !== id);
+  else state.dividends = state.dividends.filter(d => d.id !== id);
+  saveState(); render();
+  toast(`${label} silindi`);
+}
+
+function updatePrice(sym, val) {
+  const p = parseFloat(val);
+  if (!isNaN(p)) {
+    state.prices[sym] = p;
+    if (!state.priceUpdatedAt) state.priceUpdatedAt = {};
+    state.priceUpdatedAt[sym] = new Date().toISOString();
+  }
+  saveState(); render();
+}
+
+function getPriceStaleDays(sym) {
+  if (!state.priceUpdatedAt || !state.priceUpdatedAt[sym]) return null;
+  return (Date.now() - new Date(state.priceUpdatedAt[sym]).getTime()) / (24 * 3600 * 1000);
+}
+
+/* ---- FİNANSAL HESAPLAMALAR ---- */
+function computeYoyGrowth(currency) {
+  const now = new Date(); const cur12 = new Date(now); cur12.setFullYear(cur12.getFullYear() - 1);
+  const prev12 = new Date(now); prev12.setFullYear(prev12.getFullYear() - 2);
+  let curSum = 0, prevSum = 0;
+  state.dividends.forEach(d => {
+    if (d.currency !== currency) return; const dt = new Date(d.date);
+    if (dt >= cur12 && dt <= now) curSum += d.amount; else if (dt >= prev12 && dt < cur12) prevSum += d.amount;
+  });
+  return prevSum <= 0 ? null : (curSum - prevSum) / prevSum * 100;
+}
+
+function computeSymbolYoyGrowth(symbol) {
+  const now = new Date(); const cur12 = new Date(now); cur12.setFullYear(cur12.getFullYear() - 1);
+  const prev12 = new Date(now); prev12.setFullYear(prev12.getFullYear() - 2);
+  let curSum = 0, prevSum = 0;
+  state.dividends.forEach(d => {
+    if (d.symbol !== symbol) return; const dt = new Date(d.date);
+    if (dt >= cur12 && dt <= now) curSum += d.amount; else if (dt >= prev12 && dt < cur12) prevSum += d.amount;
+  });
+  return prevSum <= 0 ? null : (curSum - prevSum) / prevSum * 100;
+}
+
+function computeCombinedYoyGrowthTRY() {
+  const now = new Date(); const cur12 = new Date(now); cur12.setFullYear(cur12.getFullYear() - 1);
+  const prev12 = new Date(now); prev12.setFullYear(prev12.getFullYear() - 2);
+  let curTRY = 0, curUSD = 0, prevTRY = 0, prevUSD = 0;
+  state.dividends.forEach(d => {
+    const dt = new Date(d.date);
+    if (dt >= cur12 && dt <= now) { if (d.currency === 'TRY') curTRY += d.amount; else curUSD += d.amount; }
+    else if (dt >= prev12 && dt < cur12) { if (d.currency === 'TRY') prevTRY += d.amount; else prevUSD += d.amount; }
+  });
+  if ((curUSD > 0 || prevUSD > 0) && !state.fxRate) return null;
+  const cur = curTRY + (state.fxRate ? curUSD * state.fxRate : 0);
+  const prev = prevTRY + (state.fxRate ? prevUSD * state.fxRate : 0);
+  return prev <= 0 ? null : (cur - prev) / prev * 100;
+}
+
+function computeSharesAtDate(symbol, dateMs) {
+  return state.transactions
+    .filter(t => t.symbol === symbol && new Date(t.date).getTime() <= dateMs)
+    .reduce((s, t) => s + (t.type === 'sell' ? -t.shares : t.shares), 0);
+}
+
+function computePerShareGrowthRate(symbol) {
+  const divs = state.dividends.filter(d => d.symbol === symbol).sort((a, b) => new Date(a.date) - new Date(b.date));
+  if (divs.length < 2) return null;
+  const series = divs.map(d => {
+    const dt = new Date(d.date);
+    const sharesAt = computeSharesAtDate(symbol, dt.getTime());
+    return sharesAt > 0 ? { date: dt, perShare: d.amount / sharesAt } : null;
+  }).filter(Boolean);
+  if (series.length < 2) return null;
+  const first = series[0], last = series[series.length - 1];
+  const yearsSpan = (last.date - first.date) / (365.25 * 24 * 3600 * 1000);
+  if (yearsSpan < 0.4 || first.perShare <= 0) return null;
+  let rate = Math.pow(last.perShare / first.perShare, 1 / yearsSpan) - 1;
+  rate = Math.max(-0.5, Math.min(rate, 0.5));
+  return { rate, dataPoints: series.length, yearsSpan };
+}
+
+function computeForwardYield(h) {
+  if (h.divYieldTTM === null) return null;
+  const g = computePerShareGrowthRate(h.symbol);
+  if (!g) return { forwardYield: h.divYieldTTM, hasTrend: false };
+  return { forwardYield: Math.max(0, h.divYieldTTM * (1 + g.rate)), hasTrend: true, growthPct: g.rate * 100, dataPoints: g.dataPoints };
+}
+
+function computePortfolioForwardYield() {
+  const priced = lastHoldings.filter(h => h.marketValue && h.divYieldTTM !== null);
+  if (!priced.length) return null;
+  const totalVal = priced.reduce((s, h) => s + h.marketValue, 0);
+  if (totalVal <= 0) return null;
+  let weighted = 0;
+  priced.forEach(h => {
+    const fwd = computeForwardYield(h);
+    weighted += (h.marketValue / totalVal) * (fwd ? fwd.forwardYield : h.divYieldTTM);
+  });
+  return weighted;
+}
+
+function xirr(cashflows) {
+  if (cashflows.length < 2) return null;
+  const sorted = [...cashflows].sort((a, b) => a.date - b.date);
+  const d0 = sorted[0].date;
+  const yearsFrac = d => (d - d0) / (365.25 * 24 * 3600 * 1000);
+  const npv = rate => sorted.reduce((s, cf) => s + cf.amount / Math.pow(1 + rate, yearsFrac(cf.date)), 0);
+  let lo = -0.999, hi = 10;
+  let fLo = npv(lo), fHi = npv(hi);
+  if (fLo * fHi > 0) { hi = 50; fHi = npv(hi); if (fLo * fHi > 0) return null; }
+  for (let i = 0; i < 200; i++) {
+    const mid = (lo + hi) / 2;
+    const fMid = npv(mid);
+    if (Math.abs(fMid) < 0.0001) return mid;
+    if ((fLo < 0) === (fMid < 0)) { lo = mid; fLo = fMid; } else { hi = mid; fHi = fMid; }
+  }
+  return (lo + hi) / 2;
+}
+
+function computeXirrForCurrency(cur, holdings) {
+  const hs = holdings.filter(h => h.currency === cur);
+  if (!hs.length || !hs.every(h => h.shares <= 0 || h.currentPrice)) return null;
+  const cashflows = [];
+  state.transactions.forEach(t => {
+    if (t.currency !== cur) return;
+    if (t.type === 'sell') cashflows.push({ date: new Date(t.date), amount: t.shares * t.price });
+    else if (!t.fromDiv) cashflows.push({ date: new Date(t.date), amount: -(t.shares * t.price) });
+  });
+  state.dividends.forEach(d => { if (d.currency === cur) cashflows.push({ date: new Date(d.date), amount: d.amount }); });
+  if (cashflows.length < 2) return null;
+  const sorted = [...cashflows].sort((a, b) => a.date - b.date);
+  if ((Date.now() - sorted[0].date.getTime()) / (24 * 3600 * 1000) < 365) return null;
+  cashflows.push({ date: new Date(), amount: hs.reduce((s, h) => s + (h.marketValue || 0), 0) });
+  const rate = xirr(cashflows);
+  return rate !== null ? rate * 100 : null;
+}
+
+function getPaymentFrequency(symbol) {
+  return (state.paymentFrequency && state.paymentFrequency[symbol]) ? state.paymentFrequency[symbol] : null;
+}
+function setPaymentFrequency(symbol, val) {
+  const f = parseInt(val);
+  if (!state.paymentFrequency) state.paymentFrequency = {};
+  if (isNaN(f) || f <= 0) delete state.paymentFrequency[symbol];
+  else state.paymentFrequency[symbol] = f;
+  saveState(); render();
+}
+
+function getNextExpectedDate(symbol) {
+  const divs = state.dividends.filter(d => d.symbol === symbol).map(d => new Date(d.date)).sort((a, b) => a - b);
+  if (!divs.length) return null;
+  const freq = getPaymentFrequency(symbol);
+  let gapMs;
+  if (freq) gapMs = (365.25 * 24 * 3600 * 1000) / freq;
+  else {
+    if (divs.length < 2) return null;
+    let totalGap = 0; for (let i = 1; i < divs.length; i++) totalGap += (divs[i] - divs[i - 1]);
+    gapMs = totalGap / (divs.length - 1);
+  }
+  return new Date(divs[divs.length - 1].getTime() + gapMs);
+}
+
+function computeTTM12CombinedTRY() {
+  const now = new Date(); const cutoff = new Date(now); cutoff.setFullYear(cutoff.getFullYear() - 1);
+  let tryish = 0, usdish = 0;
+  state.dividends.forEach(d => {
+    const dt = new Date(d.date);
+    if (dt >= cutoff && dt <= now) { if (d.currency === 'TRY') tryish += d.amount; else usdish += d.amount; }
+  });
+  return { total: tryish + (state.fxRate ? usdish * state.fxRate : 0), missingRate: usdish > 0 && !state.fxRate };
+}
+
+function computeHoldings() {
+  const symbols = [...new Set([...state.transactions.map(t => t.symbol), ...state.dividends.map(d => d.symbol)])];
+  const now = new Date();
+  const ttmCutoff = new Date(now); ttmCutoff.setFullYear(ttmCutoff.getFullYear() - 1);
+
+  return symbols.map(symbol => {
+    const txEvents = state.transactions.filter(t => t.symbol === symbol).map(t => ({ ...t, kind: 'tx' }));
+    const divEvents = state.dividends.filter(d => d.symbol === symbol).map(d => ({ ...d, kind: 'div' }));
+    const events = [...txEvents, ...divEvents].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const currency = events.length ? events[0].currency : 'TRY';
+
+    let shares = 0, costBasis = 0, dividends = 0, ttmDividends = 0, divFundedShares = 0, realizedGain = 0, firstBuyDate = null;
+    events.forEach(e => {
+      if (e.kind === 'tx') {
+        if (e.type === 'sell') {
+          const avgCostNow = shares > 0 ? costBasis / shares : 0;
+          const sellShares = Math.min(e.shares, shares);
+          realizedGain += (e.price - avgCostNow) * sellShares;
+          shares -= sellShares;
+          costBasis -= avgCostNow * sellShares;
+        } else {
+          if (!firstBuyDate || new Date(e.date) < firstBuyDate) firstBuyDate = new Date(e.date);
+          shares += e.shares;
+          if (e.fromDiv) divFundedShares += e.shares;
+          else costBasis += e.shares * e.price;
+        }
+      } else {
+        dividends += e.amount;
+        if (new Date(e.date) >= ttmCutoff) ttmDividends += e.amount;
+      }
+    });
+    if (costBasis < 0.01) costBasis = 0;
+    if (shares < 0.0001) shares = 0;
+
+    const avgCost = shares > 0 ? costBasis / shares : null;
+    const currentPrice = state.prices[symbol];
+    const marketValue = currentPrice ? shares * currentPrice : null;
+    const totalReturnAmount = marketValue !== null ? (marketValue - costBasis + dividends + realizedGain) : null;
+    const totalReturnPct = (totalReturnAmount !== null && costBasis > 0) ? (totalReturnAmount / costBasis * 100) : null;
+
+    const freq = getPaymentFrequency(symbol);
+    let annualDividendPerShare = null;
+    if (freq && shares > 0) {
+      const divsForSym = state.dividends.filter(d => d.symbol === symbol).sort((a, b) => new Date(a.date) - new Date(b.date));
+      if (divsForSym.length) {
+        const last = divsForSym[divsForSym.length - 1];
+        const sharesAtLast = computeSharesAtDate(symbol, new Date(last.date).getTime());
+        if (sharesAtLast > 0) annualDividendPerShare = (last.amount / sharesAtLast) * freq;
+      }
+    }
+    const usesFrequencyEstimate = annualDividendPerShare !== null;
+    const divYieldTTM = usesFrequencyEstimate && currentPrice
+      ? (annualDividendPerShare / currentPrice * 100)
+      : ((currentPrice && ttmDividends && marketValue) ? (ttmDividends / marketValue * 100) : null);
+    const yieldOnCost = usesFrequencyEstimate && avgCost
+      ? (annualDividendPerShare / avgCost * 100)
+      : ((ttmDividends && costBasis > 0) ? (ttmDividends / costBasis * 100) : null);
+
+    return {
+      symbol, currency, shares, costBasis, dividends, ttmDividends, divFundedShares, realizedGain, firstBuyDate,
+      avgCost, currentPrice, marketValue, totalReturnAmount, totalReturnPct, divYieldTTM, yieldOnCost, usesFrequencyEstimate
+    };
+  }).filter(h => h.shares > 0 || h.dividends > 0 || h.realizedGain !== 0)
+    .sort((a, b) => (b.marketValue || 0) - (a.marketValue || 0));
+}
+
+function estimateDividendProfile(symbol) {
+  const divs = state.dividends.filter(d => d.symbol === symbol).sort((a, b) => new Date(a.date) - new Date(b.date));
+  if (!divs.length) return null;
+  const last = divs[divs.length - 1];
+  const sharesAtLast = computeSharesAtDate(symbol, new Date(last.date).getTime());
+  if (sharesAtLast <= 0) return null;
+  const perShareLast = last.amount / sharesAtLast;
+  let freq = getPaymentFrequency(symbol);
+  const explicit = !!freq;
+  if (!freq) {
+    if (divs.length < 2) return null;
+    let gap = 0;
+    for (let i = 1; i < divs.length; i++) gap += new Date(divs[i].date) - new Date(divs[i - 1].date);
+    const avgDays = gap / (divs.length - 1) / (24 * 3600 * 1000);
+    if (!(avgDays > 0)) return null;
+    freq = Math.min(12, Math.max(1, Math.round(365.25 / avgDays)));
+  }
+  return { perShareLast, freq, explicit, perShareAnnual: perShareLast * freq };
+}
+
+function fmtFutureDay(d) {
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  const dd = new Date(d); dd.setHours(0, 0, 0, 0);
+  const n = Math.round((dd - t) / (24 * 3600 * 1000));
+  const label = `${dd.getDate()} ${TR_MONTHS[dd.getMonth()]}`;
+  if (n > 1) return `${label} · ${n} gün sonra`;
+  if (n === 1) return `${label} · yarın`;
+  if (n === 0) return `${label} · bugün`;
+  return 'beklenen tarih geçti';
+}
+
+function computeForecast() {
+  const hs = lastHoldings.filter(h => h.shares > 0);
+  const rows = [], missing = [];
+  hs.forEach(h => {
+    const p = estimateDividendProfile(h.symbol);
+    if (!p) { missing.push(h.symbol); return; }
+    rows.push({
+      symbol: h.symbol, currency: h.currency, annual: p.perShareAnnual * h.shares,
+      nextAmount: p.perShareLast * h.shares, freq: p.freq, explicit: p.explicit,
+      next: getNextExpectedDate(h.symbol), marketValue: h.marketValue
+    });
+  });
+  const byCur = {};
+  rows.forEach(r => { byCur[r.currency] = (byCur[r.currency] || 0) + r.annual; });
+  const rate = state.fxRate;
+  const canCombine = !byCur.USD || !!rate;
+  const annualTRY = (byCur.TRY || 0) + (rate && byCur.USD ? byCur.USD * rate : 0);
+  let covered = 0, allPriced = true;
+  rows.forEach(r => {
+    if (r.marketValue === null || r.marketValue === undefined) { allPriced = false; return; }
+    covered += r.currency === 'USD' ? (rate ? r.marketValue * rate : 0) : r.marketValue;
+  });
+  return { hs, rows, missing, byCur, rate, canCombine, annualTRY, covered, allPriced };
+}
+
+/* ---- ÖZET EKRANI BİLEŞENLERİ ---- */
+function renderMegaCard(holdings) {
+  const container = document.getElementById('megaCard');
+  const tryH = holdings.filter(h => h.currency === 'TRY');
+  const usdH = holdings.filter(h => h.currency === 'USD');
+  const rate = state.fxRate;
+  const canCombine = tryH.every(h => h.marketValue !== null) && (!usdH.length || (usdH.every(h => h.marketValue !== null) && rate));
+
+  const fc = computeForecast();
+  const trailing = computeTTM12CombinedTRY();
+  const useForecast = fc.rows.length > 0 && fc.canCombine;
+  const monthlyIncome = useForecast ? fc.annualTRY / 12 : trailing.total / 12;
+  const incomeBasis = useForecast ? 'tahmini aylık ort.' : 'son 12 ay ort.';
+
+  if (!canCombine) {
+    container.innerHTML = `
+      <div class="mega-top">
+        <span class="mega-lbl">Toplam Portföy Değeri</span>
+        <span class="pill-badge gold">Fiyat / Kur Eksik</span>
+      </div>
+      <div class="mega-val plain" style="font-size:22px; color:var(--muted)">Değerleme Bekleniyor</div>
+      <div class="mega-usd">Sağ üstten USD/TRY kurunu ve pozisyon fiyatlarını tamamlayın.</div>
+      <div class="kpi-grid">
+        <div class="kpi hl" style="grid-column:1/-1">
+          <div class="kpi-lbl">Aylık Net Temettü Geliri</div>
+          <div class="kpi-val" style="color:var(--emerald-light)">${mFmt(monthlyIncome, 'TRY')}</div>
+          <div class="kpi-sub">${incomeBasis}</div>
+        </div>
+      </div>
+    `;
+    window.__lastCombinedVal = null;
+    window.__lastCombinedYield = null;
+    return;
+  }
+
+  const tryVal = tryH.reduce((s, h) => s + (h.marketValue || 0), 0);
+  const usdVal = usdH.reduce((s, h) => s + (h.marketValue || 0), 0);
+  const combinedVal = tryVal + (rate ? usdVal * rate : 0);
+  const combinedCost = tryH.reduce((s, h) => s + h.costBasis, 0) + (rate ? usdH.reduce((s, h) => s + h.costBasis, 0) * rate : 0);
+  const combinedDiv = tryH.reduce((s, h) => s + h.dividends, 0) + (rate ? usdH.reduce((s, h) => s + h.dividends, 0) * rate : 0);
+  const combinedTtm = tryH.reduce((s, h) => s + h.ttmDividends, 0) + (rate ? usdH.reduce((s, h) => s + h.ttmDividends, 0) * rate : 0);
+  const combinedReturn = combinedCost > 0 ? ((combinedVal - combinedCost + combinedDiv) / combinedCost * 100) : null;
+  const combinedYield = combinedVal > 0 ? (combinedTtm / combinedVal * 100) : null;
+  const usdEq = rate ? combinedVal / rate : null;
+
+  const tryXirr = computeXirrForCurrency('TRY', holdings);
+  const usdXirr = computeXirrForCurrency('USD', holdings);
+  let xirrText = '';
+  if (tryXirr !== null && usdXirr !== null) xirrText = ` · XIRR TL %${tryXirr.toFixed(1)} / $ %${usdXirr.toFixed(1)}`;
+  else if (tryXirr !== null) xirrText = ` · XIRR %${tryXirr.toFixed(1)}`;
+  else if (usdXirr !== null) xirrText = ` · XIRR ($) %${usdXirr.toFixed(1)}`;
+
+  window.__lastCombinedVal = combinedVal;
+  window.__lastCombinedYield = combinedYield;
+
+  container.innerHTML = `
+    <div class="mega-top">
+      <span class="mega-lbl">Toplam Portföy Değeri</span>
+      <span class="pill-badge emerald">${holdings.filter(h => h.shares > 0).length} Aktif Pozisyon</span>
+    </div>
+    <div class="mega-val ${privacyMode ? 'plain' : ''}">${mFmt(combinedVal, 'TRY')}</div>
+    ${usdEq !== null ? `<div class="mega-usd">≈ ${mFmt(usdEq, 'USD')}</div>` : ''}
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-lbl">Net Yatırılan Maliyet</div>
+        <div class="kpi-val">${mFmt(combinedCost, 'TRY')}</div>
+        <div class="kpi-sub">Alınan Temettü: ${mFmt(combinedDiv, 'TRY')}</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Toplam Getiri</div>
+        <div class="kpi-val ${combinedReturn >= 0 ? 'pos' : 'neg'}">${combinedReturn !== null ? pct(combinedReturn) : '—'}</div>
+        <div class="kpi-sub">Verim: ${combinedYield !== null ? '%' + combinedYield.toFixed(2) : '—'}${xirrText}</div>
+      </div>
+      <div class="kpi hl" style="grid-column:1/-1; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div class="kpi-lbl">Aylık Net Temettü Geliri</div>
+          <div class="kpi-val" style="color:var(--emerald-light)">${mFmt(monthlyIncome, 'TRY')}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="kpi-lbl">Yıllık Akış</div>
+          <div class="kpi-sub" style="font-size:12px; color:var(--text); margin-top:4px">${mFmt(monthlyIncome * 12, 'TRY')}</div>
+          <div class="kpi-sub">${incomeBasis}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSnowballCard(holdings) {
+  const el = document.getElementById('snowballCard');
+  const active = holdings.filter(h => h.shares > 0);
+  if (!active.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+
+  const rate = state.fxRate || 0;
+  let dripShares = 0, totalShares = 0, dripValTRY = 0, dripAnnualTRY = 0;
+  active.forEach(h => {
+    totalShares += h.shares;
+    dripShares += h.divFundedShares;
+    const mult = h.currency === 'USD' ? rate : 1;
+    if (h.currentPrice && h.divFundedShares > 0) {
+      dripValTRY += h.divFundedShares * h.currentPrice * mult;
+      if (h.divYieldTTM) dripAnnualTRY += (h.divFundedShares * h.currentPrice * (h.divYieldTTM / 100)) * mult;
+    }
+  });
+  const ratio = totalShares > 0 ? (dripShares / totalShares * 100) : 0;
+
+  el.innerHTML = `
+    <div class="card-head">
+      <h2 class="card-title">Kartopu Etkisi (DRIP)</h2>
+      <span class="pill-badge emerald">%${ratio.toFixed(1)} Temettü Lotu</span>
+    </div>
+    <div class="sb-grid">
+      <div class="sb-item"><div class="sb-v">${dripShares.toLocaleString('tr-TR', { maximumFractionDigits: 2 })}</div><div class="sb-l">Bedelsiz Lot</div></div>
+      <div class="sb-item"><div class="sb-v">${mFmt(dripValTRY, 'TRY')}</div><div class="sb-l">Kartopu Değeri</div></div>
+      <div class="sb-item"><div class="sb-v">${mFmt(dripAnnualTRY, 'TRY')}</div><div class="sb-l">Ek Yıllık Gelir</div></div>
+    </div>
+  `;
+}
+
+function renderFreedomCard() {
+  const container = document.getElementById('freedomCard');
+  const fc = computeForecast();
+  const trailing = computeTTM12CombinedTRY();
+  const avgMonthly = (fc.rows.length && fc.canCombine) ? fc.annualTRY / 12 : trailing.total / 12;
+  const expenses = state.monthlyExpenses;
+
+  let html = `
+    <div class="card-head">
+      <h2 class="card-title">Finansal Özgürlük Ölçeri</h2>
+      <span class="pill-badge">Aylık Gelir: ${mFmt(avgMonthly, 'TRY')}</span>
+    </div>
+    <div class="field"><label>Aylık Yaşam Giderin (TL)</label><input type="number" step="any" value="${expenses || ''}" placeholder="Örn. 30000" onchange="setMonthlyExpenses(this.value)"></div>
+  `;
+
+  if (!expenses) {
+    html += `<div class="hint" style="margin-top:8px">Aylık temettü gelirin: <b style="color:var(--emerald-light)">${mFmt(avgMonthly, 'TRY')}</b>. Özgürlük aşamalarını takip etmek için aylık giderini gir.</div>`;
+  } else {
+    const cov = (avgMonthly / expenses) * 100;
+    const milestones = [
+      { label: 'Kahve & Keyif (%5)', target: expenses * 0.05 },
+      { label: 'Faturalar (%20)', target: expenses * 0.20 },
+      { label: 'Kira / Konut (%50)', target: expenses * 0.50 },
+      { label: 'Tam Özgürlük (%100)', target: expenses }
+    ];
+    html += `
+      <div class="prog-track"><div class="prog-fill" style="width:${Math.min(cov, 100)}%"></div></div>
+      <div style="display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:6px;">
+        <span>${mFmt(avgMonthly, 'TRY')} / ${mFmt(expenses, 'TRY')}</span>
+        <b style="color:var(--emerald-light)">%${cov.toFixed(1)}</b>
+      </div>
+      <div class="ms-grid">${milestones.map(m => {
+        const p = m.target > 0 ? Math.min(100, (avgMonthly / m.target) * 100) : 0;
+        return `<div class="ms-box ${p >= 100 ? 'done' : ''}">
+          <div class="ms-top"><span>${m.label}</span><span>${p >= 100 ? '✓' : '%' + p.toFixed(0)}</span></div>
+          <div class="prog-track" style="height:4px; margin-top:6px"><div class="prog-fill" style="width:${p}%"></div></div>
+        </div>`;
+      }).join('')}</div>
+    `;
+  }
+  container.innerHTML = html;
+}
+
+function renderForecastCard() {
+  const el = document.getElementById('forecastCard');
+  const fc = computeForecast();
+  if (!fc.hs.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+
+  let html = `<div class="card-head"><h2 class="card-title">Önümüzdeki 12 Ay Tahmini Temettü</h2><span class="pill-badge emerald">Projeksiyon</span></div>`;
+  if (!fc.rows.length) {
+    html += `<div class="no-data">Tahmin için en az 2 temettü ödemesi veya Portföy sekmesinde "Ödeme/Yıl" bilgisi gerekir.</div>`;
+    el.innerHTML = html; return;
+  }
+
+  if (fc.canCombine) {
+    html += `<div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+      <div>
+        <div class="kpi-lbl">12 Aylık Toplam Tahmin</div>
+        <div style="font-family:var(--disp); font-size:26px; font-weight:700; color:var(--emerald-light)">${mFmt(fc.annualTRY, 'TRY')}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="kpi-lbl">Aylık Ortalama</div>
+        <div style="font-family:var(--mono); font-size:13px; color:var(--text)">${mFmt(fc.annualTRY / 12, 'TRY')}</div>
+      </div>
+    </div>`;
+  } else {
+    html += `<div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">` +
+      Object.keys(fc.byCur).map(c => `<div class="chip">${c}: <b>${mFmt(fc.byCur[c], c)}</b> / yıl</div>`).join('') + `</div>`;
+  }
+
+  const rows = [...fc.rows].sort((a, b) => (a.next ? a.next.getTime() : Infinity) - (b.next ? b.next.getTime() : Infinity));
+  html += rows.map(r => `
+    <div class="list-row">
+      <div>
+        <b style="font-family:var(--mono)">${r.symbol}</b>
+        <div class="row-sub">${r.next ? fmtFutureDay(r.next) : '—'} · yılda ${r.freq} ödeme</div>
+      </div>
+      <div style="text-align:right; font-family:var(--mono)">
+        <b style="color:var(--emerald-light)">~${mFmt(r.nextAmount, r.currency)}</b>
+        <div class="row-sub">yıllık ${mFmt(r.annual, r.currency)}</div>
+      </div>
+    </div>
+  `).join('');
+  el.innerHTML = html;
+}
+
+function renderMonthlyChart() {
+  const container = document.getElementById('monthlyChartCard');
+  const now = new Date();
+  const months = [];
+  for (let i = 11; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({ key: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'), label: TR_MONTHS[d.getMonth()] });
+  }
+  const byCurrency = {};
+  state.dividends.forEach(dv => {
+    const dt = new Date(dv.date);
+    const key = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0');
+    if (!byCurrency[dv.currency]) byCurrency[dv.currency] = {};
+    byCurrency[dv.currency][key] = (byCurrency[dv.currency][key] || 0) + dv.amount;
+  });
+  const currencies = Object.keys(byCurrency);
+  if (!currencies.length) {
+    container.innerHTML = '<div class="card-head"><h2 class="card-title">Son 12 Ay Aylık Temettü</h2></div><div class="no-data">Henüz temettü kaydı yok.</div>';
+    return;
+  }
+  const w = 340, h = 116, padBottom = 20, gap = 5;
+  let html = '<div class="card-head"><h2 class="card-title">Son 12 Ay Aylık Temettü</h2></div>';
+  currencies.forEach(cur => {
+    const vals = months.map(m => byCurrency[cur][m.key] || 0);
+    const max = Math.max(...vals, 0.0001);
+    const color = cur === 'USD' ? '#60A5FA' : '#34D399';
+    const tipId = 'mTip_' + cur;
+    const bw = (w - (months.length - 1) * gap) / months.length;
+    let bars = '';
+    months.forEach((m, i) => {
+      const val = vals[i];
+      const bh = Math.max((val / max) * (h - padBottom - 8), val > 0 ? 4 : 0);
+      const x = i * (bw + gap), y = h - padBottom - bh;
+      const tipText = (m.label + ': ' + (privacyMode ? '••••' : fmt(val, cur))).replace(/'/g, '');
+      bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(bh, 4).toFixed(1)}" rx="3" fill="${color}" opacity="${val > 0 ? 0.92 : 0.12}" onclick="document.getElementById('${tipId}').textContent='${tipText}'"/>`;
+      bars += `<text x="${(x + bw / 2).toFixed(1)}" y="${h - 5}" font-size="8" fill="#848C9E" text-anchor="middle" font-family="JetBrains Mono, monospace">${m.label}</text>`;
+    });
+    const yoy = computeYoyGrowth(cur);
+    const yoyBadge = yoy !== null ? `<span class="pill-badge ${yoy >= 0 ? 'emerald' : ''}" style="margin-left:6px; ${yoy < 0 ? 'color:var(--neg)' : ''}">${pct(yoy)} YoY</span>` : '';
+    html += `<div style="font-family:var(--mono); font-size:10.5px; color:var(--muted); margin:10px 0 6px;">${cur}${yoyBadge}</div>
+      <svg viewBox="0 0 ${w} ${h}" class="bar-chart">${bars}</svg>
+      <div class="chart-tip" id="${tipId}">Bir çubuğa dokun</div>`;
+  });
+  container.innerHTML = html;
+}
+
+/* ---- 12 AYLIK ÖDEME YOĞUNLUĞU ISI HARİTASI ---- */
+function renderHeatmapCard() {
+  const el = document.getElementById('heatmapCard');
+  const fc = computeForecast();
+  if (!fc.rows.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+
+  const rate = state.fxRate || 36;
+  const monthSums = Array(12).fill(0);
+  const monthSyms = Array.from({ length: 12 }, () => []);
+
+  fc.rows.forEach(r => {
+    const stepMonths = Math.max(1, Math.round(12 / r.freq));
+    const startM = r.next ? r.next.getMonth() : 0;
+    const perPayTRY = r.nextAmount * (r.currency === 'USD' ? rate : 1);
+    for (let k = 0; k < r.freq; k++) {
+      const mIdx = (startM + k * stepMonths) % 12;
+      monthSums[mIdx] += perPayTRY;
+      if (!monthSyms[mIdx].includes(r.symbol)) monthSyms[mIdx].push(r.symbol);
+    }
+  });
+
+  const maxM = Math.max(...monthSums, 1);
+  let cells = '';
+  for (let mIdx = 0; mIdx < 12; mIdx++) {
+    const val = monthSums[mIdx];
+    const ratio = val / maxM;
+    const cls = val <= 0 ? '' : (ratio > 0.65 ? 'high' : (ratio > 0.25 ? 'mid' : 'low'));
+    const syms = monthSyms[mIdx].join(', ');
+    const valTxt = privacyMode ? '••••' : (val > 0 ? Math.round(val).toLocaleString('tr-TR') + '₺' : '—');
+    const tip = `${TR_MONTHS[mIdx]}: ~${privacyMode ? '••••' : fmt(val, 'TRY')} (${syms || 'Ödeme yok'})`.replace(/'/g, '');
+    cells += `<div class="heat-cell ${cls}" onclick="document.getElementById('heatTip').textContent='${tip}'">
+      <div class="heat-m">${TR_MONTHS[mIdx]}</div>
+      <div class="heat-v">${valTxt}</div>
+      <div class="heat-s">${syms || '·'}</div>
+    </div>`;
+  }
+
+  el.innerHTML = `
+    <div class="card-head">
+      <h2 class="card-title">Ödeme Yoğunluğu Isı Haritası</h2>
+      <span class="pill-badge">Oca – Ara</span>
+    </div>
+    <div class="heat-grid">${cells}</div>
+    <div class="chart-tip" id="heatTip">Detay için bir aya dokun</div>
+  `;
+}
+
+function renderPieChart(holdings) {
+  const container = document.getElementById('pieChartCard');
+  const currencies = [...new Set(holdings.map(h => h.currency))];
+  if (!currencies.length) {
+    container.innerHTML = '<div class="card-head"><h2 class="card-title">Portföy Dağılımı</h2></div><div class="no-data">Henüz pozisyon yok.</div>';
+    return;
+  }
+  let html = '<div class="card-head"><h2 class="card-title">Portföy Dağılımı</h2></div>';
+  currencies.forEach(cur => {
+    const hs = holdings.filter(h => h.currency === cur && h.marketValue);
+    const total = hs.reduce((s, h) => s + h.marketValue, 0);
+    const tipId = 'pieTip_' + cur;
+    if (!hs.length || total <= 0) return;
+    const r = 46, cx = 58, cy = 58, circ = 2 * Math.PI * r;
+    let offset = 0, circles = '', legend = '';
+    hs.forEach((h, i) => {
+      const frac = h.marketValue / total;
+      const dash = frac * circ;
+      const color = PALETTE[i % PALETTE.length];
+      const tipText = (h.symbol + ': %' + (frac * 100).toFixed(1) + ' · ' + (privacyMode ? '••••' : fmt(h.marketValue, cur))).replace(/'/g, '');
+      const click = `onclick="document.getElementById('${tipId}').textContent='${tipText}'"`;
+      circles += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="14" stroke-dasharray="${dash.toFixed(2)} ${(circ - dash).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})" ${click}/>`;
+      offset += dash;
+      legend += `<div class="legend-item" ${click}><span class="legend-dot" style="background:${color}"></span>${h.symbol} <b>%${(frac * 100).toFixed(0)}</b></div>`;
+    });
+    html += `<div style="font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:8px;">${cur}</div>
+      <div class="pie-row">
+        <svg viewBox="0 0 116 116" class="pie-chart">${circles}<text x="58" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="#F4F5F8" font-family="Outfit, sans-serif">${cur}</text></svg>
+        <div class="legend">${legend}</div>
+      </div>
+      <div class="chart-tip" id="${tipId}">Bir dilime dokun</div>`;
+  });
+  container.innerHTML = html;
+}
+
+/* ---- PLANLAMA (ASİSTAN) ---- */
+function getWeights(cur) { if (!state.targetWeights[cur]) state.targetWeights[cur] = {}; return state.targetWeights[cur]; }
+function getTargetSymbols(cur) {
+  const held = [...new Set(lastHoldings.filter(h => h.currency === cur).map(h => h.symbol))];
+  return [...new Set([...held, ...Object.keys(getWeights(cur))])].sort();
+}
+function addTargetSymbol() {
+  const inp = document.getElementById('new-target-sym');
+  const sym = inp.value.trim().toUpperCase();
+  if (!sym) return;
+  const cur = document.getElementById('assist-cur').value;
+  const w = getWeights(cur);
+  if (w[sym] === undefined) w[sym] = 0;
+  saveState(); inp.value = '';
+  renderWeightInputs(); computeRebalancePlan();
+}
+function removeTargetSymbol(cur, sym) {
+  delete getWeights(cur)[sym];
+  saveState(); renderWeightInputs(); computeRebalancePlan();
+}
+function renderWeightInputs() {
+  const curSel = document.getElementById('assist-cur'); if (!curSel) return;
+  const cur = curSel.value;
+  const heldHs = lastHoldings.filter(h => h.currency === cur);
+  const heldSyms = heldHs.map(h => h.symbol);
+  const totalVal = heldHs.reduce((s, h) => s + (h.marketValue || 0), 0);
+  const syms = getTargetSymbols(cur);
+  const container = document.getElementById('weightInputs');
+  const weights = getWeights(cur);
+  if (!syms.length) { container.innerHTML = '<div class="no-data">Henüz sembol yok.</div>'; return; }
+  const even = (100 / syms.length).toFixed(1);
+  container.innerHTML = syms.map(s => {
+    const isHeld = heldSyms.includes(s);
+    const hObj = heldHs.find(x => x.symbol === s);
+    const curPct = (hObj && hObj.marketValue && totalVal > 0) ? (hObj.marketValue / totalVal * 100) : 0;
+    const val = weights[s] !== undefined ? weights[s] : parseFloat(even);
+    const diff = curPct - val;
+    const badge = Math.abs(diff) < 1 ? `<span class="pill-badge emerald">Dengede</span>`
+      : (diff < 0 ? `<span class="pill-badge gold">${diff.toFixed(1)}% eksik</span>` : `<span class="pill-badge">+${diff.toFixed(1)}% fazla</span>`);
+    const priceExtra = !isHeld
+      ? `<input type="number" step="any" placeholder="Fiyat" value="${state.prices[s] || ''}" style="width:66px; margin-right:4px" onchange="updatePrice('${s}', this.value)">
+         <button class="icon-btn del" onclick="removeTargetSymbol('${cur}','${s}')">✕</button>`
+      : '';
+    return `<div class="list-row">
+      <div style="flex:1"><b>${s}</b> ${badge}<div class="row-sub">Mevcut: %${curPct.toFixed(1)}</div></div>
+      <div style="display:flex; align-items:center; gap:5px;">
+        ${priceExtra}
+        <input type="number" step="any" class="weight-input" data-sym="${s}" value="${val}" style="width:64px; text-align:right" oninput="onWeightChange('${cur}', this)">%
+      </div>
+    </div>`;
+  }).join('');
+  updateWeightTotal();
+}
+function onWeightChange(cur, inp) { getWeights(cur)[inp.dataset.sym] = parseFloat(inp.value) || 0; saveState(); updateWeightTotal(); computeRebalancePlan(); computeGoalPlan(); }
+function updateWeightTotal() {
+  const total = [...document.querySelectorAll('.weight-input')].reduce((s, i) => s + (parseFloat(i.value) || 0), 0);
+  const el = document.getElementById('weightTotal');
+  el.textContent = `Toplam Hedef: %${total.toFixed(1)} ${Math.abs(total - 100) < 0.5 ? '✓' : '(100% olmalı)'}`;
+  el.style.color = Math.abs(total - 100) < 0.5 ? 'var(--emerald-light)' : 'var(--neg)';
+}
+function weightsEqualSplit() {
+  const cur = document.getElementById('assist-cur').value;
+  const inputs = [...document.querySelectorAll('.weight-input')];
+  if (!inputs.length) return;
+  const even = parseFloat((100 / inputs.length).toFixed(1));
+  const w = getWeights(cur);
+  inputs.forEach(i => { w[i.dataset.sym] = even; });
+  saveState(); renderWeightInputs(); computeRebalancePlan(); computeGoalPlan();
+}
+function weightsMatchCurrent() {
+  const cur = document.getElementById('assist-cur').value;
+  const hs = lastHoldings.filter(h => h.currency === cur && h.marketValue);
+  const total = hs.reduce((s, h) => s + h.marketValue, 0);
+  const w = getWeights(cur);
+  document.querySelectorAll('.weight-input').forEach(inp => {
+    const h = hs.find(x => x.symbol === inp.dataset.sym);
+    w[inp.dataset.sym] = (h && total > 0) ? parseFloat(((h.marketValue / total) * 100).toFixed(1)) : 0;
+  });
+  saveState(); renderWeightInputs(); computeRebalancePlan(); computeGoalPlan();
+}
+function computeRebalancePlan() {
+  const curSel = document.getElementById('assist-cur'), result = document.getElementById('rebalResult');
+  if (!curSel || !result) return;
+  const cur = curSel.value, amount = parseFloat(document.getElementById('rebal-amount').value);
+  const syms = getTargetSymbols(cur);
+  if (!amount || !syms.length) { result.innerHTML = ''; return; }
+  const weights = getWeights(cur);
+  const totalCur = lastHoldings.filter(h => h.currency === cur).reduce((s, h) => s + (h.marketValue || 0), 0);
+  const projTotal = totalCur + amount;
+  let rows = syms.map(sym => {
+    const h = lastHoldings.find(x => x.symbol === sym && x.currency === cur);
+    const curVal = h ? (h.marketValue || 0) : 0;
+    const price = state.prices[sym];
+    const w = weights[sym] !== undefined ? weights[sym] : (100 / syms.length);
+    const gap = Math.max(0, projTotal * w / 100 - curVal);
+    return { symbol: sym, price, gap, targetPct: w, currentPct: totalCur > 0 ? (curVal / totalCur * 100) : 0 };
+  });
+  const totalGap = rows.reduce((s, r) => s + r.gap, 0);
+  rows = rows.map(r => {
+    const alloc = totalGap <= 0 ? amount * r.targetPct / 100 : (totalGap <= amount ? r.gap + (amount - totalGap) * (r.targetPct / 100) : amount * (r.gap / totalGap));
+    if (!r.price) return { ...r, lots: null, cost: 0 };
+    const lots = Math.floor(alloc / r.price);
+    return { ...r, lots, cost: lots * r.price };
+  });
+  const spent = rows.reduce((s, r) => s + r.cost, 0);
+  result.innerHTML = rows.map(r => `<div class="list-row">
+    <div><b>${r.symbol}</b><div class="row-sub">Mevcut %${r.currentPct.toFixed(1)} → Hedef %${r.targetPct.toFixed(1)}</div></div>
+    <div style="text-align:right; font-family:var(--mono)">${r.lots !== null ? `<b style="color:var(--emerald-light)">${r.lots} lot</b><div class="row-sub">${mFmt(r.cost, cur)}</div>` : 'Fiyat yok'}</div>
+  </div>`).join('') + `<div style="font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-top:8px;">Kalan Nakit: <b>${mFmt(amount - spent, cur)}</b></div>`;
+}
+
+function computeGoalPlan() {
+  const curSel = document.getElementById('assist-cur'), result = document.getElementById('goalPlanResult');
+  if (!curSel || !result) return;
+  const cur = curSel.value;
+  const targetMonthly = parseFloat(document.getElementById('goal-monthly').value);
+  const hs = lastHoldings.filter(h => h.currency === cur && h.currentPrice && h.divYieldTTM !== null);
+  if (!targetMonthly || !hs.length) {
+    result.innerHTML = hs.length ? '' : '<div class="no-data">Bu para biriminde fiyatlı ve temettülü pozisyon yok.</div>';
+    return;
+  }
+  const weights = getWeights(cur);
+  const totalW = hs.reduce((s, h) => s + (weights[h.symbol] !== undefined ? weights[h.symbol] : (100 / hs.length)), 0) || 1;
+  const normW = {};
+  hs.forEach(h => { normW[h.symbol] = (weights[h.symbol] !== undefined ? weights[h.symbol] : (100 / hs.length)) / totalW; });
+  const yieldFor = (h) => { const fwd = computeForwardYield(h); return fwd ? fwd.forwardYield : h.divYieldTTM; };
+  const weightedYieldPct = hs.reduce((s, h) => s + normW[h.symbol] * yieldFor(h), 0);
+  if (weightedYieldPct <= 0) { result.innerHTML = '<div class="no-data">Verim verisi yetersiz.</div>'; return; }
+  const requiredInvestment = (targetMonthly * 12) / (weightedYieldPct / 100);
+
+  let html = `<div class="chip" style="display:inline-block; margin-bottom:8px">Gerekli Toplam Yatırım: <b>${mFmt(requiredInvestment, cur)}</b></div>`;
+  html += `<div class="hint" style="margin-bottom:8px">Ağırlıklı tahmini verim: %${weightedYieldPct.toFixed(2)}</div>`;
+  html += hs.map(h => {
+    const amt = requiredInvestment * normW[h.symbol];
+    const lots = Math.floor(amt / h.currentPrice);
+    return `<div class="list-row"><div><b>${h.symbol}</b><div class="row-sub">%${(normW[h.symbol] * 100).toFixed(1)} ağırlık</div></div><div style="text-align:right; font-family:var(--mono)"><b>${lots} lot</b><div class="row-sub">${mFmt(lots * h.currentPrice, cur)}</div></div></div>`;
+  }).join('');
+  result.innerHTML = html;
+}
+
+function setMonthlyInvestTarget(v) { const n = parseFloat(v); state.monthlyInvestTarget = (isNaN(n) || n <= 0) ? null : n; saveState(); render(); }
+function renderInvestPlan() {
+  const el = document.getElementById('investPlanBody'); if (!el) return;
+  const target = state.monthlyInvestTarget;
+  const now = new Date(), ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  let total = 0;
+  state.transactions.forEach(t => {
+    if (t.type === 'sell' || t.fromDiv || !String(t.date).startsWith(ym)) return;
+    total += (t.shares * t.price) * (t.currency === 'USD' ? (state.fxRate || 0) : 1);
+  });
+  let html = `<div class="field"><label>Aylık Yatırım Hedefin (TL)</label><input type="number" step="any" value="${target || ''}" placeholder="Örn. 15000" onchange="setMonthlyInvestTarget(this.value)"></div>`;
+  if (target) {
+    const p = Math.min(100, total / target * 100);
+    const rem = Math.max(0, target - total);
+    html += `<div class="prog-track"><div class="prog-fill" style="width:${p}%"></div></div>
+      <div style="display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:6px;">
+        <span>${mFmt(total, 'TRY')} / ${mFmt(target, 'TRY')}</span><b>%${p.toFixed(0)}</b>
+      </div>
+      ${rem > 0 ? `<button class="btn secondary" onclick="fillRebalWithRemaining(${rem})">Kalan ${fmt(rem, 'TRY')} Tutarı Rebalance'a Aktar</button>` : ''}`;
+  }
+  el.innerHTML = html;
+}
+
+function fillRebalWithRemaining(remTRY) {
+  const cur = document.getElementById('assist-cur').value;
+  let amt = remTRY;
+  if (cur === 'USD') {
+    if (!state.fxRate) { toast('Üst bardan USD/TRY kurunu girin'); return; }
+    amt = remTRY / state.fxRate;
+  }
+  document.getElementById('rebal-amount').value = amt.toFixed(2);
+  computeRebalancePlan();
+  toast(`Kalan tutar aktarıldı (${cur})`);
+}
+
+function computeSimulation() {
+  const startEl = document.getElementById('sim-start'); if (!startEl) return;
+  const start = parseFloat(startEl.value) || 0;
+  const monthly = parseFloat(document.getElementById('sim-monthly').value) || 0;
+  const growth = (parseFloat(document.getElementById('sim-growth').value) || 0) / 100;
+  const yld = (parseFloat(document.getElementById('sim-yield').value) || 0) / 100;
+  const reinvest = document.getElementById('sim-reinvest').checked;
+  const years = parseInt(document.getElementById('sim-years').value) || 0;
+  const result = document.getElementById('simResult');
+  if (years <= 0) { result.innerHTML = ''; return; }
+  const mGrowth = Math.pow(1 + growth, 1 / 12) - 1, mYield = Math.pow(1 + yld, 1 / 12) - 1;
+  let val = start, contrib = start;
+  const rows = [];
+  for (let y = 1; y <= Math.min(years, 40); y++) {
+    let yDiv = 0;
+    for (let m = 0; m < 12; m++) {
+      val += monthly; contrib += monthly;
+      const d = val * mYield; yDiv += d;
+      if (reinvest) val += d;
+      val *= (1 + mGrowth);
+    }
+    rows.push({ year: y, val, contrib, monthlyDiv: yDiv / 12 });
+  }
+  result.innerHTML = rows.filter(r => [1, 3, 5, 10, 15, 20, 30, 40].includes(r.year) || r.year === rows.length).map(r => `
+    <div class="list-row">
+      <div><b>${r.year}. Yıl</b><div class="row-sub">Ana Para: ${mFmt(r.contrib, 'TRY')} · Aylık Temettü: ${mFmt(r.monthlyDiv, 'TRY')}</div></div>
+      <div style="font-family:var(--mono); font-weight:700; color:var(--emerald-light)">${mFmt(r.val, 'TRY')}</div>
+    </div>
+  `).join('');
+}
+
+/* ---- VARLIKLAR & GEÇMİŞ ---- */
+function addAccount() {
+  const nameEl = document.getElementById('acc-name');
+  const name = nameEl.value.trim(); if (!name) return;
+  state.accounts.push({ id: uid(), name, currency: document.getElementById('acc-cur').value });
+  nameEl.value = ''; saveState(); render(); toast('Hesap eklendi');
+}
+function deleteAccount(id) {
+  state.accounts = state.accounts.filter(a => a.id !== id);
+  state.accountSnapshots = state.accountSnapshots.filter(s => s.accountId !== id);
+  saveState(); render();
+}
+function addSnapshot(accountId) {
+  const inp = document.getElementById('snap-' + accountId);
+  const val = parseFloat(inp.value); if (isNaN(val)) return;
+  state.accountSnapshots.push({ id: uid(), accountId, date: todayStr(), balance: val });
+  inp.value = ''; saveState(); render(); toast('Bakiye güncellendi');
+}
+function recordNetWorth() {
+  let tryS = 0, usdS = 0;
+  state.accounts.forEach(a => {
+    const l = state.accountSnapshots.filter(s => s.accountId === a.id).sort((x, y) => new Date(y.date) - new Date(x.date))[0];
+    if (l) { if (a.currency === 'TRY') tryS += l.balance; else usdS += l.balance; }
+  });
+  if (usdS > 0 && !state.fxRate) { toast('Üst bardan USD/TRY kurunu girin'); return; }
+  const total = tryS + (state.fxRate ? usdS * state.fxRate : 0);
+  const date = todayStr();
+  state.netWorthHistory = state.netWorthHistory.filter(r => r.date !== date);
+  state.netWorthHistory.push({ id: uid(), date, accounts: total, total });
+  saveState(); render(); toast('Toplam grafiğe kaydedildi');
+}
+
+function renderAccounts() {
+  const netWorthEl = document.getElementById('netWorthCard'), accountsEl = document.getElementById('accountsCard');
+  let tryS = 0, usdS = 0;
+  state.accounts.forEach(a => {
+    const l = state.accountSnapshots.filter(s => s.accountId === a.id).sort((x, y) => new Date(y.date) - new Date(x.date))[0];
+    if (l) { if (a.currency === 'TRY') tryS += l.balance; else usdS += l.balance; }
+  });
+  const totalTRY = tryS + (state.fxRate ? usdS * state.fxRate : 0);
+  netWorthEl.innerHTML = `
+    <div class="mega-top"><span class="mega-lbl">Bağımsız Hesaplar Toplamı</span><span class="pill-badge">${state.accounts.length} Hesap</span></div>
+    <div class="mega-val ${privacyMode ? 'plain' : ''}">${mFmt(totalTRY, 'TRY')}</div>
+    ${state.accounts.length ? `<button class="btn" onclick="recordNetWorth()">Toplamı Kaydet</button>` : ''}
+  `;
+
+  const chartEl = document.getElementById('netWorthChartCard');
+  const hist = [...state.netWorthHistory].sort((a, b) => new Date(a.date) - new Date(b.date)).slice(-24);
+  if (hist.length < 2) {
+    chartEl.innerHTML = '<div class="card-head"><h2 class="card-title">Hesap Toplamı Gelişimi</h2></div><div class="no-data">Grafik için en az 2 kayıt gerekir.</div>';
+  } else {
+    const vals = hist.map(r => r.accounts ?? r.total);
+    let min = Math.min(...vals), max = Math.max(...vals); if (max === min) max = min + 1;
+    const w = 340, h = 115, pad = 10;
+    const pts = vals.map((v, i) => `${(pad + i * (w - 2 * pad) / (vals.length - 1)).toFixed(1)},${(pad + (h - 2 * pad) * (1 - (v - min) / (max - min))).toFixed(1)}`);
+    const area = `${pad},${h - pad} ` + pts.join(' ') + ` ${w - pad},${h - pad}`;
+    chartEl.innerHTML = `<div class="card-head"><h2 class="card-title">Hesap Toplamı Gelişimi</h2></div>
+      <svg viewBox="0 0 ${w} ${h}" class="nw-svg">
+        <defs><linearGradient id="nwGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399" stop-opacity="0.3"/><stop offset="100%" stop-color="#34D399" stop-opacity="0"/></linearGradient></defs>
+        <polygon points="${area}" fill="url(#nwGrad)"/>
+        <polyline points="${pts.join(' ')}" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>`;
+  }
+
+  accountsEl.innerHTML = state.accounts.map(a => {
+    const snaps = state.accountSnapshots.filter(s => s.accountId === a.id).sort((x, y) => new Date(y.date) - new Date(x.date));
+    const latest = snaps[0];
+    return `<div class="pos-card">
+      <div class="pos-top">
+        <div><span class="pos-sym">${a.name}</span><span class="cur-pill">${a.currency}</span>${latest ? `<span class="hold-age">${relDate(latest.date).toLowerCase()}</span>` : ''}</div>
+        <button class="icon-btn del" onclick="deleteAccount('${a.id}')">✕</button>
+      </div>
+      <div style="font-family:var(--disp); font-size:24px; font-weight:700; margin-top:6px;">${latest ? mFmt(latest.balance, a.currency) : '—'}</div>
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <input type="number" step="any" id="snap-${a.id}" placeholder="Güncel bakiye">
+        <button class="btn-sm" onclick="addSnapshot('${a.id}')">Kaydet</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderHistory() {
+  const filter = (document.getElementById('hist-search')?.value || '').trim().toUpperCase();
+  const hist = document.getElementById('history');
+  let all = [
+    ...state.transactions.map(t => ({ ...t, kind: 'tx' })),
+    ...state.dividends.map(d => ({ ...d, kind: 'div' }))
+  ].sort((a, b) => new Date(b.date) - new Date(a.date));
+  if (filter) all = all.filter(i => i.symbol.includes(filter));
+
+  hist.innerHTML = all.length ? all.map(item => {
+    if (item.kind === 'tx') {
+      const tag = item.type === 'sell' ? '<span class="tag-badge tag-sell">SATIŞ</span>' : (item.fromDiv ? '<span class="tag-badge tag-div">DRIP</span>' : '<span class="tag-badge tag-buy">ALIM</span>');
+      return `<div class="list-row">
+        <div>${tag}<b>${item.symbol}</b><div class="row-sub">${item.shares} adet × ${mFmt(item.price, item.currency)} · ${item.date}</div></div>
+        <div>
+          <button class="icon-btn" onclick="startEdit('tx','${item.id}')">✎</button>
+          <button class="icon-btn del" onclick="deleteEntry('tx','${item.id}','${item.symbol}')">✕</button>
+        </div>
+      </div>`;
+    }
+    return `<div class="list-row">
+      <div><span class="tag-badge tag-div">TEMETTÜ</span><b>${item.symbol}</b><div class="row-sub">${mFmt(item.amount, item.currency)} · ${item.date}</div></div>
+      <div>
+        <button class="icon-btn" onclick="startEdit('div','${item.id}')">✎</button>
+        <button class="icon-btn del" onclick="deleteEntry('div','${item.id}','${item.symbol}')">✕</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="no-data">Kayıt bulunamadı.</div>';
+}
+
+function renderYearlySummary() {
+  const container = document.getElementById('yearlySummaryCard');
+  const byYear = {};
+  state.dividends.forEach(d => {
+    const y = new Date(d.date).getFullYear();
+    if (!byYear[y]) byYear[y] = {};
+    byYear[y][d.currency] = (byYear[y][d.currency] || 0) + d.amount;
+  });
+  const years = Object.keys(byYear).sort((a, b) => b - a);
+  if (!years.length) { container.style.display = 'none'; return; }
+  container.style.display = '';
+  container.innerHTML = '<div class="card-head"><h2 class="card-title">Yıllık Temettü Özeti</h2></div>' + years.map(y => `
+    <div class="list-row"><b>${y}</b><div style="font-family:var(--mono)">${Object.keys(byYear[y]).map(c => mFmt(byYear[y][c], c)).join(' · ')}</div></div>
+  `).join('');
+}
+
+function renderInflationCard() {
+  const container = document.getElementById('inflationCard');
+  const growth = computeCombinedYoyGrowthTRY();
+  const infl = state.inflationRate;
+  if (growth === null && infl === null) { container.style.display = 'none'; return; }
+  container.style.display = '';
+  let html = `<div class="card-head"><h2 class="card-title">Enflasyona Karşı Büyüme</h2></div>
+    <div class="field"><label>Yıllık Enflasyon Oranın (%)</label><input type="number" step="any" value="${infl || ''}" placeholder="38" onchange="setInflationRate(this.value)"></div>`;
+  if (growth !== null && infl !== null) {
+    const diff = growth - infl;
+    html += `<div class="hint" style="margin-top:8px; font-weight:600; color:${diff >= 0 ? 'var(--emerald-light)' : 'var(--neg)'}">Temettü Büyümesi: ${pct(growth)} (${diff >= 0 ? '+' : ''}${diff.toFixed(1)} puan reel fark)</div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderBulkPrices() {
+  const el = document.getElementById('bulkPriceCard');
+  const hs = lastHoldings.filter(h => h.shares > 0);
+  if (!hs.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  el.innerHTML = `<details><summary style="cursor:pointer; font-family:var(--disp); font-weight:700; font-size:15px;">Fiyatları Toplu Güncelle</summary>
+    <div style="margin-top:10px">${hs.map(h => {
+      const d = getPriceStaleDays(h.symbol);
+      const stale = (d !== null && d > 14) ? `<span class="warn-tag gold" style="margin-left:6px">${Math.floor(d)}g eski</span>` : '';
+      return `<div class="list-row"><div><b>${h.symbol}</b> <span style="color:var(--muted);font-size:11px">(${h.currency})</span>${stale}</div><input type="number" step="any" class="bulk-price" data-sym="${h.symbol}" value="${h.currentPrice || ''}" style="width:90px"></div>`;
+    }).join('')}</div>
+    <button class="btn" onclick="saveBulkPrices()">Tümünü Kaydet</button>
+  </details>`;
+}
+
+function saveBulkPrices() {
+  if (!state.priceUpdatedAt) state.priceUpdatedAt = {};
+  const now = new Date().toISOString();
+  document.querySelectorAll('.bulk-price').forEach(inp => {
+    const p = parseFloat(inp.value);
+    if (!isNaN(p)) { state.prices[inp.dataset.sym] = p; state.priceUpdatedAt[inp.dataset.sym] = now; }
+  });
+  saveState(); render(); toast('Fiyatlar güncellendi');
+}
+
+/* ---- ANA RENDER ---- */
+function render() {
+  const topFx = document.getElementById('topFxInput');
+  if (topFx && document.activeElement !== topFx) topFx.value = state.fxRate || '';
+
+  const holdings = computeHoldings();
+  lastHoldings = holdings;
+
+  const allSymbols = [...new Set([...state.transactions.map(t => t.symbol), ...state.dividends.map(d => d.symbol)])].sort();
+  document.getElementById('symbolList').innerHTML = allSymbols.map(s => `<option value="${s}">`).join('');
+
+  renderMegaCard(holdings);
+
+  const heroGrid = document.getElementById('heroGrid');
+  const currencies = [...new Set(holdings.map(h => h.currency))];
+  if (!currencies.length) {
+    heroGrid.innerHTML = `<div class="card" style="grid-column:1/-1; text-align:center;">
+      <div style="font-weight:700; margin-bottom:6px;">Portföyün Henüz Boş</div>
+      <div class="hint" style="margin-bottom:12px;">Ortadaki + butonuyla ilk işlemini ekle veya örnek portföy ile incele.</div>
+      <button class="btn-sm" onclick="loadDemoPortfolio()">Örnek Portföy Yükle</button>
+    </div>`;
+  } else {
+    heroGrid.innerHTML = currencies.map(cur => {
+      const hs = holdings.filter(h => h.currency === cur);
+      const cost = hs.reduce((s, h) => s + h.costBasis, 0);
+      const div = hs.reduce((s, h) => s + h.dividends, 0);
+      const ttm = hs.reduce((s, h) => s + h.ttmDividends, 0);
+      const val = hs.filter(h => h.marketValue !== null).reduce((s, h) => s + h.marketValue, 0);
+      const allP = hs.every(h => h.marketValue !== null);
+      const retPct = (allP && cost > 0) ? ((val - cost + div) / cost * 100) : null;
+      const yld = (allP && val > 0) ? (ttm / val * 100) : null;
+      return `<div class="cur-box ${cur === 'USD' ? 'usd' : ''}">
+        <div class="cur-lbl">${cur} Portföyü</div>
+        <div class="cur-val ${retPct >= 0 ? 'pos' : 'neg'}">${retPct !== null ? pct(retPct) : 'Fiyat Girin'}</div>
+        <div class="cur-sub">Değer: ${allP ? mFmt(val, cur) : '—'}</div>
+        <div class="cur-sub">Verim: ${yld !== null ? '%' + yld.toFixed(2) : '—'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  renderSnowballCard(holdings);
+  renderFreedomCard();
+  renderForecastCard();
+  renderMonthlyChart();
+  renderHeatmapCard();
+  renderPieChart(holdings);
+  renderYearlySummary();
+  renderInflationCard();
+
+  const ribbon = document.getElementById('ribbon');
+  const recentDivs = [...state.dividends].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 8);
+  ribbon.innerHTML = recentDivs.length ? recentDivs.map(d =>
+    `<div class="chip">${d.symbol} <b>+${mFmt(d.amount, d.currency)}</b> · ${relDate(d.date).toLowerCase()}</div>`
+  ).join('') : '<div class="no-data" style="padding:8px 0">Henüz temettü girilmedi.</div>';
+
+  // Kontrol Listesi
+  const checklistEl = document.getElementById('checklistCard');
+  const alerts = [];
+  const stale = holdings.filter(h => h.shares > 0 && (getPriceStaleDays(h.symbol) || 0) > 14).length;
+  if (stale > 0) alerts.push({ t: `${stale} pozisyonun fiyatı 14+ gündür güncel değil`, v: 'pozisyonlar' });
+  if ((state.transactions.length > 0 || state.accounts.length > 0) && !state.lastBackupAt) {
+    alerts.push({ t: 'Henüz hiç yedek almadın — dokun ve yedekle', v: 'varliklar' });
+  }
+  if (alerts.length) {
+    checklistEl.style.display = '';
+    checklistEl.innerHTML = alerts.map(a => `<div class="alert-row" onclick="switchView('${a.v}')"><span class="alert-dot"></span><span>${a.t}</span></div>`).join('');
+  } else {
+    checklistEl.style.display = 'none';
+  }
+
+  // Pozisyon Kartları
+  let displayHoldings = holdings.filter(h => h.shares > 0);
+  const pcb = document.getElementById('posCountBadge');
+  if (pcb) pcb.textContent = `${displayHoldings.length} aktif pozisyon`;
+
+  if (holdingsSortBy === 'return') displayHoldings.sort((a, b) => (b.totalReturnPct ?? -9999) - (a.totalReturnPct ?? -9999));
+  else if (holdingsSortBy === 'yield') displayHoldings.sort((a, b) => (b.divYieldTTM ?? -9999) - (a.divYieldTTM ?? -9999));
+
+  const hDiv = document.getElementById('holdings');
+  hDiv.innerHTML = displayHoldings.length ? displayHoldings.map(h => {
+    const cls = h.totalReturnPct === null ? '' : (h.totalReturnPct >= 0 ? 'pos' : 'neg');
+    const paybackPct = h.costBasis > 0 ? Math.min(100, (h.dividends / h.costBasis) * 100) : 100;
+    const staleDays = getPriceStaleDays(h.symbol);
+    const yoyG = computeSymbolYoyGrowth(h.symbol);
+    const nd = getNextExpectedDate(h.symbol);
+    const nextDiv = nd ? fmtFutureDay(nd) : null;
+    const fwdYield = computeForwardYield(h);
+    const holdingMonths = h.firstBuyDate ? Math.floor((Date.now() - h.firstBuyDate.getTime()) / (30.44 * 24 * 3600 * 1000)) : null;
+
+    let badges = '';
+    if (yoyG !== null && yoyG < -10) badges += `<span class="warn-tag red">Gelir Azalıyor (YoY ${yoyG.toFixed(0)}%)</span>`;
+    if (staleDays !== null && staleDays > 14) badges += `<span class="warn-tag gold">Fiyat ${Math.floor(staleDays)}g eski</span>`;
+
+    return `<div class="pos-card">
+      ${badges ? `<div>${badges}</div>` : ''}
+      <div class="pos-top">
+        <div>
+          <span class="pos-sym">${h.symbol}</span><span class="cur-pill">${h.currency}</span>
+          ${holdingMonths !== null ? `<span class="hold-age">${holdingMonths < 1 ? 'yeni' : holdingMonths + ' ay'}</span>` : ''}
+        </div>
+        <div class="pos-ret ${cls}">${h.totalReturnPct !== null ? pct(h.totalReturnPct) : '—'}</div>
+      </div>
+
+      <div class="pos-grid">
+        <div><div class="pm-lbl">Adet</div><div class="pm-val">${h.shares}${h.divFundedShares > 0 ? ` <span style="color:var(--emerald-light);font-size:10.5px">(+${h.divFundedShares} temettü)</span>` : ''}</div></div>
+        <div><div class="pm-lbl">Ort. Maliyet</div><div class="pm-val">${mFmt(h.avgCost, h.currency)}</div></div>
+        <div><div class="pm-lbl">Piyasa Değeri</div><div class="pm-val">${mFmt(h.marketValue, h.currency)}</div></div>
+        <div><div class="pm-lbl">Alınan Temettü</div><div class="pm-val" style="color:var(--emerald-light)">${mFmt(h.dividends, h.currency)}</div></div>
+        <div><div class="pm-lbl">Verim (${h.usesFrequencyEstimate ? 'Tahmini' : 'TTM'})</div><div class="pm-val">${h.divYieldTTM !== null ? '%' + h.divYieldTTM.toFixed(2) : '—'}</div></div>
+        <div><div class="pm-lbl">Maliyete Verim</div><div class="pm-val">${h.yieldOnCost !== null ? '%' + h.yieldOnCost.toFixed(2) : '—'}</div></div>
+      </div>
+
+      ${nextDiv ? `<div class="row-sub" style="margin-top:8px">Sıradaki temettü: <b style="color:var(--text)">${nextDiv}</b></div>` : ''}
+      ${fwdYield && fwdYield.hasTrend ? `<div class="row-sub" style="margin-top:3px">İleri Verim: %${fwdYield.forwardYield.toFixed(2)} <span style="color:var(--emerald-light)">(${fwdYield.growthPct >= 0 ? '+' : ''}${fwdYield.growthPct.toFixed(0)}%/yıl)</span></div>` : ''}
+
+      <div class="zc-wrap">
+        <div class="zc-head">
+          <span>Ana Para Geri Dönüşü (Zero-Cost)</span>
+          <b>%${paybackPct.toFixed(1)}</b>
+        </div>
+        <div class="zc-bar"><div class="zc-fill" style="width:${paybackPct}%"></div></div>
+      </div>
+
+      <div class="pos-foot">
+        <button class="btn-sm" onclick="quickRepeat('${h.symbol}')">+ Tekrar Al</button>
+        <div class="inline-group">
+          <label>Fiyat</label>
+          <input type="number" step="any" value="${h.currentPrice || ''}" placeholder="0.00" onchange="updatePrice('${h.symbol}', this.value)">
+          <label>Ödeme/Yıl</label>
+          <input type="number" step="1" min="1" style="width:52px" value="${getPaymentFrequency(h.symbol) || ''}" placeholder="4" onchange="setPaymentFrequency('${h.symbol}', this.value)">
+        </div>
+      </div>
+    </div>`;
+  }).join('') : '<div class="no-data">Henüz pozisyon yok. Ortadaki + butonuyla ilk alımını ekle.</div>';
+
+  renderHistory();
+  renderAccounts();
+  renderBulkPrices();
+  renderInvestPlan();
+  const lbi = document.getElementById('lastBackupInfo');
+  if (lbi) lbi.textContent = state.lastBackupAt ? ('Son yedekleme: ' + relDate(state.lastBackupAt.slice(0, 10)).toLowerCase()) : 'Henüz yedek alınmadı';
+
+  if (document.getElementById('tab-araclar').classList.contains('active')) {
+    renderWeightInputs();
+    computeRebalancePlan();
+    computeGoalPlan();
+  }
+}
+
+loadState();
+resetDates();
+</script>
+</body>
+</html>
