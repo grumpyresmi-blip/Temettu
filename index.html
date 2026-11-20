@@ -1,0 +1,3642 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07080B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Temettü">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Temettü Defteri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  #appRoot {
+    --bg: #07080B;
+    --surface: #0E1117;
+    --surface-2: #151923;
+    --surface-3: #1C2130;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-soft: rgba(255, 255, 255, 0.045);
+    --line-gold: rgba(223, 190, 115, 0.34);
+    --line-emerald: rgba(52, 211, 153, 0.34);
+
+    --text: #F4F6FA;
+    --muted: #8E96A8;
+    --emerald: #34D399;
+    --emerald-dim: rgba(52, 211, 153, 0.13);
+    --gold: #DFBE73;
+    --gold-dim: rgba(223, 190, 115, 0.14);
+    --sky: #60A5FA;
+    --sky-dim: rgba(96, 165, 250, 0.13);
+    --rose: #FB7185;
+    --rose-dim: rgba(251, 113, 133, 0.13);
+
+    --grad-luxury: linear-gradient(135deg, #DFBE73 0%, #34D399 100%);
+    --grad-gold: linear-gradient(135deg, #F2D694 0%, #C79C46 100%);
+    --grad-emerald: linear-gradient(135deg, #34D399 0%, #059669 100%);
+
+    --font-display: 'Outfit', 'Inter', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  #appRoot *, #appRoot *::before, #appRoot *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    margin: 0;
+    background: #07080B;
+    color: #F4F6FA;
+    overflow-x: hidden;
+  }
+
+  /* Ambient radial light */
+  #appRoot .ambient-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  #appRoot .ambient-glow::before {
+    content: '';
+    position: absolute;
+    top: -190px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 720px;
+    height: 360px;
+    background: radial-gradient(ellipse at center, rgba(223, 190, 115, 0.12), rgba(52, 211, 153, 0.06) 50%, transparent 75%);
+    animation: ambientShift 20s ease-in-out infinite alternate;
+  }
+
+  #appRoot .ambient-glow::after {
+    content: '';
+    position: absolute;
+    bottom: -210px;
+    right: -120px;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.08), transparent 72%);
+  }
+
+  @keyframes ambientShift {
+    0% { opacity: 0.75; transform: translateX(-50%) scale(1); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+  }
+
+  #appRoot .wrap {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: calc(14px + env(safe-area-inset-top)) 16px 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #appRoot main {
+    padding-bottom: calc(128px + env(safe-area-inset-bottom));
+  }
+
+  /* Sticky Top Bar */
+  #appRoot .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 35;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    margin: -4px -2px 16px;
+    border-radius: 20px;
+    background: rgba(7, 8, 11, 0.80);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--line);
+  }
+
+  #appRoot .brand-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--grad-luxury);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+  }
+
+  #appRoot .brand-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 1px 0 0;
+    line-height: 1.15;
+  }
+
+  #appRoot .header-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  #appRoot .fx-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 36px;
+    padding: 0 9px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--line-gold);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .fx-pill input {
+    width: 56px;
+    min-height: unset;
+    height: 28px;
+    padding: 0 3px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  #appRoot .fx-pill input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+  }
+
+  #appRoot .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+
+  #appRoot .icon-btn:hover,
+  #appRoot .icon-btn.active {
+    color: var(--emerald);
+    border-color: var(--line-emerald);
+    background: var(--emerald-dim);
+  }
+
+  #appRoot .icon-btn svg { width: 16px; height: 16px; }
+
+  /* Tab Views */
+  #appRoot .tabview { display: none; }
+  #appRoot .tabview.active { display: block; }
+  #appRoot .tabview.active > * {
+    animation: panelRise 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  #appRoot .tabview.active > *:nth-child(2) { animation-delay: 0.04s; }
+  #appRoot .tabview.active > *:nth-child(3) { animation-delay: 0.08s; }
+  #appRoot .tabview.active > *:nth-child(4) { animation-delay: 0.12s; }
+  #appRoot .tabview.active > *:nth-child(5) { animation-delay: 0.16s; }
+  #appRoot .tabview.active > *:nth-child(n+6) { animation-delay: 0.2s; }
+
+  @keyframes panelRise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cards & Mega Hero */
+  #appRoot .card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.005)), var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 13px;
+    position: relative;
+  }
+
+  #appRoot .mega-card {
+    background:
+      radial-gradient(115% 85% at 100% 0%, rgba(223, 190, 115, 0.15), transparent 56%),
+      radial-gradient(95% 80% at 0% 100%, rgba(52, 211, 153, 0.10), transparent 58%),
+      var(--surface);
+    border: 1px solid transparent;
+    background-image:
+      radial-gradient(115% 85% at 100% 0%, rgba(223, 190, 115, 0.15), transparent 56%) ,
+      radial-gradient(95% 80% at 0% 100%, rgba(52, 211, 153, 0.10), transparent 58%),
+      linear-gradient(var(--surface), var(--surface)),
+      linear-gradient(135deg, rgba(223, 190, 115, 0.55), rgba(52, 211, 153, 0.25) 50%, rgba(255, 255, 255, 0.08));
+    background-origin: border-box;
+    background-clip: padding-box, padding-box, padding-box, border-box;
+    border-radius: 26px;
+    padding: 22px 20px;
+    margin-bottom: 13px;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.48);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #appRoot .mega-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(223, 190, 115, 0.12) 1px, transparent 1.2px);
+    background-size: 18px 18px;
+    -webkit-mask-image: linear-gradient(145deg, transparent 42%, #000 100%);
+    mask-image: linear-gradient(145deg, transparent 42%, #000 100%);
+    pointer-events: none;
+  }
+
+  #appRoot .mega-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #appRoot .mega-lbl {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  #appRoot .cur-switch {
+    display: inline-flex;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px;
+  }
+
+  #appRoot .cur-switch button {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    min-height: 28px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  #appRoot .cur-switch button.active {
+    background: var(--grad-luxury);
+    color: #070B09;
+  }
+
+  #appRoot .mega-val {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+    background: var(--grad-luxury);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .mega-val.muted-state {
+    background: none;
+    -webkit-text-fill-color: var(--muted);
+    color: var(--muted);
+    font-size: 21px;
+  }
+
+  #appRoot .mega-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    position: relative;
+    z-index: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 3-Column Return Decomposition (Fiyat Getirisi / Temettü Getirisi / Toplam Getiri) */
+  #appRoot .return-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #appRoot .ret-box {
+    background: rgba(7, 8, 11, 0.58);
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    padding: 11px 10px;
+  }
+
+  #appRoot .ret-box.total-box {
+    border-color: var(--line-emerald);
+    background: rgba(52, 211, 153, 0.08);
+  }
+
+  #appRoot .ret-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+  }
+
+  #appRoot .ret-pct {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .ret-amt {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #appRoot .stat-box {
+    background: rgba(7, 8, 11, 0.54);
+    border: 1px solid var(--line-soft);
+    border-radius: 15px;
+    padding: 12px 13px;
+  }
+
+  #appRoot .stat-box.hl {
+    border-color: var(--line-gold);
+    background: var(--gold-dim);
+  }
+
+  #appRoot .stat-lbl {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  #appRoot .stat-val {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 5px;
+    letter-spacing: -0.015em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .stat-sub {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .real-fx-strip {
+    margin-top: 10px;
+    padding: 10px 13px;
+    border-radius: 14px;
+    background: var(--sky-dim);
+    border: 1px solid rgba(96, 165, 250, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--sky);
+    position: relative;
+    z-index: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 13px;
+  }
+
+  #appRoot .cur-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 15px;
+  }
+
+  #appRoot .cur-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  #appRoot .cur-val {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 6px;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .cur-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid var(--line-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .pos { color: var(--emerald); }
+  #appRoot .neg { color: var(--rose); }
+  #appRoot .gold-txt { color: var(--gold); }
+  #appRoot .sky-txt { color: var(--sky); }
+
+  #appRoot .card-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  #appRoot .card-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+
+  /* Bars, Chips & 12-Month Dot Matrix */
+  #appRoot .prog-track {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    margin-top: 10px;
+  }
+
+  #appRoot .prog-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--grad-luxury);
+    transition: width 0.35s ease;
+  }
+
+  #appRoot .prog-fill.gold-fill {
+    background: var(--grad-gold);
+  }
+
+  #appRoot .prog-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 10px;
+  }
+
+  #appRoot .chip {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .chip b { color: var(--emerald); font-weight: 600; }
+
+  #appRoot .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  #appRoot .matrix-cell {
+    background: var(--surface-2);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 8px 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+
+  #appRoot .matrix-cell.has-pay {
+    border-color: var(--line-gold);
+    background: rgba(223, 190, 115, 0.07);
+  }
+
+  #appRoot .matrix-m {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  #appRoot .matrix-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    flex-wrap: wrap;
+    min-height: 12px;
+    margin-top: 5px;
+  }
+
+  #appRoot .matrix-dot {
+    width: 6.5px;
+    height: 6.5px;
+    border-radius: 50%;
+  }
+
+  #appRoot .matrix-syms {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    color: var(--gold);
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Charts & Ribbon */
+  #appRoot .svg-chart { width: 100%; height: auto; display: block; cursor: pointer; margin-top: 6px; }
+  #appRoot .chart-tip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 6px;
+    min-height: 15px;
+  }
+
+  #appRoot .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 10px;
+  }
+  #appRoot .donut-svg { width: 108px; height: 108px; flex-shrink: 0; cursor: pointer; }
+  #appRoot .legend-list { display: flex; flex-direction: column; gap: 7px; flex: 1; min-width: 0; }
+  #appRoot .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  #appRoot .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  #appRoot .legend-row b { margin-left: auto; color: var(--emerald); font-weight: 600; }
+
+  #appRoot .ribbon-head {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 16px 0 9px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  #appRoot .ribbon-head::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  #appRoot .ribbon {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+  #appRoot .ribbon::-webkit-scrollbar { display: none; }
+
+  #appRoot .alert-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 12.5px;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  #appRoot .alert-row:last-child { border-bottom: none; padding-bottom: 0; }
+  #appRoot .alert-row span { color: var(--gold); font-size: 16px; }
+
+  /* Forms & Buttons */
+  #appRoot .seg-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 16px;
+  }
+
+  #appRoot .seg-tab {
+    flex: 1;
+    text-align: center;
+    padding: 9px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #appRoot .seg-tab.active {
+    background: var(--grad-luxury);
+    color: #070B09;
+  }
+
+  #appRoot .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  #appRoot .field { display: flex; flex-direction: column; gap: 5px; }
+  #appRoot .field.full { grid-column: 1 / -1; }
+
+  #appRoot label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  #appRoot input, #appRoot select {
+    width: 100%;
+    min-height: 44px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot input:focus, #appRoot select:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  #appRoot select option { background: var(--surface); color: var(--text); }
+
+  #appRoot .tx-fx-box {
+    display: none;
+    background: var(--sky-dim);
+    border: 1px solid rgba(96, 165, 250, 0.28);
+    border-radius: 14px;
+    padding: 12px;
+  }
+  #appRoot .tx-fx-box.visible { display: flex; flex-direction: column; gap: 6px; }
+
+  #appRoot .check-box {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 11px 12px;
+  }
+
+  #appRoot .check-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  #appRoot .check-label input {
+    width: 18px;
+    height: 18px;
+    min-height: 18px;
+    accent-color: var(--emerald);
+    cursor: pointer;
+  }
+
+  #appRoot .helper {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.45;
+    margin-top: 4px;
+  }
+
+  #appRoot .btn {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 14px;
+    border: none;
+    background: var(--grad-luxury);
+    color: #070B09;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 14px;
+    padding: 12px 16px;
+    box-shadow: 0 8px 22px rgba(52, 211, 153, 0.18);
+    transition: transform 0.12s ease, opacity 0.15s ease;
+  }
+
+  #appRoot .btn:active { transform: scale(0.99); opacity: 0.92; }
+  #appRoot .btn-ghost {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--line);
+    box-shadow: none;
+    font-weight: 600;
+  }
+
+  #appRoot .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    width: auto;
+    min-height: 35px;
+    margin-top: 0;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: var(--surface-2);
+    color: var(--emerald);
+    border: 1px solid var(--line-emerald);
+    box-shadow: none;
+  }
+
+  #appRoot .btn-sm.gold {
+    color: var(--gold);
+    border-color: var(--line-gold);
+  }
+
+  #appRoot .edit-banner {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--gold-dim);
+    border: 1px solid var(--line-gold);
+    color: var(--gold);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  #appRoot .edit-banner button {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-weight: 700;
+    cursor: pointer;
+    min-height: 36px;
+  }
+
+  /* Holdings */
+  #appRoot .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  #appRoot .toolbar select {
+    width: auto;
+    min-height: 38px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+  }
+
+  #appRoot .pos-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.005)), var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 17px;
+    margin-bottom: 12px;
+  }
+
+  #appRoot .pos-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  #appRoot .pos-sym {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  #appRoot .cur-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid var(--line-gold);
+    border-radius: 999px;
+    padding: 2px 8px;
+    margin-left: 6px;
+  }
+
+  #appRoot .zero-badge {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--emerald);
+    background: var(--emerald-dim);
+    border: 1px solid var(--line-emerald);
+    border-radius: 999px;
+    padding: 2px 8px;
+    margin-left: 6px;
+  }
+
+  #appRoot .pos-age {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+
+  #appRoot .pos-total-ret {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .pos-split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  #appRoot .pos-split-box {
+    background: var(--surface-2);
+    border: 1px solid var(--line-soft);
+    border-radius: 13px;
+    padding: 9px 11px;
+  }
+
+  #appRoot .pos-split-box.div-box {
+    border-color: rgba(223, 190, 115, 0.26);
+    background: rgba(223, 190, 115, 0.05);
+  }
+
+  #appRoot .pos-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  #appRoot .pos-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 11px 8px;
+    margin-top: 13px;
+    padding-top: 13px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  #appRoot .m-lbl {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+
+  #appRoot .m-val {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    margin-top: 3px;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .pos-note-input {
+    width: 100%;
+    min-height: 36px;
+    margin-top: 10px;
+    padding: 7px 11px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--line-soft);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 12px;
+  }
+
+  #appRoot .pos-note-input::placeholder { color: var(--muted); }
+  #appRoot .pos-note-input:focus { outline: none; border-color: var(--line-gold); }
+
+  #appRoot .pos-real-fx {
+    margin-top: 10px;
+    padding: 8px 11px;
+    border-radius: 12px;
+    background: var(--sky-dim);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--sky);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .pos-edit-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+
+  #appRoot .pos-edit-row input {
+    width: 96px;
+    min-height: 38px;
+    padding: 6px 10px;
+    font-size: 16px;
+  }
+
+  /* Accordions & Lists */
+  #appRoot details.acc { padding: 0; }
+  #appRoot details.acc > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 18px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+  }
+  #appRoot details.acc > summary::-webkit-details-marker { display: none; }
+  #appRoot details.acc > summary::after {
+    content: '+';
+    font-family: var(--font-mono);
+    font-size: 19px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  #appRoot details.acc[open] > summary::after { content: '−'; }
+  #appRoot details.acc .acc-body { padding: 0 18px 18px; }
+
+  #appRoot .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 13px;
+  }
+  #appRoot .list-item:last-child { border-bottom: none; }
+
+  #appRoot .tag {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+    margin-right: 6px;
+  }
+  #appRoot .tag-buy { background: var(--sky-dim); color: var(--sky); }
+  #appRoot .tag-sell { background: var(--rose-dim); color: var(--rose); }
+  #appRoot .tag-div, #appRoot .tag-drip { background: var(--emerald-dim); color: var(--emerald); }
+  #appRoot .tag-fx { background: var(--gold-dim); color: var(--gold); margin-left: 5px; }
+
+  #appRoot .sub-mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #appRoot .icon-action {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    min-width: 36px;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+  }
+  #appRoot .icon-action:hover { color: var(--text); background: var(--surface-2); }
+  #appRoot .icon-action.del:hover { color: var(--rose); }
+
+  #appRoot .weight-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  #appRoot .weight-row:last-child { border-bottom: none; }
+  #appRoot .weight-row input {
+    width: 74px;
+    min-height: 38px;
+    padding: 6px 8px;
+    text-align: right;
+    font-size: 16px;
+  }
+
+  #appRoot .weight-sum {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-align: right;
+    margin-top: 8px;
+  }
+  #appRoot .weight-sum.ok { color: var(--emerald); }
+  #appRoot .weight-sum.err { color: var(--rose); }
+
+  #appRoot .plan-bar {
+    height: 4px;
+    width: 92px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    margin-top: 5px;
+  }
+  #appRoot .plan-bar-fill {
+    height: 100%;
+    background: var(--grad-luxury);
+  }
+
+  #appRoot .summary-banner {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 11px 13px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+
+  #appRoot .empty-state {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  #appRoot .footer-note {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 18px;
+    line-height: 1.6;
+    opacity: 0.72;
+  }
+
+  /* Toast */
+  #appRoot .toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(96px + env(safe-area-inset-bottom));
+    transform: translate(-50%, 10px);
+    background: var(--surface-3);
+    border: 1px solid var(--line-gold);
+    color: var(--text);
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 999px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 90;
+    white-space: nowrap;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+  }
+  #appRoot .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* 5-Tab Floating Bottom Dock */
+  #appRoot .dock {
+    position: fixed;
+    left: 14px;
+    right: 14px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 50;
+    max-width: 540px;
+    margin: 0 auto;
+    background: rgba(14, 17, 23, 0.88);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid rgba(223, 190, 115, 0.25);
+    border-radius: 26px;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.62);
+  }
+
+  #appRoot .dock-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 48px;
+    min-height: 44px;
+    padding: 4px 6px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: color 0.16s ease, background 0.16s ease;
+  }
+  #appRoot .dock-btn svg { width: 19px; height: 19px; }
+  #appRoot .dock-btn.active {
+    color: var(--gold);
+    background: var(--gold-dim);
+  }
+
+  #appRoot .dock-fab {
+    width: 50px;
+    height: 50px;
+    border-radius: 17px;
+    border: none;
+    background: var(--grad-luxury);
+    color: #070B09;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: -20px;
+    box-shadow: 0 10px 24px rgba(52, 211, 153, 0.28), 0 0 0 5px var(--bg);
+  }
+  #appRoot .dock-fab svg { width: 22px; height: 22px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #appRoot .tabview.active > *, #appRoot .ambient-glow::before { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div id="appRoot">
+  <div class="ambient-glow"></div>
+  <div class="wrap">
+    <header class="topbar">
+      <div>
+        <div class="brand-eyebrow">Temettü Defteri</div>
+        <h1 class="brand-title" id="viewTitle">Özet</h1>
+      </div>
+      <div class="header-tools">
+        <div class="fx-pill" title="Güncel USD/TRY kuru">
+          <span>1$</span>
+          <input id="topFxInput" type="number" step="any" placeholder="0.00" onchange="setFxRate(this.value)">
+          <span>₺</span>
+        </div>
+        <button class="icon-btn" id="privacyBtn" onclick="togglePrivacy()" aria-label="Tutarları Gizle/Göster" title="Tutarları Gizle/Göster">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- 1. ÖZET -->
+      <section id="view-ozet" class="tabview active">
+        <div class="card" id="checklistCard" style="display:none"></div>
+        <div class="mega-card" id="megaCard"></div>
+        <div class="two-col" id="currencyGrid"></div>
+        <div class="card" id="leadersCard" style="display:none"></div>
+        <div class="card" id="goalCountdownCard"></div>
+        <div class="card" id="forecastCard"></div>
+        <div class="card" id="calendarMatrixCard" style="display:none"></div>
+        <div class="card" id="inflationFreedomCard"></div>
+        <div class="card" id="monthlyChartCard"></div>
+        <div class="ribbon-head">Son temettüler</div>
+        <div class="ribbon" id="divRibbon"></div>
+        <div class="footer-note">Fiyat Getirisi ve Temettü Getirisi ayrı gösterilir; Toplam Getiri ikisinin toplamıdır.<br>Girilen temettüler doğrudan net kabul edilir.</div>
+      </section>
+
+      <!-- 2. POZİSYON -->
+      <section id="view-pozisyon" class="tabview">
+        <div class="toolbar">
+          <span class="sub-mono" id="posCountLabel"></span>
+          <select id="holdingsSort" onchange="setHoldingsSort(this.value)">
+            <option value="value">Değere Göre</option>
+            <option value="totalReturn">Toplam Getiriye Göre</option>
+            <option value="divReturn">Temettü Getirisine Göre</option>
+            <option value="priceReturn">Fiyat Getirisine Göre</option>
+            <option value="yield">Verime Göre</option>
+          </select>
+        </div>
+        <div class="card" id="pieChartCard"></div>
+        <div class="card" id="bulkPriceCard" style="display:none"></div>
+        <div id="holdingsList"></div>
+      </section>
+
+      <!-- 3. + EKLE -->
+      <section id="view-ekle" class="tabview">
+        <div class="card">
+          <div class="edit-banner" id="editBanner">
+            <span id="editBannerText">Kayıt düzenleniyor</span>
+            <button onclick="cancelEdit()">İptal</button>
+          </div>
+
+          <div class="seg-tabs">
+            <div class="seg-tab active" data-tx-tab="buy" onclick="switchTxTab('buy')">Alım</div>
+            <div class="seg-tab" data-tx-tab="sell" onclick="switchTxTab('sell')">Satış</div>
+            <div class="seg-tab" data-tx-tab="div" onclick="switchTxTab('div')">Temettü</div>
+          </div>
+
+          <div id="form-buy">
+            <div class="form-grid">
+              <div class="field">
+                <label>Sembol</label>
+                <input id="b-sym" list="symbolList" placeholder="Örn. SCHD" style="text-transform:uppercase" oninput="autoFillCurrency('b')">
+              </div>
+              <div class="field">
+                <label>Para Birimi</label>
+                <select id="b-cur" onchange="toggleTxFx('b')">
+                  <option value="USD">USD</option>
+                  <option value="TRY">TRY</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Adet</label>
+                <input id="b-shares" type="number" step="any" placeholder="10">
+              </div>
+              <div class="field">
+                <label>Birim Fiyat</label>
+                <input id="b-price" type="number" step="any" placeholder="42.50">
+              </div>
+              <div class="field full">
+                <label>Tarih</label>
+                <input id="b-date" type="date">
+              </div>
+              <div class="field full tx-fx-box visible" id="b-fx-box">
+                <label>İşlem Günü Kuru (USD/TRY · Opsiyonel)</label>
+                <input id="b-txfx" type="number" step="any" placeholder="Örn. 35.40">
+                <div class="helper">Girersen cebinden çıkan gerçek TL maliyet ve kur farkı dahil TL getiri hesaplanır.</div>
+              </div>
+              <div class="field full check-box">
+                <label class="check-label">
+                  <input type="checkbox" id="b-fromdiv"> Temettü ile aldım (DRIP)
+                </label>
+                <div class="helper">Maliyete eklenmez; adet sayısını artırır ve ortalama maliyeti düşürür.</div>
+              </div>
+            </div>
+            <button class="btn" id="btn-save-buy" onclick="submitBuy()">Alımı Kaydet</button>
+          </div>
+
+          <div id="form-sell" style="display:none">
+            <div class="form-grid">
+              <div class="field">
+                <label>Sembol</label>
+                <input id="s-sym" list="symbolList" placeholder="Örn. SCHD" style="text-transform:uppercase" oninput="autoFillCurrency('s')">
+              </div>
+              <div class="field">
+                <label>Para Birimi</label>
+                <select id="s-cur" onchange="toggleTxFx('s')">
+                  <option value="USD">USD</option>
+                  <option value="TRY">TRY</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Adet</label>
+                <input id="s-shares" type="number" step="any" placeholder="5">
+              </div>
+              <div class="field">
+                <label>Satış Fiyatı</label>
+                <input id="s-price" type="number" step="any" placeholder="46.00">
+              </div>
+              <div class="field full">
+                <label>Tarih</label>
+                <input id="s-date" type="date">
+              </div>
+              <div class="field full tx-fx-box visible" id="s-fx-box">
+                <label>Satış Günü Kuru (USD/TRY · Opsiyonel)</label>
+                <input id="s-txfx" type="number" step="any" placeholder="Örn. 36.85">
+                <div class="helper">Satış günündeki kur, gerçekleşen TL kâr/zarar hesabında kullanılır.</div>
+              </div>
+            </div>
+            <button class="btn" id="btn-save-sell" onclick="submitSell()">Satışı Kaydet</button>
+          </div>
+
+          <div id="form-div" style="display:none">
+            <div class="form-grid">
+              <div class="field">
+                <label>Sembol</label>
+                <input id="d-sym" list="symbolList" placeholder="Örn. SCHD" style="text-transform:uppercase" oninput="autoFillCurrency('d')">
+              </div>
+              <div class="field">
+                <label>Para Birimi</label>
+                <select id="d-cur" onchange="toggleTxFx('d')">
+                  <option value="USD">USD</option>
+                  <option value="TRY">TRY</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>Net Temettü Tutarı</label>
+                <input id="d-amount" type="number" step="any" placeholder="14.20">
+              </div>
+              <div class="field full">
+                <label>Tarih</label>
+                <input id="d-date" type="date">
+              </div>
+              <div class="field full tx-fx-box visible" id="d-fx-box">
+                <label>Ödeme Günü Kuru (USD/TRY · Opsiyonel)</label>
+                <input id="d-txfx" type="number" step="any" placeholder="Örn. 36.50">
+                <div class="helper">Ödemenin yattığı gündeki kur, gerçek TL temettü toplamında kullanılır.</div>
+              </div>
+            </div>
+            <button class="btn" id="btn-save-div" onclick="submitDiv()">Temettüyü Kaydet</button>
+          </div>
+        </div>
+        <datalist id="symbolList"></datalist>
+      </section>
+
+      <!-- 4. ASİSTAN -->
+      <section id="view-asistan" class="tabview">
+        <div class="field" style="margin-bottom:12px">
+          <label>Hesaplama Para Birimi</label>
+          <select id="planCur" onchange="renderAssistantView()">
+            <option value="TRY">TRY</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+
+        <details class="card acc" open>
+          <summary>Aylık Yatırım Planı</summary>
+          <div class="acc-body" id="investPlanBox"></div>
+        </details>
+
+        <details class="card acc" id="rebalAccordion" open>
+          <summary>Bu Sefer Ne Almalıyım?</summary>
+          <div class="acc-body">
+            <div class="helper" style="margin-bottom:10px">Yatıracağın tutarı gir; hedef dağılımındaki açığa göre lot önerisi çıkarır.</div>
+            <div class="field">
+              <label>Yatırılacak Tutar</label>
+              <input id="rebalAmount" type="number" step="any" placeholder="5000" oninput="renderRebalanceResult()">
+            </div>
+            <div id="rebalResult" style="margin-top:12px"></div>
+          </div>
+        </details>
+
+        <details class="card acc">
+          <summary>Hedef Dağılım (%100)</summary>
+          <div class="acc-body">
+            <div class="field full">
+              <label>Sembol Ekle</label>
+              <div style="display:flex; gap:8px">
+                <input id="newTargetSym" placeholder="Örn. VOO" style="text-transform:uppercase">
+                <button class="btn btn-ghost" style="width:auto; margin-top:0; padding:0 16px; white-space:nowrap" onclick="addTargetSymbol()">Ekle</button>
+              </div>
+            </div>
+            <div id="weightRows" style="margin-top:10px"></div>
+            <div id="weightSum" class="weight-sum"></div>
+            <div style="display:flex; gap:8px; margin-top:10px">
+              <button class="btn btn-ghost" style="margin-top:0" onclick="weightsEqualSplit()">Eşit Dağıt</button>
+              <button class="btn btn-ghost" style="margin-top:0" onclick="weightsMatchCurrent()">Mevcut Ağırlık</button>
+            </div>
+          </div>
+        </details>
+
+        <details class="card acc">
+          <summary>Gelir Hedefi Hesaplayıcı</summary>
+          <div class="acc-body">
+            <div class="helper" style="margin-bottom:10px">Hedeflediğin aylık ek temettü için gereken tahmini portföy tutarını hesaplar.</div>
+            <div class="field">
+              <label>Hedef Aylık Temettü</label>
+              <input id="goalMonthlyInput" type="number" step="any" placeholder="2000" oninput="renderGoalCalculator()">
+            </div>
+            <div id="goalCalcResult" style="margin-top:12px"></div>
+          </div>
+        </details>
+
+        <details class="card acc">
+          <summary>Bileşik Büyüme Simülatörü</summary>
+          <div class="acc-body">
+            <div class="form-grid">
+              <div class="field"><label>Başlangıç (TL)</label><input id="simStart" type="number" step="any" oninput="renderSimulation()"></div>
+              <div class="field"><label>Aylık Katkı (TL)</label><input id="simMonthly" type="number" step="any" placeholder="0" oninput="renderSimulation()"></div>
+              <div class="field"><label>Fiyat Artışı (%/yıl)</label><input id="simGrowth" type="number" step="any" placeholder="0" oninput="renderSimulation()"></div>
+              <div class="field"><label>Temettü Verimi (%/yıl)</label><input id="simYield" type="number" step="any" placeholder="0" oninput="renderSimulation()"></div>
+              <div class="field full check-box">
+                <label class="check-label"><input type="checkbox" id="simReinvest" checked onchange="renderSimulation()"> Temettüler yeniden yatırılsın</label>
+              </div>
+              <div class="field full"><label>Süre (Yıl)</label><input id="simYears" type="number" step="1" value="10" oninput="renderSimulation()"></div>
+            </div>
+            <div id="simResult" style="margin-top:12px"></div>
+          </div>
+        </details>
+      </section>
+
+      <!-- 5. VARLIK & GEÇMİŞ -->
+      <section id="view-varlik" class="tabview">
+        <div class="mega-card" id="netWorthHero"></div>
+        <div class="card" id="netWorthChartCard"></div>
+        <div id="accountsList"></div>
+
+        <div class="card">
+          <div class="card-title">Yeni Hesap Ekle</div>
+          <div class="card-sub">BES, banka, para piyasası fonu gibi temettü dışı hesaplarını buradan takip et.</div>
+          <div class="form-grid">
+            <div class="field"><label>Hesap Adı</label><input id="newAccName" placeholder="Örn. BES"></div>
+            <div class="field"><label>Para Birimi</label><select id="newAccCur"><option value="TRY">TRY</option><option value="USD">USD</option></select></div>
+          </div>
+          <button class="btn" onclick="addAccount()">Hesap Ekle</button>
+        </div>
+
+        <div class="card" id="yearlyDivCard" style="display:none"></div>
+
+        <div class="card">
+          <div class="card-title">İşlem Geçmişi</div>
+          <div class="field" style="margin:10px 0 6px">
+            <input id="historySearch" placeholder="Sembole göre ara..." style="border-radius:999px; padding:9px 14px; min-height:40px" oninput="renderHistoryList()">
+          </div>
+          <div id="historyList"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Yedekleme</div>
+          <div class="card-sub" id="backupStatusText">Verilerini JSON olarak kopyalayabilir veya geri yükleyebilirsin.</div>
+          <div style="display:flex; gap:8px">
+            <button class="btn" style="margin-top:0" onclick="exportBackup()">Panoya Kopyala</button>
+            <button class="btn btn-ghost" style="margin-top:0" onclick="importBackup()">İçe Aktar</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 5-Tab Floating Bottom Dock -->
+  <nav class="dock" aria-label="Alt Menü">
+    <button class="dock-btn active" data-view="ozet" onclick="switchView('ozet')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V11M12 20V4M20 20v-7"/></svg>
+      <span>Özet</span>
+    </button>
+    <button class="dock-btn" data-view="pozisyon" onclick="switchView('pozisyon')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+      <span>Pozisyon</span>
+    </button>
+    <button class="dock-fab" data-view="ekle" onclick="switchView('ekle')" aria-label="Yeni Kayıt">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="dock-btn" data-view="asistan" onclick="switchView('asistan')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span>Asistan</span>
+    </button>
+    <button class="dock-btn" data-view="varlik" onclick="switchView('varlik')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6M4 10v9h16v-9"/></svg>
+      <span>Varlık</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+const STORAGE_KEY = 'temettu-defteri-v1';
+
+let state = {
+  transactions: [],
+  dividends: [],
+  prices: {},
+  notes: {},
+  fxRate: null,
+  monthlyGoal: null,
+  inflationRate: null,
+  monthlyExpenses: null,
+  targetWeights: {},
+  paymentFrequency: {},
+  priceUpdatedAt: {},
+  accounts: [],
+  accountSnapshots: [],
+  netWorthHistory: [],
+  lastBackupAt: null,
+  monthlyInvestTarget: null
+};
+
+let displayCurrency = 'TRY';
+let privacyHidden = false;
+let holdingsSort = 'value';
+let lastHoldings = [];
+let editing = null;
+let simInitialized = false;
+
+const MONTHS_TR = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
+const PALETTE = ['#34D399', '#DFBE73', '#60A5FA', '#FB7185', '#C4B5FD', '#6EE7B7', '#FBBF24', '#93C5FD'];
+
+function uid() {
+  return Math.random().toString(36).slice(2, 10);
+}
+
+function todayStr() {
+  const d = new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+
+function fmtMoney(val, cur) {
+  if (val === null || val === undefined || isNaN(val)) return '—';
+  if (privacyHidden) return cur === 'TRY' ? '•••• ₺' : '$••••';
+  const s = Number(val).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return cur === 'TRY' ? s + ' ₺' : '$' + s;
+}
+
+function fmtPct(val) {
+  if (val === null || val === undefined || isNaN(val)) return '—';
+  if (privacyHidden) return '•••%';
+  return (val >= 0 ? '+' : '') + Number(val).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+}
+
+function relTime(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const diffDays = Math.round((today - d) / 86400000);
+  if (isNaN(diffDays) || diffDays < 0) return dateStr;
+  if (diffDays === 0) return 'Bugün';
+  if (diffDays === 1) return 'Dün';
+  if (diffDays < 7) return diffDays + ' gün önce';
+  if (diffDays < 30) return Math.floor(diffDays / 7) + ' hafta önce';
+  if (diffDays < 365) return Math.floor(diffDays / 30) + ' ay önce';
+  return Math.floor(diffDays / 365) + ' yıl önce';
+}
+
+function toast(msg) {
+  const root = document.getElementById('appRoot') || document.body;
+  let el = document.getElementById('appToast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'appToast';
+    el.className = 'toast';
+    root.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+function normalizeState(raw) {
+  const s = raw && typeof raw === 'object' ? raw : {};
+  return {
+    transactions: Array.isArray(s.transactions) ? s.transactions : [],
+    dividends: Array.isArray(s.dividends) ? s.dividends : [],
+    prices: s.prices && typeof s.prices === 'object' ? s.prices : {},
+    notes: s.notes && typeof s.notes === 'object' ? s.notes : {},
+    fxRate: s.fxRate !== undefined ? s.fxRate : null,
+    monthlyGoal: s.monthlyGoal !== undefined ? s.monthlyGoal : null,
+    inflationRate: s.inflationRate !== undefined ? s.inflationRate : null,
+    monthlyExpenses: s.monthlyExpenses !== undefined ? s.monthlyExpenses : null,
+    targetWeights: s.targetWeights && typeof s.targetWeights === 'object' ? s.targetWeights : {},
+    paymentFrequency: s.paymentFrequency && typeof s.paymentFrequency === 'object' ? s.paymentFrequency : {},
+    priceUpdatedAt: s.priceUpdatedAt && typeof s.priceUpdatedAt === 'object' ? s.priceUpdatedAt : {},
+    accounts: Array.isArray(s.accounts) ? s.accounts : [],
+    accountSnapshots: Array.isArray(s.accountSnapshots) ? s.accountSnapshots : [],
+    netWorthHistory: Array.isArray(s.netWorthHistory) ? s.netWorthHistory : [],
+    lastBackupAt: s.lastBackupAt !== undefined ? s.lastBackupAt : null,
+    monthlyInvestTarget: s.monthlyInvestTarget !== undefined ? s.monthlyInvestTarget : null
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = normalizeState(JSON.parse(raw));
+  } catch (err) {
+    console.error('Veri yükleme hatası:', err);
+  }
+  resetDates();
+  ['b', 's', 'd'].forEach(toggleTxFx);
+  render();
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Kayıt hatası:', err);
+  }
+}
+
+function resetDates() {
+  ['b-date', 's-date', 'd-date'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = todayStr();
+  });
+}
+
+function togglePrivacy() {
+  privacyHidden = !privacyHidden;
+  const btn = document.getElementById('privacyBtn');
+  if (btn) btn.classList.toggle('active', privacyHidden);
+  render();
+}
+
+function setDisplayCurrency(cur) {
+  if (cur === 'USD' && !state.fxRate) {
+    toast('USD görünümü için üstten USD/TRY kurunu gir.');
+    return;
+  }
+  displayCurrency = cur;
+  render();
+}
+
+function convertDisplay(amountTRY) {
+  if (amountTRY === null || amountTRY === undefined || isNaN(amountTRY)) return null;
+  if (displayCurrency === 'USD') {
+    return state.fxRate ? amountTRY / state.fxRate : null;
+  }
+  return amountTRY;
+}
+
+function setFxRate(val) {
+  const num = parseFloat(val);
+  state.fxRate = (!isNaN(num) && num > 0) ? num : null;
+  if (!state.fxRate && displayCurrency === 'USD') displayCurrency = 'TRY';
+  saveState();
+  render();
+}
+
+function setMonthlyGoal(val) {
+  const num = parseFloat(val);
+  state.monthlyGoal = (!isNaN(num) && num > 0) ? num : null;
+  saveState();
+  render();
+}
+
+function setInflationRate(val) {
+  const num = parseFloat(val);
+  state.inflationRate = (!isNaN(num)) ? num : null;
+  saveState();
+  render();
+}
+
+function setMonthlyExpenses(val) {
+  const num = parseFloat(val);
+  state.monthlyExpenses = (!isNaN(num) && num > 0) ? num : null;
+  saveState();
+  render();
+}
+
+function setMonthlyInvestTarget(val) {
+  const num = parseFloat(val);
+  state.monthlyInvestTarget = (!isNaN(num) && num > 0) ? num : null;
+  saveState();
+  render();
+}
+
+function setHoldingsSort(val) {
+  holdingsSort = val;
+  render();
+}
+
+function updateNote(key, val) {
+  if (!state.notes) state.notes = {};
+  const clean = (val || '').trim();
+  if (clean) state.notes[key] = clean;
+  else delete state.notes[key];
+  saveState();
+}
+
+function switchView(name) {
+  document.querySelectorAll('.tabview').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+  document.querySelectorAll('.dock-btn').forEach(b => b.classList.toggle('active', b.dataset.view === name));
+  const titles = { ozet: 'Özet', pozisyon: 'Pozisyonlar', ekle: 'Yeni Kayıt', asistan: 'Asistan', varlik: 'Varlık & Geçmiş' };
+  const titleEl = document.getElementById('viewTitle');
+  if (titleEl) titleEl.textContent = titles[name] || 'Özet';
+
+  if (name === 'ekle') ['b', 's', 'd'].forEach(toggleTxFx);
+  if (name === 'asistan') {
+    if (!window.__planCurInit) {
+      window.__planCurInit = true;
+      const uCnt = lastHoldings.filter(h => h.shares > 0 && h.currency === 'USD').length;
+      const tCnt = lastHoldings.filter(h => h.shares > 0 && h.currency === 'TRY').length;
+      document.getElementById('planCur').value = uCnt > tCnt ? 'USD' : 'TRY';
+    }
+    renderAssistantView();
+    if (!simInitialized) {
+      simInitialized = true;
+      if (window.__totalPortfolioTRY) document.getElementById('simStart').value = Math.round(window.__totalPortfolioTRY);
+      renderSimulation();
+    }
+  }
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+function switchTxTab(tab) {
+  if (editing && editing.tab !== tab) {
+    editing = null;
+    clearTxForms();
+    updateEditBanner();
+  }
+  document.querySelectorAll('.seg-tab').forEach(el => el.classList.toggle('active', el.dataset.txTab === tab));
+  document.getElementById('form-buy').style.display = tab === 'buy' ? 'block' : 'none';
+  document.getElementById('form-sell').style.display = tab === 'sell' ? 'block' : 'none';
+  document.getElementById('form-div').style.display = tab === 'div' ? 'block' : 'none';
+  toggleTxFx(tab === 'buy' ? 'b' : (tab === 'sell' ? 's' : 'd'));
+}
+
+function toggleTxFx(prefix) {
+  const curEl = document.getElementById(prefix + '-cur');
+  const box = document.getElementById(prefix + '-fx-box');
+  if (!curEl || !box) return;
+  box.classList.toggle('visible', curEl.value === 'USD');
+}
+
+function readOptionalFx(id, cur) {
+  if (cur !== 'USD') return null;
+  const el = document.getElementById(id);
+  if (!el) return null;
+  const v = parseFloat(el.value);
+  return (!isNaN(v) && v > 0) ? v : null;
+}
+
+function knownCurrency(sym) {
+  const clean = (sym || '').trim().toUpperCase();
+  if (!clean) return null;
+  const tx = state.transactions.find(t => t.symbol === clean);
+  if (tx) return tx.currency;
+  const dv = state.dividends.find(d => d.symbol === clean);
+  return dv ? dv.currency : null;
+}
+
+function autoFillCurrency(prefix) {
+  const sym = document.getElementById(prefix + '-sym').value;
+  const cur = knownCurrency(sym);
+  if (cur) {
+    document.getElementById(prefix + '-cur').value = cur;
+    toggleTxFx(prefix);
+  }
+}
+
+function clearTxForms() {
+  ['b-sym', 'b-shares', 'b-price', 'b-txfx', 's-sym', 's-shares', 's-price', 's-txfx', 'd-sym', 'd-amount', 'd-txfx'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const fd = document.getElementById('b-fromdiv');
+  if (fd) fd.checked = false;
+  resetDates();
+  ['b', 's', 'd'].forEach(toggleTxFx);
+}
+
+function updateEditBanner() {
+  const banner = document.getElementById('editBanner');
+  const labels = {
+    buy: ['btn-save-buy', 'Alımı Kaydet'],
+    sell: ['btn-save-sell', 'Satışı Kaydet'],
+    div: ['btn-save-div', 'Temettüyü Kaydet']
+  };
+  Object.keys(labels).forEach(k => {
+    const btn = document.getElementById(labels[k][0]);
+    if (btn) btn.textContent = (editing && editing.tab === k) ? 'Değişikliği Kaydet' : labels[k][1];
+  });
+  if (banner) banner.style.display = editing ? 'flex' : 'none';
+}
+
+function cancelEdit() {
+  editing = null;
+  clearTxForms();
+  updateEditBanner();
+}
+
+function startEdit(kind, id) {
+  if (kind === 'tx') {
+    const tx = state.transactions.find(x => x.id === id);
+    if (!tx) return;
+    const tab = tx.type === 'sell' ? 'sell' : 'buy';
+    switchView('ekle');
+    switchTxTab(tab);
+    if (tab === 'buy') {
+      document.getElementById('b-sym').value = tx.symbol;
+      document.getElementById('b-cur').value = tx.currency;
+      document.getElementById('b-shares').value = tx.shares;
+      document.getElementById('b-price').value = tx.price;
+      document.getElementById('b-date').value = tx.date;
+      document.getElementById('b-fromdiv').checked = !!tx.fromDiv;
+      document.getElementById('b-txfx').value = tx.txFx || '';
+      toggleTxFx('b');
+    } else {
+      document.getElementById('s-sym').value = tx.symbol;
+      document.getElementById('s-cur').value = tx.currency;
+      document.getElementById('s-shares').value = tx.shares;
+      document.getElementById('s-price').value = tx.price;
+      document.getElementById('s-date').value = tx.date;
+      document.getElementById('s-txfx').value = tx.txFx || '';
+      toggleTxFx('s');
+    }
+    editing = { kind: 'tx', id, tab };
+  } else {
+    const dv = state.dividends.find(x => x.id === id);
+    if (!dv) return;
+    switchView('ekle');
+    switchTxTab('div');
+    document.getElementById('d-sym').value = dv.symbol;
+    document.getElementById('d-cur').value = dv.currency;
+    document.getElementById('d-amount').value = dv.amount;
+    document.getElementById('d-date').value = dv.date;
+    document.getElementById('d-txfx').value = dv.txFx || '';
+    toggleTxFx('d');
+    editing = { kind: 'div', id, tab: 'div' };
+  }
+  updateEditBanner();
+}
+
+function quickBuy(symbol) {
+  const last = [...state.transactions].filter(t => t.symbol === symbol && t.type !== 'sell').sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+  if (!last) return;
+  cancelEdit();
+  switchView('ekle');
+  switchTxTab('buy');
+  document.getElementById('b-sym').value = symbol;
+  document.getElementById('b-cur').value = last.currency;
+  document.getElementById('b-price').value = last.price;
+  document.getElementById('b-date').value = todayStr();
+  document.getElementById('b-txfx').value = last.currency === 'USD' ? (state.fxRate || '') : '';
+  toggleTxFx('b');
+  document.getElementById('b-shares').focus();
+}
+
+function quickDiv(symbol) {
+  cancelEdit();
+  switchView('ekle');
+  switchTxTab('div');
+  document.getElementById('d-sym').value = symbol;
+  const cur = knownCurrency(symbol);
+  if (cur) document.getElementById('d-cur').value = cur;
+  document.getElementById('d-date').value = todayStr();
+  document.getElementById('d-txfx').value = (document.getElementById('d-cur').value === 'USD') ? (state.fxRate || '') : '';
+  toggleTxFx('d');
+  document.getElementById('d-amount').focus();
+}
+
+function submitBuy() {
+  const sym = document.getElementById('b-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('b-cur').value;
+  const shares = parseFloat(document.getElementById('b-shares').value);
+  const price = parseFloat(document.getElementById('b-price').value);
+  const date = document.getElementById('b-date').value || todayStr();
+  const fromDiv = document.getElementById('b-fromdiv').checked;
+  const txFx = readOptionalFx('b-txfx', cur);
+  if (!sym || !shares || !price) { toast('Sembol, adet ve fiyat gerekli.'); return; }
+
+  const isEdit = !!(editing && editing.kind === 'tx' && editing.tab === 'buy');
+  const rec = { id: isEdit ? editing.id : uid(), symbol: sym, currency: cur, shares, price, date, fromDiv };
+  if (txFx !== null) rec.txFx = txFx;
+
+  const idx = isEdit ? state.transactions.findIndex(t => t.id === editing.id) : -1;
+  if (idx >= 0) state.transactions[idx] = rec; else state.transactions.push(rec);
+
+  editing = null; clearTxForms(); updateEditBanner();
+  saveState(); render();
+  toast(isEdit ? 'Alım güncellendi' : 'Alım kaydedildi');
+}
+
+function submitSell() {
+  const sym = document.getElementById('s-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('s-cur').value;
+  const shares = parseFloat(document.getElementById('s-shares').value);
+  const price = parseFloat(document.getElementById('s-price').value);
+  const date = document.getElementById('s-date').value || todayStr();
+  const txFx = readOptionalFx('s-txfx', cur);
+  if (!sym || !shares || !price) { toast('Sembol, adet ve fiyat gerekli.'); return; }
+
+  const isEdit = !!(editing && editing.kind === 'tx' && editing.tab === 'sell');
+  const rec = { id: isEdit ? editing.id : uid(), symbol: sym, currency: cur, shares, price, date, type: 'sell' };
+  if (txFx !== null) rec.txFx = txFx;
+
+  const idx = isEdit ? state.transactions.findIndex(t => t.id === editing.id) : -1;
+  if (idx >= 0) state.transactions[idx] = rec; else state.transactions.push(rec);
+
+  editing = null; clearTxForms(); updateEditBanner();
+  saveState(); render();
+  toast(isEdit ? 'Satış güncellendi' : 'Satış kaydedildi');
+}
+
+function submitDiv() {
+  const sym = document.getElementById('d-sym').value.trim().toUpperCase();
+  const cur = document.getElementById('d-cur').value;
+  const amount = parseFloat(document.getElementById('d-amount').value);
+  const date = document.getElementById('d-date').value || todayStr();
+  const txFx = readOptionalFx('d-txfx', cur);
+  if (!sym || !amount) { toast('Sembol ve tutar gerekli.'); return; }
+
+  const isEdit = !!(editing && editing.kind === 'div');
+  const rec = { id: isEdit ? editing.id : uid(), symbol: sym, currency: cur, amount, date };
+  if (txFx !== null) rec.txFx = txFx;
+
+  const idx = isEdit ? state.dividends.findIndex(d => d.id === editing.id) : -1;
+  if (idx >= 0) state.dividends[idx] = rec; else state.dividends.push(rec);
+
+  editing = null; clearTxForms(); updateEditBanner();
+  saveState(); render();
+  toast(isEdit ? 'Temettü güncellendi' : 'Temettü kaydedildi');
+}
+
+function deleteEntry(kind, id) {
+  if (kind === 'tx') state.transactions = state.transactions.filter(t => t.id !== id);
+  else state.dividends = state.dividends.filter(d => d.id !== id);
+  saveState(); render();
+  toast('Kayıt silindi');
+}
+
+function updatePrice(sym, val) {
+  const p = parseFloat(val);
+  if (!isNaN(p) && p > 0) {
+    state.prices[sym] = p;
+    if (!state.priceUpdatedAt) state.priceUpdatedAt = {};
+    state.priceUpdatedAt[sym] = new Date().toISOString();
+    saveState(); render();
+  }
+}
+
+function getPriceAgeDays(sym) {
+  if (!state.priceUpdatedAt || !state.priceUpdatedAt[sym]) return null;
+  return (Date.now() - new Date(state.priceUpdatedAt[sym]).getTime()) / 86400000;
+}
+
+function getFrequency(sym) {
+  return (state.paymentFrequency && state.paymentFrequency[sym]) ? state.paymentFrequency[sym] : null;
+}
+
+function setFrequency(sym, val) {
+  const f = parseInt(val, 10);
+  if (!state.paymentFrequency) state.paymentFrequency = {};
+  if (isNaN(f) || f <= 0) delete state.paymentFrequency[sym];
+  else state.paymentFrequency[sym] = f;
+  saveState(); render();
+}
+
+function sharesAt(sym, ms) {
+  return state.transactions
+    .filter(t => t.symbol === sym && new Date(t.date).getTime() <= ms)
+    .reduce((sum, t) => sum + (t.type === 'sell' ? -t.shares : t.shares), 0);
+}
+
+function nextDividendDate(sym) {
+  const divs = state.dividends.filter(d => d.symbol === sym).map(d => new Date(d.date)).sort((a, b) => a - b);
+  if (!divs.length) return null;
+  const freq = getFrequency(sym);
+  let gapMs;
+  if (freq) {
+    gapMs = (365.25 * 86400000) / freq;
+  } else {
+    if (divs.length < 2) return null;
+    let total = 0;
+    for (let i = 1; i < divs.length; i++) total += divs[i] - divs[i - 1];
+    gapMs = total / (divs.length - 1);
+  }
+  return new Date(divs[divs.length - 1].getTime() + gapMs);
+}
+
+function formatCountdown(dateObj) {
+  if (!dateObj) return null;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const target = new Date(dateObj); target.setHours(0, 0, 0, 0);
+  const days = Math.round((target - today) / 86400000);
+  const label = `${target.getDate()} ${MONTHS_TR[target.getMonth()]}`;
+  if (days > 1) return `${label} · ${days} gün sonra`;
+  if (days === 1) return `${label} · yarın`;
+  if (days === 0) return `${label} · bugün`;
+  return `${label} · tarih geçti`;
+}
+
+function computeHoldings() {
+  const symbols = [...new Set([...state.transactions.map(t => t.symbol), ...state.dividends.map(d => d.symbol)])];
+  const now = new Date();
+  const ttmCut = new Date(now); ttmCut.setFullYear(ttmCut.getFullYear() - 1);
+  const liveFx = state.fxRate || null;
+
+  return symbols.map(symbol => {
+    const txs = state.transactions.filter(t => t.symbol === symbol).map(t => ({ ...t, kind: 'tx' }));
+    const divs = state.dividends.filter(d => d.symbol === symbol).map(d => ({ ...d, kind: 'div' }));
+    const events = [...txs, ...divs].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const currency = events.length ? events[0].currency : 'TRY';
+
+    let shares = 0, costBasis = 0, dividends = 0, ttmDividends = 0, dripShares = 0, realizedGain = 0, firstBuy = null;
+    let costHistTRY = 0, divHistTRY = 0, realizedHistTRY = 0, hasTxFx = false;
+
+    events.forEach(e => {
+      if (e.txFx && e.txFx > 0) hasTxFx = true;
+      const fx = currency === 'USD' ? (e.txFx || liveFx || 0) : 1;
+
+      if (e.kind === 'tx') {
+        if (e.type === 'sell') {
+          const avgC = shares > 0 ? costBasis / shares : 0;
+          const avgCTRY = shares > 0 ? costHistTRY / shares : 0;
+          const sellN = Math.min(e.shares, shares);
+          realizedGain += (e.price - avgC) * sellN;
+          realizedHistTRY += (e.price * fx - avgCTRY) * sellN;
+          shares -= sellN;
+          costBasis -= avgC * sellN;
+          costHistTRY -= avgCTRY * sellN;
+        } else {
+          if (!firstBuy || new Date(e.date) < firstBuy) firstBuy = new Date(e.date);
+          shares += e.shares;
+          if (e.fromDiv) dripShares += e.shares;
+          else {
+            costBasis += e.shares * e.price;
+            costHistTRY += e.shares * e.price * fx;
+          }
+        }
+      } else {
+        dividends += e.amount;
+        divHistTRY += e.amount * fx;
+        if (new Date(e.date) >= ttmCut) ttmDividends += e.amount;
+      }
+    });
+
+    if (costBasis < 0.01) { costBasis = 0; costHistTRY = 0; }
+    if (shares < 0.0001) shares = 0;
+
+    const avgCost = shares > 0 ? costBasis / shares : null;
+    const currentPrice = state.prices[symbol] || null;
+    const marketValue = currentPrice ? shares * currentPrice : null;
+
+    const priceReturnAmt = marketValue !== null ? (marketValue - costBasis + realizedGain) : null;
+    const priceReturnPct = (priceReturnAmt !== null && costBasis > 0) ? (priceReturnAmt / costBasis) * 100 : null;
+
+    const dividendReturnAmt = dividends;
+    const dividendReturnPct = costBasis > 0 ? (dividendReturnAmt / costBasis) * 100 : null;
+
+    const totalReturnAmt = marketValue !== null ? (priceReturnAmt + dividendReturnAmt) : null;
+    const totalReturnPct = (totalReturnAmt !== null && costBasis > 0) ? (totalReturnAmt / costBasis) * 100 : null;
+
+    const divShareOfTotal = (totalReturnAmt && totalReturnAmt > 0 && dividendReturnAmt > 0)
+      ? Math.min(100, (dividendReturnAmt / totalReturnAmt) * 100)
+      : null;
+
+    let realTryAmt = null, realTryPct = null;
+    if (currency === 'USD' && hasTxFx && marketValue !== null && liveFx && costHistTRY > 0) {
+      realTryAmt = (marketValue * liveFx) - costHistTRY + divHistTRY + realizedHistTRY;
+      realTryPct = (realTryAmt / costHistTRY) * 100;
+    }
+
+    const freq = getFrequency(symbol);
+    let estAnnualPerShare = null;
+    if (freq && shares > 0) {
+      const symDivs = state.dividends.filter(d => d.symbol === symbol).sort((a, b) => new Date(a.date) - new Date(b.date));
+      if (symDivs.length) {
+        const lastD = symDivs[symDivs.length - 1];
+        const sAt = sharesAt(symbol, new Date(lastD.date).getTime());
+        if (sAt > 0) estAnnualPerShare = (lastD.amount / sAt) * freq;
+      }
+    }
+
+    const divYield = estAnnualPerShare !== null && currentPrice
+      ? (estAnnualPerShare / currentPrice * 100)
+      : ((currentPrice && ttmDividends && marketValue) ? (ttmDividends / marketValue * 100) : null);
+
+    const yieldOnCost = estAnnualPerShare !== null && avgCost
+      ? (estAnnualPerShare / avgCost * 100)
+      : ((ttmDividends && costBasis > 0) ? (ttmDividends / costBasis * 100) : null);
+
+    const paybackPct = costBasis > 0 ? Math.min(100, (dividends / costBasis) * 100) : null;
+
+    return {
+      symbol, currency, shares, costBasis, dividends, ttmDividends, dripShares, realizedGain,
+      firstBuy, avgCost, currentPrice, marketValue,
+      priceReturnAmt, priceReturnPct, dividendReturnAmt, dividendReturnPct, totalReturnAmt, totalReturnPct,
+      divShareOfTotal, divYield, yieldOnCost, paybackPct, usesFreqEst: estAnnualPerShare !== null,
+      hasTxFx, costHistTRY, divHistTRY, realTryAmt, realTryPct
+    };
+  }).filter(h => h.shares > 0 || h.dividends > 0 || h.realizedGain !== 0);
+}
+
+function estimateProfile(symbol) {
+  const divs = state.dividends.filter(d => d.symbol === symbol).sort((a, b) => new Date(a.date) - new Date(b.date));
+  if (!divs.length) return null;
+  const last = divs[divs.length - 1];
+  const sAt = sharesAt(symbol, new Date(last.date).getTime());
+  if (sAt <= 0) return null;
+  const perShare = last.amount / sAt;
+  let freq = getFrequency(symbol);
+  const explicit = !!freq;
+  if (!freq) {
+    if (divs.length < 2) return null;
+    let gap = 0;
+    for (let i = 1; i < divs.length; i++) gap += new Date(divs[i].date) - new Date(divs[i - 1].date);
+    const avgDays = gap / (divs.length - 1) / 86400000;
+    if (!(avgDays > 0)) return null;
+    freq = Math.min(12, Math.max(1, Math.round(365.25 / avgDays)));
+  }
+  return { perShare, freq, explicit, annualPerShare: perShare * freq };
+}
+
+function computeForecast() {
+  const hs = lastHoldings.filter(h => h.shares > 0);
+  const rows = [];
+  const missing = [];
+  hs.forEach(h => {
+    const prof = estimateProfile(h.symbol);
+    if (!prof) { missing.push(h.symbol); return; }
+    rows.push({
+      symbol: h.symbol,
+      currency: h.currency,
+      annual: prof.annualPerShare * h.shares,
+      nextAmount: prof.perShare * h.shares,
+      freq: prof.freq,
+      explicit: prof.explicit,
+      nextDate: nextDividendDate(h.symbol),
+      marketValue: h.marketValue
+    });
+  });
+
+  const byCur = {};
+  rows.forEach(r => { byCur[r.currency] = (byCur[r.currency] || 0) + r.annual; });
+  const rate = state.fxRate;
+  const canCombine = !byCur.USD || !!rate;
+  const annualTRY = (byCur.TRY || 0) + (rate && byCur.USD ? byCur.USD * rate : 0);
+
+  let coveredTRY = 0, allPriced = true;
+  rows.forEach(r => {
+    if (!r.marketValue) { allPriced = false; return; }
+    coveredTRY += r.currency === 'USD' ? (rate ? r.marketValue * rate : 0) : r.marketValue;
+  });
+
+  return { hs, rows, missing, byCur, canCombine, annualTRY, coveredTRY, allPriced };
+}
+
+function computeTTMTRY() {
+  const now = new Date();
+  const cut = new Date(now); cut.setFullYear(cut.getFullYear() - 1);
+  let tSum = 0, uSum = 0;
+  state.dividends.forEach(d => {
+    const dt = new Date(d.date);
+    if (dt >= cut && dt <= now) {
+      if (d.currency === 'TRY') tSum += d.amount;
+      else uSum += d.amount;
+    }
+  });
+  return {
+    totalTRY: tSum + (state.fxRate ? uSum * state.fxRate : 0),
+    missingFx: uSum > 0 && !state.fxRate
+  };
+}
+
+function computeYoyTRY() {
+  const now = new Date();
+  const cur12 = new Date(now); cur12.setFullYear(cur12.getFullYear() - 1);
+  const prev12 = new Date(now); prev12.setFullYear(prev12.getFullYear() - 2);
+  let cT = 0, cU = 0, pT = 0, pU = 0;
+  state.dividends.forEach(d => {
+    const dt = new Date(d.date);
+    if (dt >= cur12 && dt <= now) { if (d.currency === 'TRY') cT += d.amount; else cU += d.amount; }
+    else if (dt >= prev12 && dt < cur12) { if (d.currency === 'TRY') pT += d.amount; else pU += d.amount; }
+  });
+  if ((cU > 0 || pU > 0) && !state.fxRate) return null;
+  const curVal = cT + (state.fxRate ? cU * state.fxRate : 0);
+  const prevVal = pT + (state.fxRate ? pU * state.fxRate : 0);
+  return prevVal > 0 ? ((curVal - prevVal) / prevVal) * 100 : null;
+}
+
+/* ---- Overview Renderers ---- */
+function renderHeader() {
+  const fxInp = document.getElementById('topFxInput');
+  if (fxInp && document.activeElement !== fxInp) {
+    fxInp.value = state.fxRate || '';
+  }
+}
+
+function renderMegaCard(holdings) {
+  const el = document.getElementById('megaCard');
+  const tryH = holdings.filter(h => h.currency === 'TRY');
+  const usdH = holdings.filter(h => h.currency === 'USD');
+  const rate = state.fxRate;
+  const tryOk = tryH.every(h => h.marketValue !== null);
+  const usdOk = usdH.every(h => h.marketValue !== null);
+  const ready = tryOk && (usdH.length === 0 || (usdOk && rate));
+
+  const fc = computeForecast();
+  const ttm = computeTTMTRY();
+  const useFc = fc.rows.length > 0 && fc.canCombine;
+  const monthlyDivTRY = useFc ? fc.annualTRY / 12 : ttm.totalTRY / 12;
+  const annualDivTRY = useFc ? fc.annualTRY : ttm.totalTRY;
+  const incomeTag = useFc ? (fc.missing.length ? 'tahmini · kısmi' : 'tahmini') : (ttm.missingFx ? '12 ay · kur eksik' : '12 ay ort.');
+
+  const toggleHtml = `
+    <div class="cur-switch">
+      <button class="${displayCurrency === 'TRY' ? 'active' : ''}" onclick="setDisplayCurrency('TRY')">₺ TRY</button>
+      <button class="${displayCurrency === 'USD' ? 'active' : ''}" onclick="setDisplayCurrency('USD')">$ USD</button>
+    </div>
+  `;
+
+  if (!ready) {
+    const hint = (!tryOk || !usdOk) ? 'tüm pozisyonlara güncel fiyat gir' : 'üst çubuktan USD/TRY kurunu gir';
+    el.innerHTML = `
+      <div class="mega-top"><span class="mega-lbl">Portföy Kokpiti</span>${toggleHtml}</div>
+      <div class="mega-val muted-state">Fiyat veya kur bekleniyor</div>
+      <div class="mega-sub">Getiri ayrıştırması için ${hint}.</div>
+      <div class="stat-grid">
+        <div class="stat-box hl">
+          <div class="stat-lbl">Aylık Temettü</div>
+          <div class="stat-val">${fmtMoney(convertDisplay(monthlyDivTRY), displayCurrency)}</div>
+          <div class="stat-sub">${incomeTag}</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-lbl">Yıllık Nakit Akışı</div>
+          <div class="stat-val">${fmtMoney(convertDisplay(annualDivTRY), displayCurrency)}</div>
+          <div class="stat-sub">${holdings.filter(h => h.shares > 0).length} aktif pozisyon</div>
+        </div>
+      </div>
+    `;
+    window.__totalPortfolioTRY = null;
+    window.__totalReturnPctTRY = null;
+    return;
+  }
+
+  const totalTRY = tryH.reduce((s, h) => s + (h.marketValue || 0), 0) + (rate ? usdH.reduce((s, h) => s + (h.marketValue || 0), 0) * rate : 0);
+  const costTRY = tryH.reduce((s, h) => s + h.costBasis, 0) + (rate ? usdH.reduce((s, h) => s + h.costBasis, 0) * rate : 0);
+  const priceRetTRY = tryH.reduce((s, h) => s + (h.priceReturnAmt || 0), 0) + (rate ? usdH.reduce((s, h) => s + (h.priceReturnAmt || 0), 0) * rate : 0);
+  const divRetTRY = tryH.reduce((s, h) => s + h.dividendReturnAmt, 0) + (rate ? usdH.reduce((s, h) => s + h.dividendReturnAmt, 0) * rate : 0);
+  const totalRetTRY = priceRetTRY + divRetTRY;
+
+  const pricePct = costTRY > 0 ? (priceRetTRY / costTRY) * 100 : null;
+  const divPct = costTRY > 0 ? (divRetTRY / costTRY) * 100 : null;
+  const totalPct = costTRY > 0 ? (totalRetTRY / costTRY) * 100 : null;
+  const divContribPct = (totalRetTRY > 0 && divRetTRY > 0) ? Math.min(100, (divRetTRY / totalRetTRY) * 100) : null;
+
+  window.__totalPortfolioTRY = totalTRY;
+  window.__totalReturnPctTRY = totalPct;
+
+  let realFxHtml = '';
+  if (usdH.some(h => h.hasTxFx) && rate) {
+    const histCostTRY = tryH.reduce((s, h) => s + h.costBasis, 0) + usdH.reduce((s, h) => s + h.costHistTRY, 0);
+    const histDivTRY = tryH.reduce((s, h) => s + h.dividends, 0) + usdH.reduce((s, h) => s + h.divHistTRY, 0);
+    if (histCostTRY > 0) {
+      const realTRY = totalTRY - histCostTRY + histDivTRY;
+      const realPct = (realTRY / histCostTRY) * 100;
+      realFxHtml = `
+        <div class="real-fx-strip">
+          <span>İşlem Günü Kuru Net TL Getiri</span>
+          <b class="${realPct >= 0 ? 'pos' : 'neg'}">${fmtPct(realPct)} (${realTRY >= 0 ? '+' : ''}${fmtMoney(convertDisplay(realTRY), displayCurrency)})</b>
+        </div>
+      `;
+    }
+  }
+
+  const subConv = displayCurrency === 'TRY' && rate
+    ? `<div class="mega-sub">≈ ${fmtMoney(totalTRY / rate, 'USD')}${divContribPct !== null && !privacyHidden ? ` · Getirinin %${divContribPct.toFixed(0)}'si temettü` : ''}</div>`
+    : `<div class="mega-sub">≈ ${fmtMoney(totalTRY, 'TRY')}${divContribPct !== null && !privacyHidden ? ` · Getirinin %${divContribPct.toFixed(0)}'si temettü` : ''}</div>`;
+
+  el.innerHTML = `
+    <div class="mega-top"><span class="mega-lbl">Toplam Portföy Değeri</span>${toggleHtml}</div>
+    <div class="mega-val">${fmtMoney(convertDisplay(totalTRY), displayCurrency)}</div>
+    ${subConv}
+
+    <div class="return-grid">
+      <div class="ret-box">
+        <div class="ret-lbl">Fiyat Getirisi</div>
+        <div class="ret-pct ${pricePct !== null && pricePct >= 0 ? 'pos' : 'neg'}">${fmtPct(pricePct)}</div>
+        <div class="ret-amt">${priceRetTRY >= 0 ? '+' : ''}${fmtMoney(convertDisplay(priceRetTRY), displayCurrency)}</div>
+      </div>
+      <div class="ret-box">
+        <div class="ret-lbl">Temettü Getirisi</div>
+        <div class="ret-pct gold-txt">${fmtPct(divPct)}</div>
+        <div class="ret-amt">+${fmtMoney(convertDisplay(divRetTRY), displayCurrency)}</div>
+      </div>
+      <div class="ret-box total-box">
+        <div class="ret-lbl">Toplam Getiri</div>
+        <div class="ret-pct ${totalPct !== null && totalPct >= 0 ? 'pos' : 'neg'}">${fmtPct(totalPct)}</div>
+        <div class="ret-amt">${totalRetTRY >= 0 ? '+' : ''}${fmtMoney(convertDisplay(totalRetTRY), displayCurrency)}</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-lbl">Ana Maliyet</div>
+        <div class="stat-val">${fmtMoney(convertDisplay(costTRY), displayCurrency)}</div>
+        <div class="stat-sub">Yıllık nakit: ${fmtMoney(convertDisplay(annualDivTRY), displayCurrency)}</div>
+      </div>
+      <div class="stat-box hl">
+        <div class="stat-lbl">Aylık Temettü</div>
+        <div class="stat-val">${fmtMoney(convertDisplay(monthlyDivTRY), displayCurrency)}</div>
+        <div class="stat-sub">${incomeTag}</div>
+      </div>
+    </div>
+    ${realFxHtml}
+  `;
+}
+
+function renderCurrencyGrid(holdings) {
+  const el = document.getElementById('currencyGrid');
+  const curs = [...new Set(holdings.map(h => h.currency))];
+  if (!curs.length) {
+    el.innerHTML = `<div class="cur-card" style="grid-column:1/-1"><div class="cur-head"><span>Portföy</span></div><div class="cur-val" style="font-size:17px">Henüz kayıt yok</div><div class="sub-mono">Ortadaki + butonuyla alım veya temettü ekle</div></div>`;
+    return;
+  }
+
+  el.innerHTML = curs.map(cur => {
+    const hs = holdings.filter(h => h.currency === cur);
+    const cost = hs.reduce((s, h) => s + h.costBasis, 0);
+    const divs = hs.reduce((s, h) => s + h.dividendReturnAmt, 0);
+    const allPriced = hs.every(h => h.marketValue !== null);
+    const val = hs.reduce((s, h) => s + (h.marketValue || 0), 0);
+    const pRet = allPriced ? hs.reduce((s, h) => s + (h.priceReturnAmt || 0), 0) : null;
+    const tRet = pRet !== null ? (pRet + divs) : null;
+
+    const pPct = (pRet !== null && cost > 0) ? (pRet / cost) * 100 : null;
+    const dPct = cost > 0 ? (divs / cost) * 100 : null;
+    const tPct = (tRet !== null && cost > 0) ? (tRet / cost) * 100 : null;
+
+    return `
+      <div class="cur-card">
+        <div class="cur-head"><span>${cur} Toplam Getiri</span><b class="${tPct !== null && tPct >= 0 ? 'pos' : 'neg'}">${fmtPct(tPct)}</b></div>
+        <div class="cur-val">${allPriced ? fmtMoney(val, cur) : '—'}</div>
+        <div class="cur-line"><span>Fiyat Getirisi</span><b class="${pPct !== null && pPct >= 0 ? 'pos' : 'neg'}">${fmtPct(pPct)}</b></div>
+        <div class="cur-line" style="margin-top:4px; padding-top:4px; border-top:none"><span>Temettü Getirisi</span><b class="gold-txt">${fmtPct(dPct)}</b></div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderLeadersCard(holdings) {
+  const el = document.getElementById('leadersCard');
+  const withDiv = holdings.filter(h => h.dividends > 0);
+  if (!withDiv.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+
+  const byCash = [...withDiv].sort((a, b) => {
+    const aTRY = a.currency === 'USD' && state.fxRate ? a.dividends * state.fxRate : a.dividends;
+    const bTRY = b.currency === 'USD' && state.fxRate ? b.dividends * state.fxRate : b.dividends;
+    return bTRY - aTRY;
+  }).slice(0, 3);
+
+  const byDivRet = [...withDiv].filter(h => h.dividendReturnPct !== null).sort((a, b) => b.dividendReturnPct - a.dividendReturnPct).slice(0, 3);
+  const medals = ['🥇', '🥈', '🥉'];
+
+  let html = `<div class="card-title">Temettü Şampiyonları</div>`;
+  html += `<div class="sub-mono" style="margin-bottom:4px">En Çok Nakit Temettü Ödeyenler</div>`;
+  html += byCash.map((h, i) => `
+    <div class="list-item">
+      <span>${medals[i] || '•'} <b style="font-family:var(--font-mono)">${h.symbol}</b> <span class="sub-mono">(${h.currency})</span></span>
+      <b class="gold-txt" style="font-family:var(--font-mono)">${fmtMoney(h.dividends, h.currency)}</b>
+    </div>
+  `).join('');
+
+  if (byDivRet.length) {
+    html += `<div class="sub-mono" style="margin:10px 0 4px">Maliyete Göre En Yüksek Temettü Getirisi</div>`;
+    html += byDivRet.map((h, i) => `
+      <div class="list-item">
+        <span>${medals[i] || '•'} <b style="font-family:var(--font-mono)">${h.symbol}</b></span>
+        <b class="pos" style="font-family:var(--font-mono)">${fmtPct(h.dividendReturnPct)}</b>
+      </div>
+    `).join('');
+  }
+  el.innerHTML = html;
+}
+
+function renderGoalCountdownCard() {
+  const el = document.getElementById('goalCountdownCard');
+  const fc = computeForecast();
+  const ttm = computeTTMTRY();
+  const currentMonthlyTRY = (fc.rows.length && fc.canCombine) ? (fc.annualTRY / 12) : (ttm.totalTRY / 12);
+  const goal = state.monthlyGoal;
+
+  let html = `
+    <div class="card-title">Pasif Gelir Hedefi</div>
+    <div class="field" style="margin-top:10px">
+      <label>Hedef Aylık Temettü (TL)</label>
+      <input type="number" step="any" value="${goal || ''}" placeholder="Örn. 15000" onchange="setMonthlyGoal(this.value)">
+    </div>
+  `;
+
+  if (!goal) {
+    html += `<div class="helper" style="margin-top:8px">Mevcut aylık temettü: <b class="gold-txt">${fmtMoney(convertDisplay(currentMonthlyTRY), displayCurrency)}</b>. Hedef girerek geri sayımı başlat.</div>`;
+  } else {
+    const pctDone = (currentMonthlyTRY / goal) * 100;
+    const remTRY = Math.max(0, goal - currentMonthlyTRY);
+    const totalTRY = window.__totalPortfolioTRY || 0;
+    const annYield = (totalTRY > 0 && currentMonthlyTRY > 0) ? ((currentMonthlyTRY * 12) / totalTRY) : 0;
+    const monthlyContrib = state.monthlyInvestTarget || 0;
+
+    let etaText = 'Asistan sekmesinden aylık yatırım hedefi girerek tahmini süreyi gör';
+    if (remTRY <= 0) {
+      etaText = 'Hedeflenen aylık temettü gelirine ulaştın.';
+    } else if (annYield > 0 && monthlyContrib > 0) {
+      const mYield = Math.pow(1 + annYield, 1 / 12) - 1;
+      const targetPort = (goal * 12) / annYield;
+      let simP = totalTRY, months = 0;
+      while (simP < targetPort && months < 480) {
+        simP = (simP + monthlyContrib) * (1 + mYield);
+        months++;
+      }
+      if (months >= 480) {
+        etaText = '40+ yıl (aylık katkıyı veya verimi artırmayı değerlendirebilirsin)';
+      } else {
+        const yrs = Math.floor(months / 12);
+        const mos = months % 12;
+        etaText = `Mevcut hızla tahmini ${yrs > 0 ? yrs + ' yıl ' : ''}${mos} ay`;
+      }
+    }
+
+    html += `
+      <div class="prog-track"><div class="prog-fill" style="width:${Math.min(100, pctDone)}%"></div></div>
+      <div class="prog-meta">
+        <span>${fmtMoney(convertDisplay(currentMonthlyTRY), displayCurrency)} / ${fmtMoney(convertDisplay(goal), displayCurrency)}</span>
+        <b class="gold-txt">${privacyHidden ? '•••%' : pctDone.toFixed(1) + '%'}</b>
+      </div>
+      <div class="helper" style="color:var(--emerald); font-weight:600">${etaText}${remTRY > 0 && !privacyHidden ? ` · Kalan: ${fmtMoney(convertDisplay(remTRY), displayCurrency)}` : ''}</div>
+    `;
+  }
+  el.innerHTML = html;
+}
+
+function renderForecastCard() {
+  const el = document.getElementById('forecastCard');
+  const fc = computeForecast();
+  if (!fc.hs.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+
+  let html = `<div class="card-title">Gelecek 12 Ay Tahmini</div>`;
+  if (!fc.rows.length) {
+    html += `<div class="helper">Tahmin için en az 2 temettü ödemesi veya pozisyonda "Ödeme/Yıl" değeri gerekir.</div>`;
+    el.innerHTML = html;
+    return;
+  }
+
+  if (fc.canCombine) {
+    html += `
+      <div class="cur-val" style="font-size:28px; color:var(--gold)">${fmtMoney(convertDisplay(fc.annualTRY), displayCurrency)}</div>
+      <div class="sub-mono">Aylık ort: <b class="pos">${fmtMoney(convertDisplay(fc.annualTRY / 12), displayCurrency)}</b> · Çeyreklik ort: <b class="gold-txt">${fmtMoney(convertDisplay(fc.annualTRY / 4), displayCurrency)}</b></div>
+    `;
+  } else {
+    html += `<div class="chip-row">` + Object.keys(fc.byCur).map(c => `<div class="chip">${c}: <b>${fmtMoney(fc.byCur[c], c)}</b>/yıl</div>`).join('') + `</div>`;
+  }
+
+  const sorted = [...fc.rows].sort((a, b) => (a.nextDate ? a.nextDate.getTime() : Infinity) - (b.nextDate ? b.nextDate.getTime() : Infinity));
+  html += `<div style="margin-top:10px">` + sorted.map(r => `
+    <div class="list-item">
+      <div>
+        <b style="font-family:var(--font-mono)">${r.symbol}</b>
+        <div class="sub-mono">${r.nextDate ? formatCountdown(r.nextDate) : 'Tarih belirsiz'} · ${r.freq}x/yıl</div>
+      </div>
+      <div style="text-align:right; font-family:var(--font-mono); font-size:12.5px">
+        <b>~${fmtMoney(r.nextAmount, r.currency)}</b>
+        <div class="sub-mono">Yıllık ${fmtMoney(r.annual, r.currency)}</div>
+      </div>
+    </div>
+  `).join('') + `</div>`;
+
+  el.innerHTML = html;
+}
+
+function renderCalendarMatrix(holdings) {
+  const el = document.getElementById('calendarMatrixCard');
+  const activeSyms = holdings.filter(h => h.shares > 0).map(h => h.symbol);
+  if (!activeSyms.length) { el.style.display = 'none'; return; }
+
+  const monthMap = Array.from({ length: 12 }, () => []);
+  activeSyms.forEach((sym, idx) => {
+    const color = PALETTE[idx % PALETTE.length];
+    const divs = state.dividends.filter(d => d.symbol === sym);
+    const monthsSet = new Set(divs.map(d => new Date(d.date).getMonth()));
+    const nextD = nextDividendDate(sym);
+    if (nextD) monthsSet.add(nextD.getMonth());
+    monthsSet.forEach(m => {
+      if (!monthMap[m].some(x => x.sym === sym)) monthMap[m].push({ sym, color });
+    });
+  });
+
+  if (!monthMap.some(arr => arr.length > 0)) { el.style.display = 'none'; return; }
+  el.style.display = '';
+
+  el.innerHTML = `
+    <div class="card-title">12 Aylık Ödeme Matrisi</div>
+    <div class="card-sub">Geçmiş ve beklenen temettü aylarının nokta dağılımı.</div>
+    <div class="matrix-grid">
+      ${monthMap.map((items, mIdx) => {
+        const tip = items.length ? `${MONTHS_TR[mIdx]}: ${items.map(i => i.sym).join(', ')}` : `${MONTHS_TR[mIdx]}: Planlı ödeme yok`;
+        return `
+          <div class="matrix-cell ${items.length ? 'has-pay' : ''}" onclick="document.getElementById('matrixTip').textContent='${tip.replace(/'/g, '')}'">
+            <div class="matrix-m">${MONTHS_TR[mIdx]}</div>
+            <div class="matrix-dots">${items.map(it => `<span class="matrix-dot" style="background:${it.color}"></span>`).join('')}</div>
+            <div class="matrix-syms">${items.map(it => it.sym).join(', ') || '—'}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+    <div class="chart-tip" id="matrixTip">Aylara dokunarak sembolleri gör</div>
+  `;
+}
+
+function renderInflationFreedomCard() {
+  const el = document.getElementById('inflationFreedomCard');
+  const yoy = computeYoyTRY();
+  const infl = state.inflationRate;
+  const expenses = state.monthlyExpenses;
+
+  const fc = computeForecast();
+  const ttm = computeTTMTRY();
+  const avgMonthlyTRY = (fc.rows.length && fc.canCombine) ? (fc.annualTRY / 12) : (ttm.totalTRY / 12);
+
+  let html = `<div class="card-title">Enflasyon Kalkanı & Özgürlük</div>`;
+  html += `
+    <div class="form-grid" style="margin-top:10px">
+      <div class="field">
+        <label>Yıllık Enflasyon (%)</label>
+        <input type="number" step="any" value="${infl !== null ? infl : ''}" placeholder="Örn. 35" onchange="setInflationRate(this.value)">
+      </div>
+      <div class="field">
+        <label>Aylık Gider (TL)</label>
+        <input type="number" step="any" value="${expenses || ''}" placeholder="Örn. 30000" onchange="setMonthlyExpenses(this.value)">
+      </div>
+    </div>
+  `;
+
+  if (yoy !== null && infl !== null) {
+    const spread = yoy - infl;
+    const beat = spread >= 0;
+    html += `
+      <div class="chip-row">
+        <div class="chip">Temettü YoY: <b class="${yoy >= 0 ? 'pos' : 'neg'}">${fmtPct(yoy)}</b></div>
+        <div class="chip">Enflasyon: <b>%${infl}</b></div>
+        <div class="chip">Reel Fark: <b class="${beat ? 'pos' : 'neg'}">${beat ? '+' : ''}${spread.toFixed(1)} puan</b></div>
+      </div>
+    `;
+  } else if (yoy !== null) {
+    html += `<div class="helper" style="margin-top:8px">Temettü gelir büyümesi (YoY): <b class="${yoy >= 0 ? 'pos' : 'neg'}">${fmtPct(yoy)}</b></div>`;
+  }
+
+  if (expenses && expenses > 0) {
+    const covPct = (avgMonthlyTRY / expenses) * 100;
+    html += `
+      <div class="prog-track"><div class="prog-fill" style="width:${Math.min(100, covPct)}%"></div></div>
+      <div class="prog-meta">
+        <span>Gider karşılama: ${fmtMoney(convertDisplay(avgMonthlyTRY), displayCurrency)} / ${fmtMoney(convertDisplay(expenses), displayCurrency)}</span>
+        <b class="pos">${privacyHidden ? '•••%' : covPct.toFixed(1) + '%'}</b>
+      </div>
+    `;
+  } else {
+    html += `<div class="helper" style="margin-top:8px">Aylık temettü gelirin: <b class="gold-txt">${fmtMoney(convertDisplay(avgMonthlyTRY), displayCurrency)}</b></div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function renderMonthlyChart() {
+  const el = document.getElementById('monthlyChartCard');
+  const now = new Date();
+  const months = [];
+  for (let i = 11; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({
+      key: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'),
+      label: MONTHS_TR[d.getMonth()]
+    });
+  }
+
+  const byCur = {};
+  state.dividends.forEach(dv => {
+    const dt = new Date(dv.date);
+    const k = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0');
+    if (!byCur[dv.currency]) byCur[dv.currency] = {};
+    byCur[dv.currency][k] = (byCur[dv.currency][k] || 0) + dv.amount;
+  });
+
+  const curs = Object.keys(byCur);
+  if (!curs.length) {
+    el.innerHTML = `<div class="card-title">Aylık Temettü</div><div class="empty-state">Henüz temettü kaydı yok.</div>`;
+    return;
+  }
+
+  let html = `<div class="card-title">Aylık Temettü <span class="sub-mono" style="font-weight:400">(son 12 ay)</span></div>`;
+  const w = 320, h = 112, gap = 4, bottomPad = 18;
+
+  curs.forEach((cur, idx) => {
+    const vals = months.map(m => byCur[cur][m.key] || 0);
+    const maxV = Math.max(...vals, 0.0001);
+    const color = PALETTE[idx % PALETTE.length];
+    const barW = (w - (months.length - 1) * gap) / months.length;
+    const tipId = 'mBarTip_' + cur;
+
+    let bars = '';
+    months.forEach((m, i) => {
+      const v = vals[i];
+      const bh = v > 0 ? Math.max(4, (v / maxV) * (h - bottomPad - 6)) : 2;
+      const x = i * (barW + gap);
+      const y = h - bottomPad - bh;
+      const tip = privacyHidden ? `${m.label}: •••` : `${m.label}: ${fmtMoney(v, cur)}`;
+      bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}" rx="2.5" fill="${color}" opacity="${v > 0 ? 1 : 0.14}" onclick="document.getElementById('${tipId}').textContent='${tip.replace(/'/g, '')}'"/>`;
+      bars += `<text x="${(x + barW / 2).toFixed(1)}" y="${h - 4}" font-size="8" fill="#8E96A8" text-anchor="middle" font-family="IBM Plex Mono, monospace">${m.label}</text>`;
+    });
+
+    html += `
+      <div class="sub-mono" style="margin-top:10px">${cur}</div>
+      <svg viewBox="0 0 ${w} ${h}" class="svg-chart">${bars}</svg>
+      <div class="chart-tip" id="${tipId}">Bir aya dokunarak tutarı gör</div>
+    `;
+  });
+  el.innerHTML = html;
+}
+
+function renderRibbon() {
+  const el = document.getElementById('divRibbon');
+  const recent = [...state.dividends].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 8);
+  el.innerHTML = recent.length
+    ? recent.map(d => `<div class="chip">${d.symbol} <b class="gold-txt">+${fmtMoney(d.amount, d.currency)}</b> · ${relTime(d.date).toLowerCase()}</div>`).join('')
+    : '<div class="sub-mono">Henüz temettü ödemesi yok.</div>';
+}
+
+function renderChecklist(holdings) {
+  const el = document.getElementById('checklistCard');
+  const items = [];
+
+  holdings.forEach(h => {
+    if (h.shares <= 0) return;
+    const age = getPriceAgeDays(h.symbol);
+    if (age !== null && age > 14) items.push({ text: `${h.symbol} fiyatı ${Math.floor(age)} gündür güncel değil`, view: 'pozisyon' });
+  });
+
+  const hasData = state.transactions.length > 0 || (state.accounts || []).length > 0;
+  if (hasData) {
+    if (!state.lastBackupAt) items.push({ text: 'Henüz yedek alınmadı', view: 'varlik' });
+    else {
+      const bDays = Math.floor((Date.now() - new Date(state.lastBackupAt).getTime()) / 86400000);
+      if (bDays > 14) items.push({ text: `${bDays} gündür yedek alınmadı`, view: 'varlik' });
+    }
+  }
+
+  if (!items.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  el.innerHTML = `<div class="card-title" style="margin-bottom:4px">Kontrol Listesi</div>` + items.map(i => `
+    <div class="alert-row" onclick="switchView('${i.view}')">
+      <div>${i.text}</div>
+      <span>›</span>
+    </div>
+  `).join('');
+}
+
+/* ---- Holdings Renderers ---- */
+function renderPieChart(holdings) {
+  const el = document.getElementById('pieChartCard');
+  const curs = [...new Set(holdings.filter(h => h.shares > 0 && h.marketValue).map(h => h.currency))];
+  if (!curs.length) {
+    el.innerHTML = `<div class="card-title">Portföy Dağılımı</div><div class="empty-state">Fiyat girilmiş pozisyon yok.</div>`;
+    return;
+  }
+
+  let html = `<div class="card-title">Portföy Dağılımı</div>`;
+  curs.forEach(cur => {
+    const hs = holdings.filter(h => h.currency === cur && h.marketValue);
+    const total = hs.reduce((s, h) => s + h.marketValue, 0);
+    if (total <= 0) return;
+    const r = 46, cx = 56, cy = 56, circ = 2 * Math.PI * r;
+    const tipId = 'allocTip_' + cur;
+    let offset = 0, circles = '', legend = '';
+
+    hs.forEach((h, i) => {
+      const frac = h.marketValue / total;
+      const dash = frac * circ;
+      const color = PALETTE[i % PALETTE.length];
+      const tip = privacyHidden ? `${h.symbol}: %${(frac * 100).toFixed(0)}` : `${h.symbol}: %${(frac * 100).toFixed(1)} · ${fmtMoney(h.marketValue, cur)}`;
+      const fn = `onclick="document.getElementById('${tipId}').textContent='${tip.replace(/'/g, '')}'"`;
+      circles += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="13" stroke-dasharray="${dash.toFixed(2)} ${(circ - dash).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})" ${fn}/>`;
+      offset += dash;
+      legend += `<div class="legend-row" ${fn}><span class="legend-dot" style="background:${color}"></span>${h.symbol} <b>${(frac * 100).toFixed(1)}%</b></div>`;
+    });
+
+    html += `
+      <div class="sub-mono" style="margin-top:10px">${cur}</div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 112 112" class="donut-svg">${circles}<text x="56" y="59" text-anchor="middle" font-size="11" font-weight="700" fill="#F4F6FA" font-family="Outfit, sans-serif">${cur}</text></svg>
+        <div class="legend-list">${legend}</div>
+      </div>
+      <div class="chart-tip" id="${tipId}">Dilim veya sembole dokun</div>
+    `;
+  });
+  el.innerHTML = html;
+}
+
+function renderBulkPriceCard() {
+  const el = document.getElementById('bulkPriceCard');
+  const active = lastHoldings.filter(h => h.shares > 0);
+  if (!active.length) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  const wasOpen = el.querySelector('details')?.open || false;
+
+  el.innerHTML = `
+    <details ${wasOpen ? 'open' : ''}>
+      <summary>Fiyatları Toplu Güncelle</summary>
+      <div class="acc-body">
+        ${active.map(h => `
+          <div class="weight-row">
+            <div style="flex:1; font-family:var(--font-mono); font-weight:600">${h.symbol} <span class="cur-badge">${h.currency}</span></div>
+            <input type="number" step="any" class="bulk-px" data-sym="${h.symbol}" value="${h.currentPrice || ''}" placeholder="Fiyat" style="width:104px">
+          </div>
+        `).join('')}
+        <button class="btn" onclick="saveBulkPrices()">Tümünü Kaydet</button>
+      </div>
+    </details>
+  `;
+}
+
+function saveBulkPrices() {
+  if (!state.priceUpdatedAt) state.priceUpdatedAt = {};
+  const stamp = new Date().toISOString();
+  document.querySelectorAll('.bulk-px').forEach(inp => {
+    const p = parseFloat(inp.value);
+    if (!isNaN(p) && p > 0) {
+      state.prices[inp.dataset.sym] = p;
+      state.priceUpdatedAt[inp.dataset.sym] = stamp;
+    }
+  });
+  saveState(); render();
+  toast('Fiyatlar güncellendi');
+}
+
+function renderHoldingsList(holdings) {
+  const listEl = document.getElementById('holdingsList');
+  const countEl = document.getElementById('posCountLabel');
+  let active = holdings.filter(h => h.shares > 0);
+
+  if (holdingsSort === 'totalReturn') active.sort((a, b) => (b.totalReturnPct ?? -9999) - (a.totalReturnPct ?? -9999));
+  else if (holdingsSort === 'divReturn') active.sort((a, b) => (b.dividendReturnPct ?? -9999) - (a.dividendReturnPct ?? -9999));
+  else if (holdingsSort === 'priceReturn') active.sort((a, b) => (b.priceReturnPct ?? -9999) - (a.priceReturnPct ?? -9999));
+  else if (holdingsSort === 'yield') active.sort((a, b) => (b.divYield ?? -9999) - (a.divYield ?? -9999));
+  else active.sort((a, b) => (b.marketValue || 0) - (a.marketValue || 0));
+
+  if (countEl) countEl.textContent = `${active.length} aktif pozisyon`;
+
+  if (!active.length) {
+    listEl.innerHTML = `<div class="card"><div class="empty-state">Henüz açık pozisyon yok. Ortadaki + butonuyla alım ekle.</div></div>`;
+    return;
+  }
+
+  const curTotals = {};
+  active.forEach(h => {
+    if (h.marketValue) curTotals[h.currency] = (curTotals[h.currency] || 0) + h.marketValue;
+  });
+
+  listEl.innerHTML = active.map(h => {
+    const tCls = h.totalReturnPct === null ? '' : (h.totalReturnPct >= 0 ? 'pos' : 'neg');
+    const pCls = h.priceReturnPct === null ? '' : (h.priceReturnPct >= 0 ? 'pos' : 'neg');
+    const nextTxt = formatCountdown(nextDividendDate(h.symbol));
+    const weightPct = (h.marketValue && curTotals[h.currency]) ? (h.marketValue / curTotals[h.currency]) * 100 : null;
+    const isZeroCost = h.paybackPct !== null && h.paybackPct >= 100;
+    const noteVal = (state.notes && state.notes['pos_' + h.symbol]) ? state.notes['pos_' + h.symbol] : '';
+
+    const realFxHtml = (h.currency === 'USD' && h.realTryPct !== null)
+      ? `<div class="pos-real-fx"><span>İşlem Kuru Net TL</span><b class="${h.realTryPct >= 0 ? 'pos' : 'neg'}">${fmtPct(h.realTryPct)} (${h.realTryAmt >= 0 ? '+' : ''}${fmtMoney(h.realTryAmt, 'TRY')})</b></div>`
+      : '';
+
+    const paybackHtml = h.paybackPct !== null
+      ? `
+        <div style="margin-top:11px">
+          <div class="prog-meta" style="margin-top:0">
+            <span>Ana Para Geri Dönüşü${h.divShareOfTotal !== null && !privacyHidden ? ` · Getirinin %${h.divShareOfTotal.toFixed(0)}'si temettü` : ''}</span>
+            <b class="gold-txt">${privacyHidden ? '•••%' : h.paybackPct.toFixed(0) + '%'}</b>
+          </div>
+          <div class="prog-track" style="height:6px; margin-top:5px"><div class="prog-fill gold-fill" style="width:${h.paybackPct}%"></div></div>
+        </div>
+      `
+      : '';
+
+    return `
+      <div class="pos-card">
+        <div class="pos-head">
+          <div>
+            <span class="pos-sym">${h.symbol}</span>
+            <span class="cur-badge">${h.currency}</span>
+            ${isZeroCost ? `<span class="zero-badge">Maliyet Sıfırlandı</span>` : ''}
+            ${h.firstBuy ? `<span class="pos-age">${relTime(h.firstBuy.toISOString().slice(0, 10)).toLowerCase()}</span>` : ''}
+          </div>
+          <div class="pos-total-ret ${tCls}" title="Toplam Getiri">${fmtPct(h.totalReturnPct)}</div>
+        </div>
+
+        <div class="pos-split-grid">
+          <div class="pos-split-box">
+            <div class="m-lbl">Fiyat Getirisi</div>
+            <div class="m-val ${pCls}" style="font-weight:700">${fmtPct(h.priceReturnPct)}</div>
+            <div class="sub-mono">${h.priceReturnAmt !== null ? (h.priceReturnAmt >= 0 ? '+' : '') + fmtMoney(h.priceReturnAmt, h.currency) : '—'}</div>
+          </div>
+          <div class="pos-split-box div-box">
+            <div class="m-lbl">Temettü Getirisi</div>
+            <div class="m-val gold-txt" style="font-weight:700">${fmtPct(h.dividendReturnPct)}</div>
+            <div class="sub-mono">+${fmtMoney(h.dividendReturnAmt, h.currency)}</div>
+          </div>
+        </div>
+
+        ${paybackHtml}
+
+        <div class="pos-actions">
+          <button class="btn btn-sm" onclick="quickBuy('${h.symbol}')">+ Alım</button>
+          <button class="btn btn-sm gold" onclick="quickDiv('${h.symbol}')">+ Temettü</button>
+          ${weightPct !== null ? `<span class="sub-mono" style="margin-left:auto">Ağırlık: %${weightPct.toFixed(1)}</span>` : ''}
+        </div>
+
+        <div class="pos-metrics">
+          <div>
+            <div class="m-lbl">Adet</div>
+            <div class="m-val">${privacyHidden ? '•••' : h.shares}${h.dripShares > 0 && !privacyHidden ? ` <span class="pos" style="font-size:10.5px">(+${h.dripShares} DRIP)</span>` : ''}</div>
+          </div>
+          <div>
+            <div class="m-lbl">Ort. Maliyet</div>
+            <div class="m-val">${fmtMoney(h.avgCost, h.currency)}</div>
+          </div>
+          <div>
+            <div class="m-lbl">Piyasa Değeri</div>
+            <div class="m-val">${fmtMoney(h.marketValue, h.currency)}</div>
+          </div>
+          <div>
+            <div class="m-lbl">${h.usesFreqEst ? 'Verim (Tahmini)' : 'Verim (12 Ay)'}</div>
+            <div class="m-val">${h.divYield !== null ? (privacyHidden ? '•••%' : h.divYield.toFixed(2) + '%') : '—'}</div>
+          </div>
+          <div>
+            <div class="m-lbl">Maliyete Verim</div>
+            <div class="m-val">${h.yieldOnCost !== null ? (privacyHidden ? '•••%' : h.yieldOnCost.toFixed(2) + '%') : '—'}</div>
+          </div>
+          <div>
+            <div class="m-lbl">Sıradaki</div>
+            <div class="m-val" style="font-size:11px">${nextTxt || '—'}</div>
+          </div>
+        </div>
+
+        ${realFxHtml}
+
+        <input class="pos-note-input" type="text" value="${noteVal.replace(/"/g, '&quot;')}" placeholder="Strateji / hedef lot notu..." onchange="updateNote('pos_${h.symbol}', this.value)">
+
+        <div class="pos-edit-row">
+          <label>Fiyat</label>
+          <input type="number" step="any" value="${h.currentPrice || ''}" placeholder="0.00" onchange="updatePrice('${h.symbol}', this.value)">
+          <label style="margin-left:6px">Ödeme/Yıl</label>
+          <input type="number" step="1" min="1" style="width:62px" value="${getFrequency(h.symbol) || ''}" placeholder="4" onchange="setFrequency('${h.symbol}', this.value)">
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ---- Assistant Renderers ---- */
+function getWeightsMap(cur) {
+  if (!state.targetWeights[cur]) state.targetWeights[cur] = {};
+  return state.targetWeights[cur];
+}
+
+function getPlanSymbols(cur) {
+  const held = lastHoldings.filter(h => h.currency === cur).map(h => h.symbol);
+  const targeted = Object.keys(getWeightsMap(cur));
+  return [...new Set([...held, ...targeted])].sort();
+}
+
+function addTargetSymbol() {
+  const inp = document.getElementById('newTargetSym');
+  const sym = inp.value.trim().toUpperCase();
+  if (!sym) return;
+  const cur = document.getElementById('planCur').value;
+  const w = getWeightsMap(cur);
+  if (w[sym] === undefined) w[sym] = 0;
+  inp.value = '';
+  saveState();
+  renderAssistantView();
+}
+
+function removeTargetSymbol(cur, sym) {
+  delete getWeightsMap(cur)[sym];
+  saveState();
+  renderAssistantView();
+}
+
+function renderAssistantView() {
+  renderInvestPlan();
+  renderWeightInputs();
+  renderRebalanceResult();
+  renderGoalCalculator();
+}
+
+function renderInvestPlan() {
+  const el = document.getElementById('investPlanBox');
+  if (!el) return;
+  const target = state.monthlyInvestTarget;
+  const now = new Date();
+  const ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  let tAmt = 0, uAmt = 0;
+  state.transactions.forEach(t => {
+    if (t.type === 'sell' || t.fromDiv) return;
+    if (!String(t.date).startsWith(ym)) return;
+    const sum = t.shares * t.price;
+    if (t.currency === 'TRY') tAmt += sum; else uAmt += sum;
+  });
+  const investedTRY = tAmt + (state.fxRate ? uAmt * state.fxRate : 0);
+
+  let html = `
+    <div class="field">
+      <label>Aylık Yatırım Hedefi (TL)</label>
+      <input type="number" step="any" value="${target || ''}" placeholder="Örn. 10000" onchange="setMonthlyInvestTarget(this.value)">
+    </div>
+  `;
+
+  if (!target) {
+    html += `<div class="helper" style="margin-top:8px">Bu ay yatırılan: <b>${fmtMoney(convertDisplay(investedTRY), displayCurrency)}</b>. Hedef girerek kalan tutarı takip et.</div>`;
+  } else {
+    const pctDone = (investedTRY / target) * 100;
+    const rem = Math.max(0, target - investedTRY);
+    html += `
+      <div class="prog-track"><div class="prog-fill" style="width:${Math.min(100, pctDone)}%"></div></div>
+      <div class="prog-meta"><span>${fmtMoney(convertDisplay(investedTRY), displayCurrency)} / ${fmtMoney(convertDisplay(target), displayCurrency)}</span><b>${privacyHidden ? '•••%' : pctDone.toFixed(0) + '%'}</b></div>
+      <div class="helper" style="color:var(--emerald); font-weight:600">${rem > 0 ? `Bu ay kalan: ${fmtMoney(convertDisplay(rem), displayCurrency)}` : 'Aylık yatırım hedefine ulaştın.'}</div>
+    `;
+  }
+  el.innerHTML = html;
+}
+
+function renderWeightInputs() {
+  const cur = document.getElementById('planCur')?.value || 'TRY';
+  const heldSyms = lastHoldings.filter(h => h.currency === cur).map(h => h.symbol);
+  const syms = getPlanSymbols(cur);
+  const weights = getWeightsMap(cur);
+  const box = document.getElementById('weightRows');
+  if (!box) return;
+
+  if (!syms.length) {
+    box.innerHTML = `<div class="empty-state">Bu para biriminde sembol yok.</div>`;
+    document.getElementById('weightSum').textContent = '';
+    return;
+  }
+
+  const even = (100 / syms.length).toFixed(1);
+  box.innerHTML = syms.map(sym => {
+    const isHeld = heldSyms.includes(sym);
+    const val = weights[sym] !== undefined ? weights[sym] : even;
+    return `
+      <div class="weight-row">
+        <div style="flex:1; font-family:var(--font-mono); font-weight:600">${sym}${!isHeld ? ` <span class="sub-mono">(yeni)</span>` : ''}</div>
+        <input type="number" step="any" class="w-inp" data-sym="${sym}" value="${val}" oninput="onWeightInput('${cur}', this)">
+        <span class="sub-mono">%</span>
+        ${!isHeld ? `
+          <input type="number" step="any" value="${state.prices[sym] || ''}" placeholder="Fiyat" style="width:76px" onchange="updatePrice('${sym}', this.value)">
+          <button class="icon-action del" onclick="removeTargetSymbol('${cur}','${sym}')">✕</button>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+  refreshWeightSum();
+}
+
+function onWeightInput(cur, inp) {
+  getWeightsMap(cur)[inp.dataset.sym] = parseFloat(inp.value) || 0;
+  saveState();
+  refreshWeightSum();
+  renderRebalanceResult();
+  renderGoalCalculator();
+}
+
+function refreshWeightSum() {
+  const sum = [...document.querySelectorAll('.w-inp')].reduce((acc, el) => acc + (parseFloat(el.value) || 0), 0);
+  const el = document.getElementById('weightSum');
+  if (!el) return;
+  el.textContent = `Toplam: %${sum.toFixed(1)}`;
+  el.className = 'weight-sum ' + (Math.abs(sum - 100) < 0.5 ? 'ok' : 'err');
+}
+
+function weightsEqualSplit() {
+  const cur = document.getElementById('planCur').value;
+  const inputs = [...document.querySelectorAll('.w-inp')];
+  if (!inputs.length) return;
+  const even = (100 / inputs.length).toFixed(1);
+  const w = getWeightsMap(cur);
+  inputs.forEach(inp => { inp.value = even; w[inp.dataset.sym] = parseFloat(even); });
+  saveState();
+  refreshWeightSum();
+  renderRebalanceResult();
+  renderGoalCalculator();
+}
+
+function weightsMatchCurrent() {
+  const cur = document.getElementById('planCur').value;
+  const hs = lastHoldings.filter(h => h.currency === cur && h.marketValue);
+  const total = hs.reduce((s, h) => s + h.marketValue, 0);
+  const w = getWeightsMap(cur);
+  document.querySelectorAll('.w-inp').forEach(inp => {
+    const h = hs.find(x => x.symbol === inp.dataset.sym);
+    const p = (h && total > 0) ? (h.marketValue / total) * 100 : 0;
+    inp.value = p.toFixed(1);
+    w[inp.dataset.sym] = p;
+  });
+  saveState();
+  refreshWeightSum();
+  renderRebalanceResult();
+  renderGoalCalculator();
+}
+
+function renderRebalanceResult() {
+  const cur = document.getElementById('planCur')?.value || 'TRY';
+  const amount = parseFloat(document.getElementById('rebalAmount')?.value);
+  const out = document.getElementById('rebalResult');
+  if (!out) return;
+  const syms = getPlanSymbols(cur);
+  if (!amount || amount <= 0 || !syms.length) { out.innerHTML = ''; return; }
+
+  const weights = getWeightsMap(cur);
+  const currentTotal = lastHoldings.filter(h => h.currency === cur).reduce((s, h) => s + (h.marketValue || 0), 0);
+  const futureTotal = currentTotal + amount;
+
+  let plan = syms.map(sym => {
+    const h = lastHoldings.find(x => x.symbol === sym && x.currency === cur);
+    const curVal = h ? (h.marketValue || 0) : 0;
+    const targetPct = weights[sym] !== undefined ? weights[sym] : (100 / syms.length);
+    const gap = Math.max(0, (futureTotal * targetPct / 100) - curVal);
+    const curPct = currentTotal > 0 ? (curVal / currentTotal) * 100 : 0;
+    return { sym, price: state.prices[sym] || null, targetPct, curPct, gap, alloc: 0 };
+  });
+
+  const sumGap = plan.reduce((s, r) => s + r.gap, 0);
+  if (sumGap <= 0) plan.forEach(r => { r.alloc = amount * r.targetPct / 100; });
+  else if (sumGap <= amount) {
+    const rem = amount - sumGap;
+    plan.forEach(r => { r.alloc = r.gap + rem * (r.targetPct / 100); });
+  } else {
+    plan.forEach(r => { r.alloc = amount * (r.gap / sumGap); });
+  }
+
+  let spent = 0;
+  plan.forEach(r => {
+    if (!r.price) { r.lots = null; r.cost = 0; return; }
+    r.lots = Math.floor(r.alloc / r.price);
+    r.cost = r.lots * r.price;
+    spent += r.cost;
+  });
+
+  plan.sort((a, b) => (b.targetPct - b.curPct) - (a.targetPct - a.curPct));
+
+  out.innerHTML = plan.map(r => {
+    const barW = Math.min(100, (r.curPct / (r.targetPct || 1)) * 100);
+    return `
+      <div class="list-item">
+        <div>
+          <b style="font-family:var(--font-mono)">${r.sym}</b>
+          <div class="sub-mono">Mevcut %${r.curPct.toFixed(1)} → Hedef %${r.targetPct.toFixed(1)}</div>
+          <div class="plan-bar"><div class="plan-bar-fill" style="width:${barW}%"></div></div>
+        </div>
+        <div style="text-align:right; font-family:var(--font-mono); font-size:12.5px">
+          ${r.lots !== null ? `<b>${r.lots} adet</b><div class="sub-mono">${fmtMoney(r.cost, cur)}</div>` : `<span class="sub-mono">Fiyat yok</span>`}
+        </div>
+      </div>
+    `;
+  }).join('') + `<div class="chip-row"><div class="chip">Kalan nakit: <b>${fmtMoney(amount - spent, cur)}</b></div></div>`;
+}
+
+function renderGoalCalculator() {
+  const cur = document.getElementById('planCur')?.value || 'TRY';
+  const monthlyGoal = parseFloat(document.getElementById('goalMonthlyInput')?.value);
+  const out = document.getElementById('goalCalcResult');
+  if (!out) return;
+
+  const hs = lastHoldings.filter(h => h.currency === cur && h.currentPrice && h.divYield !== null && h.divYield > 0);
+  if (!monthlyGoal || monthlyGoal <= 0) { out.innerHTML = ''; return; }
+  if (!hs.length) {
+    out.innerHTML = `<div class="helper">Bu para biriminde verimi hesaplanabilir pozisyon bulunmuyor.</div>`;
+    return;
+  }
+
+  const weights = getWeightsMap(cur);
+  const totalW = hs.reduce((s, h) => s + (weights[h.symbol] !== undefined ? weights[h.symbol] : (100 / hs.length)), 0) || 1;
+  let avgYield = 0;
+  hs.forEach(h => {
+    const wNorm = (weights[h.symbol] !== undefined ? weights[h.symbol] : (100 / hs.length)) / totalW;
+    avgYield += wNorm * h.divYield;
+  });
+
+  if (avgYield <= 0) { out.innerHTML = ''; return; }
+  const needed = (monthlyGoal * 12) / (avgYield / 100);
+
+  out.innerHTML = `
+    <div class="summary-banner">
+      Tahmini ortalama <b>%${avgYield.toFixed(2)}</b> verimle aylık <b>${fmtMoney(monthlyGoal, cur)}</b> temettü için gereken toplam portföy: <b class="pos">${fmtMoney(needed, cur)}</b>
+    </div>
+  `;
+}
+
+function renderSimulation() {
+  const start = parseFloat(document.getElementById('simStart')?.value) || 0;
+  const monthly = parseFloat(document.getElementById('simMonthly')?.value) || 0;
+  const gRate = (parseFloat(document.getElementById('simGrowth')?.value) || 0) / 100;
+  const yRate = (parseFloat(document.getElementById('simYield')?.value) || 0) / 100;
+  const drip = !!document.getElementById('simReinvest')?.checked;
+  const years = Math.min(40, Math.max(1, parseInt(document.getElementById('simYears')?.value, 10) || 10));
+  const out = document.getElementById('simResult');
+  if (!out) return;
+
+  const mGrowth = Math.pow(1 + gRate, 1 / 12) - 1;
+  const mYield = Math.pow(1 + yRate, 1 / 12) - 1;
+
+  let val = start, contributed = start, cashDiv = 0;
+  const milestones = [];
+
+  for (let y = 1; y <= years; y++) {
+    let yearDiv = 0;
+    for (let m = 0; m < 12; m++) {
+      val += monthly;
+      contributed += monthly;
+      const mDiv = val * mYield;
+      yearDiv += mDiv;
+      cashDiv += mDiv;
+      if (drip) val += mDiv;
+      val *= (1 + mGrowth);
+    }
+    if ([1, 3, 5, 10, 15, 20, 25, 30, 40].includes(y) || y === years) {
+      milestones.push({ y, val, contributed, avgMonthlyDiv: yearDiv / 12 });
+    }
+  }
+
+  const finalWealth = val + (drip ? 0 : cashDiv);
+  const totalGainPct = contributed > 0 ? ((finalWealth - contributed) / contributed) * 100 : 0;
+
+  out.innerHTML = milestones.map(m => `
+    <div class="list-item">
+      <div>
+        <b style="font-family:var(--font-mono)">${m.y}. Yıl</b>
+        <div class="sub-mono">Katkı: ${fmtMoney(convertDisplay(m.contributed), displayCurrency)} · Aylık ort. temettü: ${fmtMoney(convertDisplay(m.avgMonthlyDiv), displayCurrency)}</div>
+      </div>
+      <div style="font-family:var(--font-mono); font-weight:600; color:var(--emerald)">${fmtMoney(convertDisplay(m.val), displayCurrency)}</div>
+    </div>
+  `).join('') + `<div class="chip-row"><div class="chip">Tahmini Toplam Getiri: <b>${fmtPct(totalGainPct)}</b></div></div>`;
+}
+
+/* ---- Accounts & History Renderers ---- */
+function getAccountSnaps(accId) {
+  return (state.accountSnapshots || []).filter(s => s.accountId === accId).sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+function addAccount() {
+  const nameInp = document.getElementById('newAccName');
+  const cur = document.getElementById('newAccCur').value;
+  const name = nameInp.value.trim();
+  if (!name) return;
+  if (!state.accounts) state.accounts = [];
+  state.accounts.push({ id: uid(), name, currency: cur });
+  nameInp.value = '';
+  saveState(); render();
+  toast('Hesap eklendi');
+}
+
+function deleteAccount(id) {
+  state.accounts = (state.accounts || []).filter(a => a.id !== id);
+  state.accountSnapshots = (state.accountSnapshots || []).filter(s => s.accountId !== id);
+  saveState(); render();
+  toast('Hesap silindi');
+}
+
+function addSnapshot(accId) {
+  const balInp = document.getElementById('snapBal-' + accId);
+  const dateInp = document.getElementById('snapDate-' + accId);
+  const balance = parseFloat(balInp.value);
+  if (isNaN(balance)) return;
+  const date = (dateInp && dateInp.value) ? dateInp.value : todayStr();
+  if (!state.accountSnapshots) state.accountSnapshots = [];
+  state.accountSnapshots.push({ id: uid(), accountId: accId, date, balance });
+  balInp.value = '';
+  saveState(); render();
+  toast('Bakiye kaydedildi');
+}
+
+function deleteSnapshot(id) {
+  state.accountSnapshots = (state.accountSnapshots || []).filter(s => s.id !== id);
+  saveState(); render();
+  toast('Bakiye kaydı silindi');
+}
+
+function computeAccountsSummary() {
+  let totalTRY = 0, totalUSD = 0;
+  (state.accounts || []).forEach(a => {
+    const latest = getAccountSnaps(a.id)[0];
+    if (!latest) return;
+    if (a.currency === 'TRY') totalTRY += latest.balance;
+    else totalUSD += latest.balance;
+  });
+  const ok = totalUSD === 0 || !!state.fxRate;
+  return { ok, totalTRY, totalUSD, combinedTRY: totalTRY + (state.fxRate ? totalUSD * state.fxRate : 0) };
+}
+
+function recordNetWorthSnapshot() {
+  const sum = computeAccountsSummary();
+  if (!sum.ok) { toast('USD hesaplar için üstten USD/TRY kurunu gir.'); return; }
+  const date = todayStr();
+  state.netWorthHistory = (state.netWorthHistory || []).filter(r => r.date !== date);
+  state.netWorthHistory.push({ id: uid(), date, accounts: sum.combinedTRY, total: sum.combinedTRY });
+  state.netWorthHistory.sort((a, b) => new Date(a.date) - new Date(b.date));
+  saveState(); render();
+  toast('Varlık toplamı kaydedildi');
+}
+
+function deleteNetWorthSnap(id) {
+  state.netWorthHistory = (state.netWorthHistory || []).filter(r => r.id !== id);
+  saveState(); render();
+  toast('Kayıt silindi');
+}
+
+function renderAccountsView() {
+  const hero = document.getElementById('netWorthHero');
+  const chartCard = document.getElementById('netWorthChartCard');
+  const listEl = document.getElementById('accountsList');
+  const sum = computeAccountsSummary();
+  const accs = state.accounts || [];
+
+  let heroHtml = `<div class="mega-top"><span class="mega-lbl">Hesap Varlıkları</span></div>`;
+  if (!accs.length) {
+    heroHtml += `<div class="mega-val muted-state">Henüz hesap yok</div>`;
+  } else if (!sum.ok) {
+    heroHtml += `<div class="mega-val muted-state">USD/TRY kuru gerekli</div>`;
+  } else {
+    heroHtml += `<div class="mega-val">${fmtMoney(convertDisplay(sum.combinedTRY), displayCurrency)}</div>`;
+  }
+
+  if (accs.length) {
+    heroHtml += `<div class="chip-row" style="position:relative; z-index:1">
+      ${sum.totalTRY !== 0 ? `<div class="chip">TRY: <b>${fmtMoney(sum.totalTRY, 'TRY')}</b></div>` : ''}
+      ${sum.totalUSD !== 0 ? `<div class="chip">USD: <b>${fmtMoney(sum.totalUSD, 'USD')}</b></div>` : ''}
+    </div>`;
+    if (sum.ok) {
+      heroHtml += `<button class="btn" style="position:relative; z-index:1" onclick="recordNetWorthSnapshot()">Toplamı Kaydet</button>`;
+    }
+  }
+  hero.innerHTML = heroHtml;
+
+  const valOf = r => (typeof r.accounts === 'number' ? r.accounts : r.total);
+  const hist = [...(state.netWorthHistory || [])].sort((a, b) => new Date(a.date) - new Date(b.date)).slice(-30);
+
+  let cHtml = `<div class="card-title">Varlık Gelişimi</div>`;
+  if (hist.length < 2) {
+    cHtml += `<div class="helper">Gelişim grafiği ve kazanç özeti için en az 2 kayıt gerekir.</div>`;
+  } else {
+    const first = hist[0], prev = hist[hist.length - 2], last = hist[hist.length - 1];
+    const diffFirst = valOf(last) - valOf(first);
+    const pctFirst = valOf(first) ? (diffFirst / valOf(first)) * 100 : 0;
+    const diffPrev = valOf(last) - valOf(prev);
+    const pctPrev = valOf(prev) ? (diffPrev / valOf(prev)) * 100 : 0;
+
+    cHtml += `
+      <div class="summary-banner">
+        İlk kayıttan (${relTime(first.date).toLowerCase()}) bugüne kazanç: <b class="${diffFirst >= 0 ? 'pos' : 'neg'}">${diffFirst >= 0 ? '+' : ''}${fmtMoney(convertDisplay(diffFirst), displayCurrency)} (${fmtPct(pctFirst)})</b>
+      </div>
+      <div class="chip-row">
+        <div class="chip">Önceki kayıt (${relTime(prev.date).toLowerCase()}): <b class="${diffPrev >= 0 ? 'pos' : 'neg'}">${diffPrev >= 0 ? '+' : ''}${fmtMoney(convertDisplay(diffPrev), displayCurrency)} (${fmtPct(pctPrev)})</b></div>
+      </div>
+    `;
+
+    const w = 320, h = 122, px = 8, pt = 10, pb = 20;
+    const vals = hist.map(valOf);
+    let minV = Math.min(...vals), maxV = Math.max(...vals);
+    if (maxV === minV) maxV = minV + 1;
+    const span = maxV - minV;
+    const xAt = i => px + i * (w - 2 * px) / (hist.length - 1);
+    const yAt = v => pt + (h - pt - pb) * (1 - (v - minV) / span);
+    const pts = hist.map((r, i) => `${xAt(i).toFixed(1)},${yAt(valOf(r)).toFixed(1)}`);
+    const areaPts = `${xAt(0).toFixed(1)},${(h - pb).toFixed(1)} ` + pts.join(' ') + ` ${xAt(hist.length - 1).toFixed(1)},${(h - pb).toFixed(1)}`;
+
+    let svg = `
+      <defs>
+        <linearGradient id="nwAreaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#DFBE73" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#34D399" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <polygon points="${areaPts}" fill="url(#nwAreaGrad)"/>
+      <polyline points="${pts.join(' ')}" fill="none" stroke="#34D399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    `;
+
+    hist.forEach((r, i) => {
+      const tip = privacyHidden ? `${relTime(r.date)}: •••` : `${relTime(r.date)}: ${fmtMoney(valOf(r), 'TRY')}`;
+      svg += `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(valOf(r)).toFixed(1)}" r="3.5" fill="#0E1117" stroke="#DFBE73" stroke-width="2" onclick="document.getElementById('nwTip').textContent='${tip.replace(/'/g, '')}'"/>`;
+      svg += `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(valOf(r)).toFixed(1)}" r="12" fill="transparent" onclick="document.getElementById('nwTip').textContent='${tip.replace(/'/g, '')}'"/>`;
+    });
+
+    svg += `<text x="${px}" y="${h - 4}" font-size="8" fill="#8E96A8" font-family="IBM Plex Mono, monospace">${relTime(first.date)}</text>`;
+    svg += `<text x="${w - px}" y="${h - 4}" font-size="8" fill="#8E96A8" text-anchor="end" font-family="IBM Plex Mono, monospace">${relTime(last.date)}</text>`;
+
+    cHtml += `<svg viewBox="0 0 ${w} ${h}" class="svg-chart">${svg}</svg><div class="chart-tip" id="nwTip">Noktalara dokun</div>`;
+  }
+
+  const recentSnaps = [...(state.netWorthHistory || [])].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+  if (recentSnaps.length) {
+    cHtml += `<div style="margin-top:8px">` + recentSnaps.map(r => `
+      <div class="list-item">
+        <span class="sub-mono">${relTime(r.date)} · <b>${fmtMoney(convertDisplay(valOf(r)), displayCurrency)}</b></span>
+        <button class="icon-action del" onclick="deleteNetWorthSnap('${r.id}')">✕</button>
+      </div>
+    `).join('') + `</div>`;
+  }
+  chartCard.innerHTML = cHtml;
+
+  listEl.innerHTML = accs.map(a => {
+    const snaps = getAccountSnaps(a.id);
+    const latest = snaps[0] || null;
+    const oldest = snaps[snaps.length - 1] || null;
+    const diff = (latest && oldest && snaps.length > 1) ? (latest.balance - oldest.balance) : null;
+    const diffPct = (diff !== null && oldest.balance !== 0) ? (diff / oldest.balance) * 100 : null;
+    const noteVal = (state.notes && state.notes['acc_' + a.id]) ? state.notes['acc_' + a.id] : '';
+
+    return `
+      <div class="pos-card">
+        <div class="pos-head">
+          <div>
+            <span class="pos-sym">${a.name}</span>
+            <span class="cur-badge">${a.currency}</span>
+            ${latest ? `<span class="pos-age">${relTime(latest.date).toLowerCase()}</span>` : ''}
+          </div>
+          <button class="icon-action del" onclick="deleteAccount('${a.id}')">✕</button>
+        </div>
+        <div class="cur-val" style="font-size:24px; margin-top:8px">${latest ? fmtMoney(latest.balance, a.currency) : '—'}</div>
+        ${diff !== null ? `<div class="sub-mono" style="margin-top:4px">İlk kayıttan beri: <b class="${diff >= 0 ? 'pos' : 'neg'}">${diff >= 0 ? '+' : ''}${fmtMoney(diff, a.currency)} (${fmtPct(diffPct)})</b></div>` : ''}
+        <div class="pos-edit-row">
+          <input type="number" step="any" id="snapBal-${a.id}" placeholder="Yeni bakiye" style="width:124px">
+          <input type="date" id="snapDate-${a.id}" value="${todayStr()}" style="width:142px">
+          <button class="btn btn-sm" onclick="addSnapshot('${a.id}')">Kaydet</button>
+        </div>
+        <input class="pos-note-input" type="text" value="${noteVal.replace(/"/g, '&quot;')}" placeholder="Hesap notu..." onchange="updateNote('acc_${a.id}', this.value)">
+        ${snaps.slice(0, 2).map(s => `
+          <div class="list-item" style="padding:7px 0">
+            <span class="sub-mono">${relTime(s.date)} · <b>${fmtMoney(s.balance, a.currency)}</b></span>
+            <button class="icon-action del" onclick="deleteSnapshot('${s.id}')">✕</button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderYearlyDividends() {
+  const el = document.getElementById('yearlyDivCard');
+  const byYear = {};
+  state.dividends.forEach(d => {
+    const y = new Date(d.date).getFullYear();
+    if (!byYear[y]) byYear[y] = {};
+    byYear[y][d.currency] = (byYear[y][d.currency] || 0) + d.amount;
+  });
+  const years = Object.keys(byYear).sort((a, b) => b - a);
+  if (years.length < 2) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  el.innerHTML = `<div class="card-title">Yıllık Temettü Özeti</div>` + years.map(y => `
+    <div class="list-item">
+      <b>${y}</b>
+      <span style="font-family:var(--font-mono); font-size:12.5px; color:var(--gold)">${Object.keys(byYear[y]).map(c => fmtMoney(byYear[y][c], c)).join(' · ')}</span>
+    </div>
+  `).join('');
+}
+
+function renderHistoryList() {
+  const q = (document.getElementById('historySearch')?.value || '').trim().toUpperCase();
+  const el = document.getElementById('historyList');
+  if (!el) return;
+
+  let items = [
+    ...state.transactions.map(t => ({ ...t, kind: 'tx' })),
+    ...state.dividends.map(d => ({ ...d, kind: 'div' }))
+  ].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  if (q) items = items.filter(i => i.symbol.includes(q));
+
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state">${q ? 'Eşleşen kayıt yok.' : 'Henüz işlem kaydı yok.'}</div>`;
+    return;
+  }
+
+  el.innerHTML = items.map(it => {
+    const fxBadge = it.txFx ? `<span class="tag tag-fx">kur ₺${it.txFx}</span>` : '';
+    if (it.kind === 'tx') {
+      const tCls = it.type === 'sell' ? 'tag-sell' : (it.fromDiv ? 'tag-drip' : 'tag-buy');
+      const tLbl = it.type === 'sell' ? 'SATIŞ' : (it.fromDiv ? 'ALIM · DRIP' : 'ALIM');
+      return `
+        <div class="list-item">
+          <div>
+            <span class="tag ${tCls}">${tLbl}</span>
+            <b style="font-family:var(--font-mono)">${it.symbol}</b>${fxBadge}
+            <div class="sub-mono">${it.shares} adet × ${fmtMoney(it.price, it.currency)} · ${it.date}</div>
+          </div>
+          <div style="display:flex; align-items:center">
+            <button class="icon-action" onclick="startEdit('tx','${it.id}')" title="Düzenle">✎</button>
+            <button class="icon-action del" onclick="deleteEntry('tx','${it.id}')" title="Sil">✕</button>
+          </div>
+        </div>
+      `;
+    } else {
+      return `
+        <div class="list-item">
+          <div>
+            <span class="tag tag-div">TEMETTÜ</span>
+            <b style="font-family:var(--font-mono)">${it.symbol}</b>${fxBadge}
+            <div class="sub-mono">${fmtMoney(it.amount, it.currency)} · ${it.date}</div>
+          </div>
+          <div style="display:flex; align-items:center">
+            <button class="icon-action" onclick="startEdit('div','${it.id}')" title="Düzenle">✎</button>
+            <button class="icon-action del" onclick="deleteEntry('div','${it.id}')" title="Sil">✕</button>
+          </div>
+        </div>
+      `;
+    }
+  }).join('');
+}
+
+function copyTextFallback(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (_) {}
+  document.body.removeChild(ta);
+  return ok;
+}
+
+function exportBackup() {
+  state.lastBackupAt = new Date().toISOString();
+  saveState();
+  const payload = JSON.stringify(state);
+  if (copyTextFallback(payload)) {
+    toast('Yedek panoya kopyalandı');
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(payload).then(() => toast('Yedek panoya kopyalandı')).catch(() => {
+      window.prompt('Yedek metni:', payload);
+    });
+  } else {
+    window.prompt('Yedek metni:', payload);
+  }
+  render();
+}
+
+function importBackup() {
+  const raw = window.prompt('Yedek JSON metnini yapıştır:');
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed.transactions) || !Array.isArray(parsed.dividends)) {
+      throw new Error('Geçersiz yedek');
+    }
+    state = normalizeState(parsed);
+    saveState();
+    render();
+    toast('Yedek geri yüklendi');
+  } catch (_) {
+    toast('Geçersiz yedek metni.');
+  }
+}
+
+function render() {
+  const holdings = computeHoldings();
+  lastHoldings = holdings;
+
+  const syms = [...new Set([...state.transactions.map(t => t.symbol), ...state.dividends.map(d => d.symbol)])].sort();
+  const dl = document.getElementById('symbolList');
+  if (dl) dl.innerHTML = syms.map(s => `<option value="${s}">`).join('');
+
+  renderHeader();
+  renderChecklist(holdings);
+  renderMegaCard(holdings);
+  renderCurrencyGrid(holdings);
+  renderLeadersCard(holdings);
+  renderGoalCountdownCard();
+  renderForecastCard();
+  renderCalendarMatrix(holdings);
+  renderInflationFreedomCard();
+  renderMonthlyChart();
+  renderRibbon();
+
+  renderPieChart(holdings);
+  renderBulkPriceCard();
+  renderHoldingsList(holdings);
+
+  renderAccountsView();
+  renderYearlyDividends();
+  renderHistoryList();
+
+  const bText = document.getElementById('backupStatusText');
+  if (bText) {
+    bText.textContent = state.lastBackupAt
+      ? `Son yedek: ${relTime(state.lastBackupAt.slice(0, 10)).toLowerCase()}`
+      : 'Henüz yedek alınmadı.';
+  }
+
+  if (document.getElementById('view-asistan')?.classList.contains('active')) {
+    renderAssistantView();
+  }
+}
+
+loadState();
+</script>
+</body>
+</html>
